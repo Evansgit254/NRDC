@@ -1,0 +1,87 @@
+{
+    "nav": {
+        "home": "Home",
+        "about": "About",
+        "programs": "Programs",
+        "blog": "Blog",
+        "contact": "Contact",
+        "getInvolved": "Get Involved",
+        "gallery": "Gallery",
+        "resources": "Resources",
+        "admin": "Admin"
+    },
+    "hero": {
+        "title": "Nourishing Hope in Displaced Communities",
+        "subtitle": "Providing essential nutrition, food security, and health support to those who need it most.",
+        "donateNow": "Donate Now",
+        "ourPrograms": "Our Programs"
+    },
+    "mission": {
+        "title": "Our Mission",
+        "statement": "To provide nutrition, food security programs, capacity building, and community health support to refugees and displaced persons, ensuring every individual has the foundation for a healthy future."
+    },
+    "programs": {
+        "title": "Our Programs",
+        "subtitle": "Comprehensive support for sustainable change.",
+        "viewAll": "View All",
+        "learnMore": "Learn More",
+        "emergencyNutrition": {
+            "title": "Emergency Nutrition",
+            "desc": "Immediate food assistance for families in crisis zones."
+        },
+        "communityGardens": {
+            "title": "Community Gardens",
+            "desc": "Teaching sustainable farming to ensure long-term food security."
+        },
+        "mobileHealth": {
+            "title": "Mobile Health Clinics",
+            "desc": "Bringing essential medical care to remote displaced communities."
+        }
+    },
+    "testimonials": {
+        "title": "What People Say",
+        "subtitle": "Hear from those we've helped"
+    },
+    "shareStory": {
+        "title": "Share Your Story",
+        "subtitle": "Have you been impacted by our work? We'd love to hear from you."
+    },
+    "blogPage": {
+        "title": "News & Stories",
+        "subtitle": "Stay updated with our latest programs, success stories, and community impact.",
+        "readMore": "Read More",
+        "noPosts": "No blog posts available at the moment."
+    },
+    "programsPage": {
+        "title": "Our Programs",
+        "subtitle": "Comprehensive, sustainable interventions designed to empower and heal.",
+        "readMore": "Read More"
+    },
+    "aboutPage": {
+        "title": "About NRDC",
+        "subtitle": "Dedicated to restoring dignity and health to displaced communities through sustainable nutrition and support.",
+        "mission": "Our Mission",
+        "vision": "Our Vision",
+        "visionStatement": "A world where displaced communities have the resources and support to thrive independently.",
+        "leadership": "Leadership Team",
+        "resources": "Resources & Reports",
+        "noTeam": "No team members to display yet.",
+        "noResources": "No resources available yet."
+    },
+    "footer": {
+        "about": "About NRDC",
+        "aboutDesc": "Empowering displaced communities through nutrition, health, and sustainable development.",
+        "quickLinks": "Quick Links",
+        "contact": "Contact Us",
+        "rights": "All rights reserved."
+    },
+    "common": {
+        "loading": "Loading...",
+        "error": "An error occurred",
+        "submit": "Submit",
+        "cancel": "Cancel",
+        "save": "Save",
+        "delete": "Delete",
+        "edit": "Edit"
+    }
+}

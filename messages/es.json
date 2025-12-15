@@ -1,0 +1,87 @@
+{
+    "nav": {
+        "home": "Inicio",
+        "about": "Nosotros",
+        "programs": "Programas",
+        "blog": "Blog",
+        "contact": "Contacto",
+        "getInvolved": "Involúcrate",
+        "gallery": "Galería",
+        "resources": "Recursos",
+        "admin": "Admin"
+    },
+    "hero": {
+        "title": "Sembrando Esperanza en Comunidades Desplazadas",
+        "subtitle": "Brindando nutrición esencial, seguridad alimentaria y apoyo médico a quienes más lo necesitan.",
+        "donateNow": "Donar Ahora",
+        "ourPrograms": "Nuestros Programas"
+    },
+    "mission": {
+        "title": "Nuestra Misión",
+        "statement": "Proporcionar nutrición, programas de seguridad alimentaria, desarrollo de capacidades y apoyo a la salud comunitaria a refugiados y personas desplazadas, asegurando que cada individuo tenga la base para un futuro saludable."
+    },
+    "programs": {
+        "title": "Nuestros Programas",
+        "subtitle": "Apoyo integral para un cambio sostenible.",
+        "viewAll": "Ver Todos",
+        "learnMore": "Saber Más",
+        "emergencyNutrition": {
+            "title": "Nutrición de Emergencia",
+            "desc": "Asistencia alimentaria inmediata para familias en zonas de crisis."
+        },
+        "communityGardens": {
+            "title": "Huertos Comunitarios",
+            "desc": "Enseñando agricultura sostenible para garantizar la seguridad alimentaria a largo plazo."
+        },
+        "mobileHealth": {
+            "title": "Clínicas Móviles de Salud",
+            "desc": "Llevando atención médica esencial a comunidades desplazadas remotas."
+        }
+    },
+    "testimonials": {
+        "title": "Lo Que Dicen",
+        "subtitle": "Escucha a quienes hemos ayudado"
+    },
+    "shareStory": {
+        "title": "Comparte Tu Historia",
+        "subtitle": "¿Has sido impactado por nuestro trabajo? Nos encantaría saber de ti."
+    },
+    "blogPage": {
+        "title": "Noticias e Historias",
+        "subtitle": "Mantente actualizado con nuestros últimos programas, historias de éxito e impacto comunitario.",
+        "readMore": "Leer Más",
+        "noPosts": "No hay publicaciones disponibles en este momento."
+    },
+    "programsPage": {
+        "title": "Nuestros Programas",
+        "subtitle": "Intervenciones integrales y sostenibles diseñadas para empoderar y sanar.",
+        "readMore": "Leer Más"
+    },
+    "aboutPage": {
+        "title": "Sobre NRDC",
+        "subtitle": "Dedicados a restaurar la dignidad y la salud de las comunidades desplazadas a través de nutrición sostenible y apoyo.",
+        "mission": "Nuestra Misión",
+        "vision": "Nuestra Visión",
+        "visionStatement": "Un mundo donde las comunidades desplazadas tengan los recursos y el apoyo para prosperar de manera independiente.",
+        "leadership": "Equipo de Liderazgo",
+        "resources": "Recursos e Informes",
+        "noTeam": "Aún no hay miembros del equipo para mostrar.",
+        "noResources": "No hay recursos disponibles todavía."
+    },
+    "footer": {
+        "about": "Sobre NRDC",
+        "aboutDesc": "Empoderando comunidades desplazadas a través de nutrición, salud y desarrollo sostenible.",
+        "quickLinks": "Enlaces Rápidos",
+        "contact": "Contáctanos",
+        "rights": "Todos los derechos reservados."
+    },
+    "common": {
+        "loading": "Cargando...",
+        "error": "Ocurrió un error",
+        "submit": "Enviar",
+        "cancel": "Cancelar",
+        "save": "Guardar",
+        "delete": "Eliminar",
+        "edit": "Editar"
+    }
+}
