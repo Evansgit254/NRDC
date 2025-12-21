@@ -132,13 +132,7 @@ export default function DonatePage() {
                     Every contribution, no matter the size, makes a real difference in someone's life.
                 </p>
 
-                {/* Recurring Donation Toggle (Hidden for M-Changa) 
-                <div className="max-w-2xl mx-auto mb-12">
-                    <div className="bg-gradient-to-r from-blue-50 to-green-50 rounded-xl p-6 borderborder-2 border-[#6E8C82]/30">
-                       ...
-                    </div>
-                </div>
-                */}
+                {/* Recurring Donation Toggle Removed as it was Paystack-dependent */}
 
                 {loading ? (
                     <div className="text-center py-12">
@@ -159,7 +153,7 @@ export default function DonatePage() {
                                 )}
                                 <div className="text-center">
                                     <div className="text-4xl font-bold text-[#6E8C82] mb-2">
-                                        ${option.amount}
+                                        KES {option.amount}
                                     </div>
                                     <p className="text-gray-600 text-sm mb-4">
                                         {option.description}
@@ -179,7 +173,7 @@ export default function DonatePage() {
                                                 Processing...
                                             </span>
                                         ) : (
-                                            `Donate $${option.amount}`
+                                            `Donate KES ${option.amount}`
                                         )}
                                     </button>
                                 </div>
@@ -198,11 +192,11 @@ export default function DonatePage() {
                     <div className="flex gap-4">
                         <div className="flex-1">
                             <div className="relative">
-                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-xl">$</span>
+                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-xl">KES</span>
                                 <input
                                     type="number"
                                     placeholder="Enter amount"
-                                    className="w-full pl-10 pr-4 py-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#6E8C82] outline-none text-xl"
+                                    className="w-full pl-16 pr-4 py-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#6E8C82] outline-none text-xl"
                                     min="1"
                                     value={customAmount}
                                     onChange={(e) => setCustomAmount(e.target.value)}
@@ -239,7 +233,7 @@ export default function DonatePage() {
                         <div className="bg-white p-6 rounded-xl shadow-sm text-center">
                             <CreditCard className="mx-auto mb-4 w-12 h-12 text-[#6E8C82]" />
                             <h3 className="font-bold text-lg mb-2">Credit/Debit Card</h3>
-                            <p className="text-gray-600 text-sm">Secure online payment via Visa, Mastercard, or PayPal</p>
+                            <p className="text-gray-600 text-sm">Secure online payment via M-PESA and Mobile Money</p>
                         </div>
                         <div className="bg-white p-6 rounded-xl shadow-sm text-center">
                             <Building className="mx-auto mb-4 w-12 h-12 text-[#6E8C82]" />
@@ -247,9 +241,9 @@ export default function DonatePage() {
                             <p className="text-gray-600 text-sm">Direct bank transfer for larger donations</p>
                         </div>
                         <div className="bg-white p-6 rounded-xl shadow-sm text-center">
-                            <Repeat className="mx-auto mb-4 w-12 h-12 text-[#6E8C82]" />
-                            <h3 className="font-bold text-lg mb-2">Monthly Giving</h3>
-                            <p className="text-gray-600 text-sm">Set up recurring donations for sustained impact</p>
+                            <Gift className="mx-auto mb-4 w-12 h-12 text-[#6E8C82]" />
+                            <h3 className="font-bold text-lg mb-2">Support Our Programs</h3>
+                            <p className="text-gray-600 text-sm">Your contribution directly funds our primary initiatives</p>
                         </div>
                     </div>
                 </div>

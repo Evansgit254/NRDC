@@ -22,7 +22,7 @@ export default function VerifyPaymentPage() {
 
             try {
                 // Update donation status based on transaction
-                const response = await fetch(`/api/payments/paystack/verify?reference=${reference}`)
+                const response = await fetch(`/api/payments/mchanga/verify?reference=${reference}`)
 
                 if (response.ok) {
                     const data = await response.json()

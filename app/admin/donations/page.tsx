@@ -29,7 +29,7 @@ interface DonationRecord {
     donorPhone: string | null
     paymentMethod: string
     paymentStatus: string
-    stripeSessionId: string | null
+    reference: string | null
     createdAt: string
     updatedAt: string
 }
@@ -228,9 +228,9 @@ export default function AdminDonationsPage() {
 
     // Format currency
     function formatCurrency(amount: number, currency: string) {
-        return new Intl.NumberFormat('en-US', {
+        return new Intl.NumberFormat('en-KE', {
             style: 'currency',
-            currency: currency || 'USD'
+            currency: currency || 'KES'
         }).format(amount)
     }
 
@@ -321,7 +321,7 @@ export default function AdminDonationsPage() {
                             <form onSubmit={handleTierSubmit} className="space-y-4">
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Amount ($)</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">Amount (KES)</label>
                                         <input
                                             type="number"
                                             required
@@ -389,7 +389,7 @@ export default function AdminDonationsPage() {
                                     </div>
                                 )}
                                 <div className="flex justify-between items-start mb-4">
-                                    <div className="text-3xl font-bold text-[#6E8C82]">${tier.amount}</div>
+                                    <div className="text-3xl font-bold text-[#6E8C82]">KES {tier.amount}</div>
                                     <div className="flex gap-2">
                                         <button onClick={() => startEditTier(tier)} className="p-2 text-gray-500 hover:bg-gray-100 rounded-lg transition-colors">
                                             <Edit size={18} />
@@ -525,9 +525,7 @@ export default function AdminDonationsPage() {
                                     className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#6E8C82] outline-none"
                                 >
                                     <option value="">All Methods</option>
-                                    <option value="paystack">Paystack</option>
-                                    <option value="stripe">Stripe</option>
-                                    <option value="mpesa">M-Pesa</option>
+                                    <option value="mchanga">M-Changa</option>
                                 </select>
                             </div>
                             <div className="flex items-end">
@@ -624,7 +622,7 @@ export default function AdminDonationsPage() {
                                                     </span>
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500 font-mono">
-                                                    {donation.stripeSessionId?.substring(0, 20)}...
+                                                    {donation.reference?.substring(0, 20)}...
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm">
                                                     {donation.paymentStatus === 'pending' && (

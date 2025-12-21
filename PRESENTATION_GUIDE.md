@@ -6,7 +6,7 @@ This comprehensive guide is designed to help you lead a professional and convinc
 **Goal:** To deliver a robust, scalable, and user-friendly donation platform that empowers NRDC to raise funds effectively and manage their digital presence with ease.
 
 **Key Achievements:**
-*   **Localized Payment Engine:** Seamless integration with **Paystack** to support M-PESA, Mobile Money, and Cards—crucial for the Kenyan donor base.
+*   **Localized Payment Engine:** Seamless integration with **M-Changa** to support M-PESA and Mobile Money—crucial for the Kenyan donor base.
 *   **Dynamic Content Management:** A custom Admin Dashboard that gives NRDC full control over their site's text, settings, and team members without needing a developer.
 *   **Modern Brand Identity:** A responsive, high-performance UI that builds trust and credibility with potential donors.
 *   **Production Stability:** Built on Next.js 15+ with strict security and type safety, ensuring the site is fast, secure, and reliable.
@@ -38,11 +38,8 @@ This comprehensive guide is designed to help you lead a professional and convinc
 
 **3. The Donation Flow (The Star Feature)**
 *   **Action:** Click the **"Donate"** button.
-*   **Action:** Show the **Recurring Donation** toggle. Switch between 'One-time' and 'Monthly'.
-*   **Narrative:** "We've built a flexible donation engine. Donors can choose to support you once or commit to a monthly subscription, which is key for sustainable revenue."
 *   **Action:** Select an amount (e.g., KES 1,000). Click **"Donate Now"**.
-*   **Action:** When the payment modal appears, select **Paystack**.
-*   **Narrative:** "We integrated Paystack specifically for the Kenyan market. This allows donors to pay directly via **M-PESA**, which drastically reduces drop-off rates compared to international gateways."
+*   **Narrative:** "We integrated M-Changa specifically for the Kenyan market. This allows donors to pay directly via **M-PESA**, which is the primary way Kenyans support causes they care about."
 
 ### Part B: The Admin Experience (Management)
 *Context: "Now, let's see how you manage the platform behind the scenes."*
@@ -77,7 +74,7 @@ This comprehensive guide is designed to help you lead a professional and convinc
 *   **Database:** Powered by **PostgreSQL** and **Prisma**. This ensures data integrity—we never lose a donation record.
 *   **Security:**
     *   **SSL/TLS:** All data in transit is encrypted.
-    *   **PCI Compliance:** Payment processing is offloaded to Paystack's secure servers; we never touch raw credit card numbers.
+    *   **PCI Compliance:** Payment processing is offloaded to M-Changa's secure servers; we never touch raw credit card or mobile money details.
     *   **Role-Based Access:** Only authorized admins can access the dashboard.
 *   **Scalability:** The system is built to handle thousands of concurrent users. As NRDC grows, the platform grows with you.
 
@@ -95,12 +92,12 @@ This comprehensive guide is designed to help you lead a professional and convinc
 *A: The site is deployed on a cloud infrastructure (like Vercel) with 99.9% uptime guarantees. We also have error logging to alert us immediately if something breaks.*
 
 **Q: Is M-PESA fully supported?**
-*A: Yes, via Paystack. When a user selects M-PESA, they get a prompt on their phone to enter their PIN. It's the standard flow Kenyans are used to.*
+*A: Yes, via M-Changa. When a user clicks donate, they are redirected to a secure fundraiser page where they can enter their phone number and complete the M-PESA payment.*
 
 ---
 
 ## 6. Deployment & Next Steps 🚀
 1.  **Domain Setup:** Point `nrdc.org` (or chosen domain) to our production server.
-2.  **Live Keys:** Switch Paystack from "Test Mode" to "Live Mode".
+2.  **Live Keys:** Switch M-Changa from "Test Mode" (or staging) to "Live Mode" by updating the Paybill/Fundraiser ID and API Key.
 3.  **Handoff:** Transfer admin credentials and documentation to the NRDC team.
 4.  **Support:** 30-day post-launch support period to ensure smooth operations.
