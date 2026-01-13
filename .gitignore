@@ -34,6 +34,16 @@ yarn-error.log*
 .env*
 !.env.example
 
+# Bank Documentation & Folders (Keeping code tracked)
+BANK_API_INTEGRATION_REQUIREMENTS.md
+BANK_TRANSFER_SETUP_GUIDE.md
+Bank Response/
+*_Bank_Response_*.pdf
+Meeting_Prep_Brief_*.pdf
+Technical_Spec_Sheet_*.pdf
+Technical_Implementation_Proof_*.pdf
+
+
 # vercel
 .vercel
 
