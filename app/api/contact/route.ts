@@ -29,7 +29,7 @@ export async function POST(request: Request) {
                 message: body.message,
             })
 
-            console.log(`✅ Contact form submitted and emails sent: ${submission.id}`)
+
         } catch (emailError) {
             console.error('Email sending failed:', emailError)
             // Don't fail the contact submission if email fails

@@ -52,6 +52,7 @@ model GalleryImage {
   caption   String?
   category  String?
   createdAt DateTime @default(now())
+  translations GalleryImageTranslation[]
 }
 
 model PageContent {
@@ -89,6 +90,7 @@ model TeamMember {
   active    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  translations TeamMemberTranslation[]
 }
 
 model Statistic {
@@ -100,6 +102,7 @@ model Statistic {
   active    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  translations StatisticTranslation[]
 }
 
 model Resource {
@@ -114,6 +117,7 @@ model Resource {
   active      Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  translations ResourceTranslation[]
 }
 
 model Testimonial {
@@ -127,6 +131,7 @@ model Testimonial {
   order     Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  translations TestimonialTranslation[]
 }
 
 model SiteContent {
@@ -136,6 +141,7 @@ model SiteContent {
   type      String   @default("TEXT") // TEXT, RICH_TEXT, IMAGE_URL
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  translations SiteContentTranslation[]
 }
 
 model PasswordResetToken {
@@ -183,7 +189,9 @@ model AuditLog {
   @@index([createdAt])
 }
 
+
 // Multilingual Support Models
+
 model Translation {
   id        String   @id @default(uuid())
   namespace String   @default("common")
@@ -228,6 +236,121 @@ model ProgramTranslation {
   @@index([locale])
 }
 
+model TeamMemberTranslation {
+  id           String     @id @default(uuid())
+  teamMemberId String
+  locale       String
+  title        String?
+  bio          String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  teamMember   TeamMember @relation(fields: [teamMemberId], references: [id], onDelete: Cascade)
+
+  @@unique([teamMemberId, locale])
+  @@index([locale])
+}
+
+model TestimonialTranslation {
+  id            String      @id @default(uuid())
+  testimonialId String
+  locale        String
+  message       String
+  role          String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  testimonial   Testimonial @relation(fields: [testimonialId], references: [id], onDelete: Cascade)
+
+  @@unique([testimonialId, locale])
+  @@index([locale])
+}
+
+model ResourceTranslation {
+  id          String   @id @default(uuid())
+  resourceId  String
+  locale      String
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  resource    Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+
+  @@unique([resourceId, locale])
+  @@index([locale])
+}
+
+model StatisticTranslation {
+  id          String    @id @default(uuid())
+  statisticId String
+  locale      String
+  label       String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  statistic   Statistic @relation(fields: [statisticId], references: [id], onDelete: Cascade)
+
+  @@unique([statisticId, locale])
+  @@index([locale])
+}
+
+model DonationTierTranslation {
+  id             String       @id @default(uuid())
+  donationTierId String
+  locale         String
+  description    String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  donationTier   DonationTier @relation(fields: [donationTierId], references: [id], onDelete: Cascade)
+
+  @@unique([donationTierId, locale])
+  @@index([locale])
+}
+
+model SiteContentTranslation {
+  id            String      @id @default(uuid())
+  siteContentId String
+  locale        String
+  value         String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  siteContent   SiteContent @relation(fields: [siteContentId], references: [id], onDelete: Cascade)
+
+  @@unique([siteContentId, locale])
+  @@index([locale])
+}
+
+model DonationStatTranslation {
+  id             String       @id @default(uuid())
+  donationStatId String
+  locale         String
+  label          String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  donationStat   DonationStat @relation(fields: [donationStatId], references: [id], onDelete: Cascade)
+
+  @@unique([donationStatId, locale])
+  @@index([locale])
+}
+
+model GalleryImageTranslation {
+  id             String       @id @default(uuid())
+  galleryImageId String
+  locale         String
+  caption        String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  galleryImage   GalleryImage @relation(fields: [galleryImageId], references: [id], onDelete: Cascade)
+
+  @@unique([galleryImageId, locale])
+  @@index([locale])
+}
+
 // Advertisement Models
 model Advertisement {
   id          String    @id @default(uuid())
@@ -255,6 +378,7 @@ model DonationTier {
   order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  translations DonationTierTranslation[]
 }
 
 model DonationStat {
@@ -264,25 +388,43 @@ model DonationStat {
   order     Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  translations DonationStatTranslation[]
 }
 
+model BankDetails {
+  id            String   @id @default(uuid())
+  accountName   String   // e.g., "NRDC"
+  accountNumber String   // e.g., "01207150002"
+  branch        String   // e.g., "Nairobi"
+  bankCode      String?  // e.g., "19"
+  branchCode    String?  // e.g., "000"
+  swiftCode     String?  // e.g., "AFRIKENX"
+  phoneNumber   String?  // e.g., "972900"
+  bankName      String?  // e.g., "ABC Bank"
+  active        Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+
 model Donation {
-  id              String   @id @default(uuid())
-  amount          Float
-  currency        String   @default("USD")
-  donorName       String?
-  donorEmail      String
-  donorPhone      String?
-  paymentMethod   String   // 'stripe', 'mpesa'
-  paymentStatus   String   // 'pending', 'completed', 'failed', 'refunded'
-  stripeSessionId String?  @unique
-  mpesaCheckoutId String?  @unique
-  mchangaCheckoutId String? @unique // Unique ID from M-Changa
-  reference       String?   @unique // Generic reference for tracking
-  mpesaReceiptNo  String?
-  metadata        String?  // JSON for additional data
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id                    String   @id @default(uuid())
+  amount                Float
+  currency              String   @default("USD")
+  donorName             String?
+  donorEmail            String
+  donorPhone            String?
+  paymentMethod         String   // 'stripe', 'mpesa', 'mchanga', 'bank_transfer'
+  paymentStatus         String   // 'pending', 'completed', 'failed', 'refunded'
+  stripeSessionId       String?  @unique
+  mpesaCheckoutId       String?  @unique
+  mchangaCheckoutId     String?  @unique // Unique ID from M-Changa
+  reference             String?  @unique // Generic reference for tracking
+  mpesaReceiptNo        String?
+  bankTransferReference String?  // Reference number for bank transfers
+  metadata              String?  // JSON for additional data
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
   
   @@index([paymentStatus])
   @@index([createdAt])

@@ -4,10 +4,21 @@ import { Images } from 'lucide-react'
 export const dynamic = 'force-static'
 export const revalidate = 1800
 
-export default async function GalleryPage() {
+export default async function GalleryPage({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params
     const images = await prisma.galleryImage.findMany({
+        include: {
+            translations: {
+                where: { locale }
+            }
+        },
         orderBy: { createdAt: 'desc' },
     })
+
+    const translatedImages = images.map(image => ({
+        ...image,
+        caption: image.translations?.[0]?.caption || image.caption
+    }))
 
     return (
         <div className="pb-16">
@@ -21,9 +32,9 @@ export default async function GalleryPage() {
             </section>
 
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                {images.length > 0 ? (
+                {translatedImages.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        {images.map((image: { id: string; url: string; caption: string | null }) => (
+                        {translatedImages.map((image) => (
                             <div key={image.id} className="group relative aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow bg-gray-200 hover-scale">
                                 <div
                                     className="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-300"

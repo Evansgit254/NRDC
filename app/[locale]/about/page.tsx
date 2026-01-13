@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useParams } from 'next/navigation'
 import Image from 'next/image'
 import { Download, Target, Lightbulb, Users } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -34,13 +35,18 @@ export default function AboutPage() {
     const [resources, setResources] = useState<Resource[]>([])
     const [content, setContent] = useState<SiteContent>({})
 
+    const params = useParams()
+    const locale = params.locale as string
+
     useEffect(() => {
-        fetch('/api/team', { cache: 'no-store' }).then(res => res.json()).then(setTeamMembers)
-        fetch('/api/resources').then(res => res.json()).then(setResources)
-        fetch('/api/content?keys=mission_statement,vision_statement,core_values')
+        const localeQuery = locale ? `?locale=${locale}` : ''
+        fetch(`/api/team${localeQuery}`, { cache: 'no-store' }).then(res => res.json()).then(setTeamMembers)
+        fetch(`/api/resources${localeQuery}`).then(res => res.json()).then(setResources)
+        const contentKeys = 'mission_statement,vision_statement,core_values'
+        fetch(`/api/content?keys=${contentKeys}${locale ? `&locale=${locale}` : ''}`)
             .then(res => res.json())
             .then(setContent)
-    }, [])
+    }, [locale])
 
     async function trackDownload(id: string, url: string) {
         // Track download
@@ -74,7 +80,7 @@ export default function AboutPage() {
                             <h2 className="text-2xl font-bold text-gray-900">{t('mission')}</h2>
                         </div>
                         <p className="text-gray-700 leading-relaxed text-lg">
-                            {content.mission_statement || 'To provide nutrition, food security programs, capacity building, and community health support to refugees and displaced persons.'}
+                            {content.mission_statement || ''}
                         </p>
                     </div>
 
@@ -124,12 +130,14 @@ export default function AboutPage() {
                             className="text-center"
                         >
                             {member.imageUrl ? (
-                                <div className="w-48 h-48 mx-auto mb-4 rounded-full overflow-hidden relative">
+                                <div className="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden relative border-4 border-white shadow-xl bg-gray-50 ring-1 ring-gray-200/50">
                                     <Image
                                         src={member.imageUrl}
                                         alt={member.name}
                                         fill
-                                        className="object-cover"
+                                        className="object-cover transition-transform duration-500 hover:scale-105"
+                                        sizes="192px"
+                                        priority={index < 3}
                                     />
                                 </div>
                             ) : (

@@ -2,15 +2,18 @@
 
 import ContactForm from '@/components/ContactForm'
 import { MapPin, Phone, Mail } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export default function ContactPage() {
+    const t = useTranslations('contactPage')
+
     return (
         <div className="pb-16">
             <section className="bg-[#6E8C82] text-white py-20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-6 animate-fadeInUp">Contact Us</h1>
+                    <h1 className="text-4xl md:text-5xl font-bold mb-6 animate-fadeInUp">{t('title')}</h1>
                     <p className="text-xl max-w-3xl mx-auto text-white/80 animate-fadeInUp animation-delay-200">
-                        Have questions or want to learn more? We'd love to hear from you.
+                        {t('subtitle')}
                     </p>
                 </div>
             </section>
@@ -18,20 +21,20 @@ export default function ContactPage() {
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                     <div>
-                        <h2 className="text-3xl font-bold text-gray-900 mb-8">Get In Touch</h2>
+                        <h2 className="text-3xl font-bold text-gray-900 mb-8">{t('getInTouch')}</h2>
                         <ContactForm />
                     </div>
 
                     <div>
-                        <h2 className="text-3xl font-bold text-gray-900 mb-8">Contact Information</h2>
+                        <h2 className="text-3xl font-bold text-gray-900 mb-8">{t('info')}</h2>
 
                         <div className="space-y-6 mb-12">
                             <div className="flex gap-4 hover-slide">
                                 <div className="bg-[#6E8C82]/20 p-3 rounded-full text-[#6E8C82] h-fit">
                                     <MapPin size={24} />
                                 </div>
-                                <div>
-                                    <h3 className="font-bold text-gray-900 mb-1">Address</h3>
+                                <div className="animate-fadeInRight">
+                                    <h3 className="font-bold text-gray-900 mb-1">{t('address')}</h3>
                                     <p className="text-gray-600">
                                         Nairobi, Kenya<br />
                                         P.O. Box 12345-00100
@@ -43,8 +46,8 @@ export default function ContactPage() {
                                 <div className="bg-green-100 p-3 rounded-full text-[#2E8B57] h-fit">
                                     <Phone size={24} />
                                 </div>
-                                <div>
-                                    <h3 className="font-bold text-gray-900 mb-1">Phone</h3>
+                                <div className="animate-fadeInRight animation-delay-100">
+                                    <h3 className="font-bold text-gray-900 mb-1">{t('phone')}</h3>
                                     <p className="text-gray-600">+254 727 001 702 / +254 702 121 310</p>
                                 </div>
                             </div>
@@ -53,8 +56,8 @@ export default function ContactPage() {
                                 <div className="bg-orange-100 p-3 rounded-full text-orange-600 h-fit">
                                     <Mail size={24} />
                                 </div>
-                                <div>
-                                    <h3 className="font-bold text-gray-900 mb-1">Email</h3>
+                                <div className="animate-fadeInRight animation-delay-200">
+                                    <h3 className="font-bold text-gray-900 mb-1">{t('email')}</h3>
                                     <p className="text-gray-600">info@nrdc.org</p>
                                 </div>
                             </div>

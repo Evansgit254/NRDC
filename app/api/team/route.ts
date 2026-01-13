@@ -5,12 +5,33 @@ import { getSession } from '@/lib/auth'
 export const dynamic = 'force-dynamic'
 
 // GET /api/team - List all team members
-export async function GET() {
+export async function GET(request: Request) {
+    const { searchParams } = new URL(request.url)
+    const locale = searchParams.get('locale')
+
     try {
         const teamMembers = await prisma.teamMember.findMany({
+            where: { active: true },
+            include: {
+                translations: locale ? {
+                    where: { locale }
+                } : false
+            },
             orderBy: { order: 'asc' }
         })
-        return NextResponse.json(teamMembers)
+
+        const translatedTeamMembers = teamMembers.map(member => {
+            if (!locale) return member;
+            const translation = member.translations?.[0];
+            return {
+                ...member,
+                title: translation?.title || member.title,
+                bio: translation?.bio || member.bio,
+                translations: undefined // Remove translations from response
+            }
+        })
+
+        return NextResponse.json(translatedTeamMembers)
     } catch (error) {
         console.error('Error fetching team members:', error)
         return NextResponse.json({ error: 'Failed to fetch team members' }, { status: 500 })

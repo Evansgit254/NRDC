@@ -8,7 +8,9 @@
         "getInvolved": "Get Involved",
         "gallery": "Gallery",
         "resources": "Resources",
-        "admin": "Admin"
+        "admin": "Admin",
+        "donate": "Donate",
+        "donateNow": "Donate Now"
     },
     "hero": {
         "title": "Nourishing Hope in Displaced Communities",
@@ -68,12 +70,81 @@
         "noTeam": "No team members to display yet.",
         "noResources": "No resources available yet."
     },
+    "contactPage": {
+        "title": "Contact Us",
+        "subtitle": "Have questions or want to learn more? We'd love to hear from you.",
+        "getInTouch": "Get In Touch",
+        "info": "Contact Information",
+        "address": "Address",
+        "phone": "Phone",
+        "email": "Email"
+    },
+    "contactForm": {
+        "name": "Name",
+        "email": "Email",
+        "message": "Message",
+        "send": "Send Message",
+        "successTitle": "Message Sent!",
+        "successMessage": "Thank you for reaching out. We'll get back to you soon.",
+        "sendAnother": "Send another message"
+    },
+    "volunteerForm": {
+        "name": "Full Name",
+        "email": "Email Address",
+        "messageLabel": "Why do you want to volunteer?",
+        "submit": "Submit Application",
+        "successTitle": "Thank You!",
+        "successMessage": "Your application has been received. We will be in touch shortly.",
+        "sendAnother": "Send another message"
+    },
+    "testimonialForm": {
+        "name": "Your Name *",
+        "namePlaceholder": "John Doe",
+        "role": "Role/Affiliation (Optional)",
+        "rolePlaceholder": "e.g., Community Member, Volunteer",
+        "testimonial": "Your Testimonial *",
+        "testimonialPlaceholder": "Share your experience with NRDC...",
+        "rating": "Rating",
+        "submit": "Submit Testimonial",
+        "submitting": "Submitting...",
+        "successTitle": "Thank You!",
+        "successMessage": "Your testimonial has been submitted and is pending admin approval.",
+        "submitAnother": "Submit Another Testimonial",
+        "reviewNotice": "Your testimonial will be reviewed by our team before being published."
+    },
     "footer": {
         "about": "About NRDC",
-        "aboutDesc": "Empowering displaced communities through nutrition, health, and sustainable development.",
+        "aboutDesc": "Nutrition for Refugee & Displaced Communities. Providing hope, health, and stability to those in need.",
         "quickLinks": "Quick Links",
         "contact": "Contact Us",
+        "followUs": "Follow Us",
+        "aboutUs": "About Us",
+        "ourPrograms": "Our Programs",
+        "newsStories": "News & Stories",
+        "contactUs": "Contact Us",
+        "privacyPolicy": "Privacy Policy",
+        "adminLogin": "Admin Login",
         "rights": "All rights reserved."
+    },
+    "getInvolved": {
+        "title": "Get Involved",
+        "subtitle": "Join us in making a difference. Your time, skills, and support can change lives.",
+        "waysToSupport": "Ways to Support",
+        "donateTitle": "Donate",
+        "donateDesc": "Your financial contribution directly supports our nutrition and health programs. Every dollar counts.",
+        "donateLink": "View Donation Options",
+        "partnerTitle": "Partner With Us",
+        "partnerDesc": "We collaborate with organizations, governments, and businesses to amplify our impact.",
+        "partnerLink": "Become a Partner",
+        "volunteerTitle": "Volunteer",
+        "volunteerDesc": "Share your skills and time. We are always looking for passionate individuals to join our team.",
+        "volunteerApp": "Volunteer Application"
+    },
+    "cookieConsent": {
+        "title": "We use cookies",
+        "message": "We use cookies to enhance your experience, analyze site traffic, and support our humanitarian mission. By clicking \"Accept\", you agree to our use of cookies. Read our",
+        "accept": "Accept Cookies",
+        "decline": "Decline"
     },
     "common": {
         "loading": "Loading...",

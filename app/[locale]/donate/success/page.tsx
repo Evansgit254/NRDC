@@ -70,7 +70,7 @@ export default function DonateSuccessPage() {
                         <ul className="space-y-3">
                             <li className="flex items-start gap-3">
                                 <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                                <span className="text-gray-600">You'll receive an email confirmation with your donation receipt</span>
+                                <span className="text-gray-600">You&apos;ll receive an email confirmation with your donation receipt</span>
                             </li>
                             <li className="flex items-start gap-3">
                                 <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
@@ -78,7 +78,7 @@ export default function DonateSuccessPage() {
                             </li>
                             <li className="flex items-start gap-3">
                                 <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                                <span className="text-gray-600">You'll receive updates on the impact your donation is making</span>
+                                <span className="text-gray-600">You&apos;ll receive updates on the impact your donation is making</span>
                             </li>
                         </ul>
                     </div>

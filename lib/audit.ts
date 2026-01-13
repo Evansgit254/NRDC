@@ -1,15 +1,10 @@
-import { prisma } from '@/lib/prisma';
-
-interface AuditContext {
-    userId?: string;
-    details?: any;
-}
+import { prisma } from './prisma'
 
 export async function logAudit(
     action: string,
     entity: string,
-    entityId: string | null,
-    context: AuditContext = {}
+    entityId: string | null = null,
+    metadata: { userId?: string; details?: any } = {}
 ) {
     try {
         await prisma.auditLog.create({
@@ -17,11 +12,12 @@ export async function logAudit(
                 action,
                 entity,
                 entityId,
-                details: context.details ? JSON.stringify(context.details) : null,
-                userId: context.userId,
+                userId: metadata.userId || null,
+                details: metadata.details ? JSON.stringify(metadata.details) : null,
             },
-        });
+        })
     } catch (error) {
-        console.error('❌ Failed to log audit:', error);
+        // Fallback to console if database logging fails to prevent breaking the main flow
+        console.error('Failed to log audit:', error)
     }
 }

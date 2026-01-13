@@ -6,14 +6,23 @@ import { getSession } from '@/lib/auth'
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url)
     const keys = searchParams.get('keys')?.split(',')
+    const locale = searchParams.get('locale')
 
     try {
         const where = keys ? { key: { in: keys } } : {}
-        const content = await prisma.siteContent.findMany({ where })
+        const content = await prisma.siteContent.findMany({
+            where,
+            include: {
+                translations: locale ? {
+                    where: { locale }
+                } : false
+            }
+        })
 
         // Convert array to object for easier access
         const contentMap = content.reduce((acc, item) => {
-            acc[item.key] = item.value
+            const translation = item.translations?.[0];
+            acc[item.key] = translation?.value || item.value
             return acc
         }, {} as Record<string, string>)
 

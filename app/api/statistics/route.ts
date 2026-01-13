@@ -5,13 +5,32 @@ import { getSession } from '@/lib/auth'
 export const dynamic = 'force-dynamic'
 
 // GET /api/statistics - List all statistics
-export async function GET() {
+export async function GET(request: Request) {
+    const { searchParams } = new URL(request.url)
+    const locale = searchParams.get('locale')
+
     try {
         const statistics = await prisma.statistic.findMany({
             where: { active: true },
+            include: {
+                translations: locale ? {
+                    where: { locale }
+                } : false
+            },
             orderBy: { order: 'asc' }
         })
-        return NextResponse.json(statistics)
+
+        const translatedStatistics = statistics.map(stat => {
+            if (!locale) return stat;
+            const translation = stat.translations?.[0];
+            return {
+                ...stat,
+                label: translation?.label || stat.label,
+                translations: undefined // Remove translations from response
+            }
+        })
+
+        return NextResponse.json(translatedStatistics)
     } catch (error) {
         console.error('Error fetching statistics:', error)
         return NextResponse.json({ error: 'Failed to fetch statistics' }, { status: 500 })

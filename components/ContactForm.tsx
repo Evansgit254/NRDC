@@ -2,8 +2,10 @@
 
 import { useState, useRef } from 'react'
 import { Send, Loader2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export default function ContactForm() {
+    const t = useTranslations('contactForm')
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState(false)
     const formRef = useRef<HTMLFormElement>(null)
@@ -40,13 +42,13 @@ export default function ContactForm() {
     if (success) {
         return (
             <div className="bg-green-50 text-green-800 p-6 rounded-xl text-center">
-                <h3 className="text-xl font-bold mb-2">Message Sent!</h3>
-                <p>Thank you for reaching out. We'll get back to you soon.</p>
+                <h3 className="text-xl font-bold mb-2">{t('successTitle')}</h3>
+                <p>{t('successMessage')}</p>
                 <button
                     onClick={() => setSuccess(false)}
                     className="mt-4 text-sm underline hover:text-green-900"
                 >
-                    Send another message
+                    {t('sendAnother')}
                 </button>
             </div>
         )
@@ -55,7 +57,7 @@ export default function ContactForm() {
     return (
         <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
             <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">{t('name')}</label>
                 <input
                     type="text"
                     name="name"
@@ -65,7 +67,7 @@ export default function ContactForm() {
                 />
             </div>
             <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">{t('email')}</label>
                 <input
                     type="email"
                     name="email"
@@ -75,7 +77,7 @@ export default function ContactForm() {
                 />
             </div>
             <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">{t('message')}</label>
                 <textarea
                     name="message"
                     id="message"
@@ -90,7 +92,7 @@ export default function ContactForm() {
                 className="w-full bg-[#6E8C82] hover:bg-[#587068] text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
             >
                 {loading ? <Loader2 className="animate-spin" /> : <Send size={20} />}
-                Send Message
+                {t('send')}
             </button>
         </form>
     )

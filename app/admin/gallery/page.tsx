@@ -252,7 +252,7 @@ export default function AdminGalleryPage() {
                 <div className="text-center py-12 text-gray-500">
                     <Upload size={48} className="mx-auto mb-4 opacity-50" />
                     <p className="text-lg">No images in the gallery yet.</p>
-                    <p className="text-sm">Click "Upload Image" to get started!</p>
+                    <p className="text-sm">Click &quot;Upload Image&quot; to get started!</p>
                 </div>
             )}
         </div>

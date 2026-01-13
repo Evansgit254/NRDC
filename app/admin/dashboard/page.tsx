@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts'
 import { FileText, BookOpen, Image, Mail, TrendingUp, Activity, Users, Sparkles } from 'lucide-react'
 
@@ -63,7 +64,7 @@ export default function AdminDashboardPage() {
             <div className="flex items-center justify-between">
                 <div>
                     <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-                    <p className="text-gray-600 mt-1">Welcome back! Here's your NRDC overview</p>
+                    <p className="text-gray-600 mt-1">Welcome back! Here&apos;s your NRDC overview</p>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-500">
                     <Activity size={16} className="text-green-600" />
@@ -155,22 +156,22 @@ export default function AdminDashboardPage() {
             <div className="bg-gradient-to-r from-[#6E8C82] to-[#2E8B57] rounded-xl shadow-sm p-6 text-white">
                 <h2 className="text-xl font-bold mb-4">Quick Actions</h2>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <a href="/admin/blog" className="bg-white/10 hover:bg-white/20 rounded-lg p-4 text-center transition-colors backdrop-blur-sm">
+                    <Link href="/admin/blog" className="bg-white/10 hover:bg-white/20 rounded-lg p-4 text-center transition-colors backdrop-blur-sm">
                         <BookOpen size={32} className="mx-auto mb-2" />
                         <p className="text-sm font-medium">New Blog Post</p>
-                    </a>
-                    <a href="/admin/programs" className="bg-white/10 hover:bg-white/20 rounded-lg p-4 text-center transition-colors backdrop-blur-sm">
+                    </Link>
+                    <Link href="/admin/programs" className="bg-white/10 hover:bg-white/20 rounded-lg p-4 text-center transition-colors backdrop-blur-sm">
                         <FileText size={32} className="mx-auto mb-2" />
                         <p className="text-sm font-medium">Add Program</p>
-                    </a>
-                    <a href="/admin/contact" className="bg-white/10 hover:bg-white/20 rounded-lg p-4 text-center transition-colors backdrop-blur-sm">
+                    </Link>
+                    <Link href="/admin/contact" className="bg-white/10 hover:bg-white/20 rounded-lg p-4 text-center transition-colors backdrop-blur-sm">
                         <Mail size={32} className="mx-auto mb-2" />
                         <p className="text-sm font-medium">View Messages</p>
-                    </a>
-                    <a href="/admin/gallery" className="bg-white/10 hover:bg-white/20 rounded-lg p-4 text-center transition-colors backdrop-blur-sm">
+                    </Link>
+                    <Link href="/admin/gallery" className="bg-white/10 hover:bg-white/20 rounded-lg p-4 text-center transition-colors backdrop-blur-sm">
                         <Image size={32} className="mx-auto mb-2" />
                         <p className="text-sm font-medium">Upload Image</p>
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>

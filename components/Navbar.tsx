@@ -73,7 +73,7 @@ export default function Navbar() {
                             className="bg-gradient-to-r from-[#2E8B57] to-[#267347] hover:from-[#267347] hover:to-[#1e5a33] text-white px-6 py-2.5 rounded-full text-base font-semibold flex items-center gap-2 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl ml-2"
                         >
                             <Heart size={18} className="animate-pulse" />
-                            Donate
+                            {t('donate')}
                         </Link>
                     </div>
 
@@ -120,7 +120,7 @@ export default function Navbar() {
                         onClick={() => setIsOpen(false)}
                     >
                         <Heart size={18} />
-                        Donate Now
+                        {t('donateNow')}
                     </Link>
                 </div>
             </div>

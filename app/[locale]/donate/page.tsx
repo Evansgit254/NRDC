@@ -2,6 +2,7 @@
 
 import { Heart, CreditCard, Building, Repeat, Gift, CheckCircle } from 'lucide-react'
 import Link from 'next/link'
+import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 interface DonationTier {
@@ -27,17 +28,29 @@ export default function DonatePage() {
     const [processingAmount, setProcessingAmount] = useState<number | null>(null)
     const [isRecurring, setIsRecurring] = useState(false)
     const [frequency, setFrequency] = useState<'monthly' | 'yearly'>('monthly')
+    const [paymentMethod, setPaymentMethod] = useState<'mchanga' | 'bank_transfer'>('mchanga')
+    const [bankDetails, setBankDetails] = useState<any>(null)
+    const [showBankDetails, setShowBankDetails] = useState(false)
+
+    const params = useParams()
+    const locale = params.locale as string
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const [tiersRes, statsRes] = await Promise.all([
-                    fetch('/api/donations/tiers'),
-                    fetch('/api/donations/stats')
+                const localeQuery = locale ? `?locale=${locale}` : ''
+                const [tiersRes, statsRes, bankRes] = await Promise.all([
+                    fetch(`/api/donations/tiers${localeQuery}`),
+                    fetch(`/api/donations/stats${localeQuery}`),
+                    fetch('/api/settings/bank')
                 ])
 
                 if (tiersRes.ok) setTiers(await tiersRes.json())
                 if (statsRes.ok) setStats(await statsRes.json())
+                if (bankRes.ok) {
+                    const data = await bankRes.json()
+                    setBankDetails(data)
+                }
             } catch (error) {
                 console.error('Error fetching donation data:', error)
             } finally {
@@ -45,7 +58,7 @@ export default function DonatePage() {
             }
         }
         fetchData()
-    }, [])
+    }, [locale])
 
     async function handleDonate(amount: number, tierId?: string) {
         if (processingAmount) return // Prevent double clicks
@@ -53,34 +66,46 @@ export default function DonatePage() {
         setProcessingAmount(amount)
 
         try {
-            // Check if recurring donation
-            if (isRecurring) {
-                const res = await fetch('/api/subscriptions', {
+            // Check payment method
+            if (paymentMethod === 'bank_transfer') {
+                // Bank transfer donation
+                const donorEmail = prompt('Please enter your email:') || ''
+                const donorName = prompt('Please enter your name (optional):') || null
+                const donorPhone = prompt('Please enter your phone number (optional):') || null
+
+                if (!donorEmail) {
+                    alert('Email is required for bank transfer donations')
+                    setProcessingAmount(null)
+                    return
+                }
+
+                const res = await fetch('/api/payments/bank-transfer', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         amount,
-                        frequency,
-                        donorEmail: prompt('Please enter your email:') || '',
-                        donorName: prompt('Please enter your name (optional):') || null,
+                        donorEmail,
+                        donorName,
+                        donorPhone
                     }),
                 })
 
                 if (!res.ok) {
-                    throw new Error('Failed to create subscription')
+                    throw new Error('Failed to create bank transfer donation')
                 }
 
-                const { authorizationUrl } = await res.json()
-                window.location.href = authorizationUrl
+                const { reference } = await res.json()
+
+                // Redirect to bank transfer instructions page
+                window.location.href = `/donate/bank-transfer?reference=${reference}`
             } else {
-                // One-time donation
-                // One-time donation via M-Changa
+                // M-Changa payment (existing logic)
                 const res = await fetch('/api/payments/mchanga/checkout', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         amount,
-                        donorEmail: prompt('Please enter your email to proceed:') || '', // Prompt for email as it's required
+                        donorEmail: prompt('Please enter your email to proceed:') || '',
                         donorName: prompt('Please enter your name (optional):') || null,
                         donorPhone: prompt('Please enter your phone number (for payment):') || null,
                         tierId: tierId || null,
@@ -129,8 +154,83 @@ export default function DonatePage() {
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <h2 className="text-3xl font-bold text-gray-900 text-center mb-4">Choose Your Impact</h2>
                 <p className="text-gray-600 text-center mb-8 max-w-2xl mx-auto">
-                    Every contribution, no matter the size, makes a real difference in someone's life.
+                    Every contribution, no matter the size, makes a real difference in someone&apos;s life.
                 </p>
+
+                {/* Payment Method Selector */}
+                <div className="max-w-3xl mx-auto mb-12">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">Choose Payment Method</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button
+                            onClick={() => {
+                                setPaymentMethod('mchanga')
+                                setShowBankDetails(false)
+                            }}
+                            className={`p-6 rounded-xl border-2 transition-all ${paymentMethod === 'mchanga'
+                                ? 'border-[#2E8B57] bg-green-50'
+                                : 'border-gray-200 hover:border-gray-300'
+                                }`}
+                        >
+                            <CreditCard className={`mx-auto mb-3 w-10 h-10 ${paymentMethod === 'mchanga' ? 'text-[#2E8B57]' : 'text-gray-400'}`} />
+                            <h4 className="font-bold text-lg mb-2">M-PESA / Mobile Money</h4>
+                            <p className="text-sm text-gray-600">Pay instantly via M-PESA, Airtel Money, or card</p>
+                        </button>
+
+                        <button
+                            onClick={() => {
+                                setPaymentMethod('bank_transfer')
+                                setShowBankDetails(true)
+                            }}
+                            className={`p-6 rounded-xl border-2 transition-all ${paymentMethod === 'bank_transfer'
+                                ? 'border-[#2E8B57] bg-green-50'
+                                : 'border-gray-200 hover:border-gray-300'
+                                }`}
+                        >
+                            <Building className={`mx-auto mb-3 w-10 h-10 ${paymentMethod === 'bank_transfer' ? 'text-[#2E8B57]' : 'text-gray-400'}`} />
+                            <h4 className="font-bold text-lg mb-2">Bank Transfer</h4>
+                            <p className="text-sm text-gray-600">Direct bank deposit for larger donations</p>
+                        </button>
+                    </div>
+
+                    {/* Bank Details Display */}
+                    {showBankDetails && bankDetails && (
+                        <div className="mt-6 bg-blue-50 border border-blue-200 rounded-xl p-6">
+                            <h4 className="font-bold text-lg mb-4 flex items-center gap-2">
+                                <Building className="w-5 h-5 text-blue-600" />
+                                Bank Account Details
+                            </h4>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <p className="text-gray-600">Account Name:</p>
+                                    <p className="font-semibold">{bankDetails.accountName}</p>
+                                </div>
+                                <div>
+                                    <p className="text-gray-600">Account Number:</p>
+                                    <p className="font-semibold">{bankDetails.accountNumber}</p>
+                                </div>
+                                {bankDetails.bankName && (
+                                    <div>
+                                        <p className="text-gray-600">Bank:</p>
+                                        <p className="font-semibold">{bankDetails.bankName}</p>
+                                    </div>
+                                )}
+                                <div>
+                                    <p className="text-gray-600">Branch:</p>
+                                    <p className="font-semibold">{bankDetails.branch}</p>
+                                </div>
+                                {bankDetails.swiftCode && (
+                                    <div>
+                                        <p className="text-gray-600">Swift Code:</p>
+                                        <p className="font-semibold">{bankDetails.swiftCode}</p>
+                                    </div>
+                                )}
+                            </div>
+                            <p className="text-sm text-gray-600 mt-4">
+                                💡 After donating through bank transfer, you&apos;ll receive instructions to email proof of payment for verification.
+                            </p>
+                        </div>
+                    )}
+                </div>
 
                 {/* Recurring Donation Toggle Removed as it was Paystack-dependent */}
 
@@ -319,7 +419,7 @@ export default function DonatePage() {
                     <Gift className="mx-auto mb-4 w-12 h-12 text-[#2E8B57]" />
                     <h2 className="text-2xl font-bold text-gray-900 mb-4">Other Ways to Help</h2>
                     <p className="text-gray-600 mb-8">
-                        Can't donate right now? There are other meaningful ways to support our mission.
+                        Can&apos;t donate right now? There are other meaningful ways to support our mission.
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">
                         <Link

@@ -2,11 +2,35 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/auth'
 
-export async function GET() {
-    const images = await prisma.galleryImage.findMany({
-        orderBy: { createdAt: 'desc' },
-    })
-    return NextResponse.json(images)
+export async function GET(request: Request) {
+    const { searchParams } = new URL(request.url)
+    const locale = searchParams.get('locale')
+
+    try {
+        const images = await prisma.galleryImage.findMany({
+            include: {
+                translations: locale ? {
+                    where: { locale }
+                } : false
+            },
+            orderBy: { createdAt: 'desc' },
+        })
+
+        const translatedImages = images.map(image => {
+            if (!locale) return image;
+            const translation = image.translations?.[0];
+            return {
+                ...image,
+                caption: translation?.caption || image.caption,
+                translations: undefined
+            }
+        })
+
+        return NextResponse.json(translatedImages)
+    } catch (error) {
+        console.error('Error fetching gallery images:', error)
+        return NextResponse.json({ error: 'Failed to fetch gallery images' }, { status: 500 })
+    }
 }
 
 export async function POST(request: Request) {

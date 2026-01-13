@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { Heart, ChevronLeft, ChevronRight, ArrowRight, Users, Heart as HeartIcon, Utensils, Activity, Quote, Star, BarChart3, Smile, Award } from 'lucide-react'
 import TestimonialForm from '@/components/TestimonialForm'
@@ -44,43 +45,44 @@ export default function Home() {
     'https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?q=80&w=2070&auto=format&fit=crop'
   ]
 
+  const params = useParams()
+  const locale = params.locale as string
+
   useEffect(() => {
+    const localeQuery = locale ? `?locale=${locale}` : ''
     // Fetch statistics
-    fetch('/api/statistics')
+    fetch(`/api/statistics${localeQuery}`)
       .then(res => {
         if (!res.ok) throw new Error(`Statistics API error: ${res.status}`)
         return res.json()
       })
       .then(data => {
-        console.log('Statistics loaded:', data)
         setStatistics(data)
       })
       .catch(err => console.error('Error loading statistics:', err))
 
     // Fetch testimonials
-    fetch('/api/testimonials?status=APPROVED')
+    fetch(`/api/testimonials?status=APPROVED${locale ? `&locale=${locale}` : ''}`)
       .then(res => {
         if (!res.ok) throw new Error(`Testimonials API error: ${res.status}`)
         return res.json()
       })
       .then(data => {
-        console.log('Testimonials loaded:', data)
         setTestimonials(data)
       })
       .catch(err => console.error('Error loading testimonials:', err))
 
     // Fetch content
-    fetch('/api/content?keys=hero_title,hero_subtitle,mission_statement')
+    fetch(`/api/content?keys=hero_title,hero_subtitle,mission_statement${locale ? `&locale=${locale}` : ''}`)
       .then(res => {
         if (!res.ok) throw new Error(`Content API error: ${res.status}`)
         return res.json()
       })
       .then(data => {
-        console.log('Content loaded:', data)
         setContent(data)
       })
       .catch(err => console.error('Error loading content:', err))
-  }, [])
+  }, [locale])
 
   // Auto-slide effect
   useEffect(() => {
@@ -92,6 +94,14 @@ export default function Home() {
 
     return () => clearInterval(interval)
   }, [heroImages.length, isPaused])
+
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % heroImages.length)
+  }, [heroImages.length])
+
+  const prevSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev - 1 + heroImages.length) % heroImages.length)
+  }, [heroImages.length])
 
   // Keyboard navigation
   useEffect(() => {
@@ -105,15 +115,7 @@ export default function Home() {
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [currentSlide])
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % heroImages.length)
-  }
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + heroImages.length) % heroImages.length)
-  }
+  }, [prevSlide, nextSlide])
 
   function getIconComponent(iconName: string, size: number) {
     const Icon = (Icons as any)[iconName] || Icons.BarChart3

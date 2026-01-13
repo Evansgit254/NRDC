@@ -5,15 +5,24 @@ import { ArrowLeft, Calendar, Tag } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
 
-export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
-    const { slug } = await params
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string; locale: string }> }) {
+    const { slug, locale } = await params
     const post = await prisma.blogPost.findUnique({
         where: { slug },
+        include: {
+            translations: {
+                where: { locale }
+            }
+        }
     })
 
     if (!post) {
         notFound()
     }
+
+    const translation = post.translations[0]
+    const title = translation?.title || post.title
+    const content = translation?.content || post.content
 
     const tags = post.tags ? post.tags.split(',').map(t => t.trim()) : []
 
@@ -22,19 +31,19 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <section className="bg-gray-50 py-12">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                     <Link href="/blog" className="inline-flex items-center text-gray-600 hover:text-[#6E8C82] mb-8">
-                        <ArrowLeft size={16} className="mr-2" /> Back to News
+                        <ArrowLeft size={16} className="mr-2" /> {locale === 'fr' ? 'Retour aux Articles' : 'Back to News'}
                     </Link>
 
                     <div className="inline-block bg-[#6E8C82]/20 text-[#6E8C82] text-sm font-semibold px-4 py-1 rounded-full mb-4">
                         {post.category}
                     </div>
 
-                    <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">{post.title}</h1>
+                    <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">{title}</h1>
 
                     <div className="flex items-center gap-2 text-gray-600 mb-8">
                         <Calendar size={18} />
                         <time>
-                            {new Date(post.createdAt).toLocaleDateString('en-US', {
+                            {new Date(post.createdAt).toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', {
                                 month: 'long',
                                 day: 'numeric',
                                 year: 'numeric'
@@ -58,7 +67,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="prose max-w-none mb-12">
                     <div className="text-lg text-gray-700 leading-relaxed whitespace-pre-wrap">
-                        {post.content}
+                        {content}
                     </div>
                 </div>
 

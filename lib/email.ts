@@ -32,7 +32,7 @@ export async function sendEmail(options: SendEmailOptions) {
             throw error
         }
 
-        console.log('Email sent successfully:', data)
+
         return { success: true, data }
     } catch (error) {
         console.error('Failed to send email:', error)
@@ -317,6 +317,60 @@ export async function sendContactAlertToAdmin(params: {
     return sendEmail({
         to: adminEmail,
         subject: `New Contact Form: ${name}`,
+        html,
+    })
+}
+
+/**
+ * Send password reset email to user
+ */
+export async function sendPasswordResetEmail(email: string, resetUrl: string) {
+    const html = `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: #6E8C82; color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+        .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
+        .button { display: inline-block; background: #6E8C82; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; margin: 20px 0; font-weight: bold; }
+        .footer { text-align: center; padding: 20px; color: #666; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 style="margin: 0;">Password Reset</h1>
+        </div>
+        <div class="content">
+            <p>Hello,</p>
+            
+            <p>We received a request to reset your password for the NRDC Admin Portal. Click the button below to set a new password:</p>
+            
+            <p style="text-align: center;">
+                <a href="${resetUrl}" class="button">Reset Password</a>
+            </p>
+            
+            <p>If you didn't request this, you can safely ignore this email. The link will expire in 1 hour.</p>
+            
+            <p>For security, please do not share this link with anyone.</p>
+            
+            <p>Best regards,<br>
+            <strong>The NRDC Team</strong></p>
+        </div>
+        <div class="footer">
+            <p>Nutrition Relief and Development Center (NRDC)</p>
+        </div>
+    </div>
+</body>
+</html>
+    `
+
+    return sendEmail({
+        to: email,
+        subject: 'Reset your NRDC Admin password',
         html,
     })
 }

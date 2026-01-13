@@ -242,10 +242,10 @@ export default function AdminUsersPage() {
                                 <button
                                     onClick={() => startEditRole(user)}
                                     className={`px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity ${user.role === 'ADMIN'
-                                            ? 'bg-red-100 text-red-700'
-                                            : user.role === 'EDITOR'
-                                                ? 'bg-[#6E8C82]/20 text-[#587068]'
-                                                : 'bg-gray-100 text-gray-700'
+                                        ? 'bg-red-100 text-red-700'
+                                        : user.role === 'EDITOR'
+                                            ? 'bg-[#6E8C82]/20 text-[#587068]'
+                                            : 'bg-gray-100 text-gray-700'
                                         }`}
                                     title="Click to edit role"
                                 >
@@ -277,7 +277,7 @@ export default function AdminUsersPage() {
 
             {users.length === 0 && (
                 <div className="text-center py-12 text-gray-500">
-                    No users found. Click "Add User" to create one.
+                    No users found. Click &quot;Add User&quot; to create one.
                 </div>
             )}
         </div>

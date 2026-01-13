@@ -5,15 +5,24 @@ import { ArrowLeft, CheckCircle, BarChart } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
 
-export default async function ProgramDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-    const { slug } = await params
+export default async function ProgramDetailPage({ params }: { params: Promise<{ slug: string; locale: string }> }) {
+    const { slug, locale } = await params
     const program = await prisma.program.findUnique({
         where: { slug },
+        include: {
+            translations: {
+                where: { locale }
+            }
+        }
     })
 
     if (!program) {
         notFound()
     }
+
+    const translation = program.translations[0]
+    const title = translation?.title || program.title
+    const description = translation?.description || program.description
 
     const objectives = JSON.parse(program.objectives || '[]')
     const metrics = JSON.parse(program.metrics || '{}')
@@ -24,9 +33,9 @@ export default async function ProgramDetailPage({ params }: { params: Promise<{ 
             <section className="bg-gray-50 py-12">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <Link href="/programs" className="inline-flex items-center text-gray-600 hover:text-[#6E8C82] mb-8">
-                        <ArrowLeft size={16} className="mr-2" /> Back to Programs
+                        <ArrowLeft size={16} className="mr-2" /> {locale === 'fr' ? 'Retour aux Programmes' : 'Back to Programs'}
                     </Link>
-                    <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">{program.title}</h1>
+                    <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">{title}</h1>
                 </div>
             </section>
 
@@ -34,12 +43,12 @@ export default async function ProgramDetailPage({ params }: { params: Promise<{ 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
                     <div className="lg:col-span-2">
                         <div className="prose max-w-none mb-12">
-                            <h2 className="text-2xl font-bold text-[#6E8C82] mb-4">About the Program</h2>
-                            <p className="text-lg text-gray-700 leading-relaxed whitespace-pre-wrap">{program.description}</p>
+                            <h2 className="text-2xl font-bold text-[#6E8C82] mb-4">{locale === 'fr' ? 'À Propos du Programme' : 'About the Program'}</h2>
+                            <p className="text-lg text-gray-700 leading-relaxed whitespace-pre-wrap">{description}</p>
                         </div>
 
                         <div className="mb-12">
-                            <h2 className="text-2xl font-bold text-[#6E8C82] mb-6">Key Objectives</h2>
+                            <h2 className="text-2xl font-bold text-[#6E8C82] mb-6">{locale === 'fr' ? 'Objectifs Clés' : 'Key Objectives'}</h2>
                             <ul className="space-y-4">
                                 {objectives.map((obj: string, i: number) => (
                                     <li key={i} className="flex items-start gap-3">
@@ -54,13 +63,23 @@ export default async function ProgramDetailPage({ params }: { params: Promise<{ 
                     <div className="lg:col-span-1">
                         <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 sticky top-24">
                             <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                                <BarChart className="text-[#6E8C82]" /> Impact Metrics
+                                <BarChart className="text-[#6E8C82]" /> {locale === 'fr' ? 'Mesures d\'Impact' : 'Impact Metrics'}
                             </h3>
                             <div className="space-y-6">
                                 {Object.entries(metrics).map(([key, value]) => (
                                     <div key={key}>
                                         <div className="text-3xl font-bold text-[#2E8B57]">{String(value)}</div>
-                                        <div className="text-gray-600 capitalize">{key.replace(/_/g, ' ')}</div>
+                                        <div className="text-gray-600 capitalize">
+                                            {locale === 'fr' ? (
+                                                key === 'beneficiaries' ? 'bénéficiaires' :
+                                                    key === 'meals' ? 'repas' :
+                                                        key === 'gardens' ? 'jardins' :
+                                                            key === 'families' ? 'familles' :
+                                                                key === 'patients' ? 'patients' :
+                                                                    key === 'villages' ? 'villages' :
+                                                                        key.replace(/_/g, ' ')
+                                            ) : key.replace(/_/g, ' ')}
+                                        </div>
                                     </div>
                                 ))}
                             </div>

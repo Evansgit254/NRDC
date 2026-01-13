@@ -47,7 +47,7 @@ export default function ForgotPasswordPage() {
                         <Mail size={32} />
                         <h1 className="text-3xl font-bold">Forgot Password</h1>
                     </div>
-                    <p className="text-white/80">We'll send you a reset link</p>
+                    <p className="text-white/80">We&apos;ll send you a reset link</p>
                 </div>
 
                 {/* Form */}

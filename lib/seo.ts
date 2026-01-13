@@ -91,7 +91,7 @@ export function generateOrganizationSchema() {
     return {
         '@context': 'https://schema.org',
         '@type': 'NGO',
-        name: 'Nutrition Relief and Development Center',
+        name: 'Nutrition for Refugee & Displaced Communities',
         alternateName: 'NRDC',
         url: siteUrl,
         logo: `${siteUrl}/logo.png`,

@@ -8,7 +8,9 @@
         "getInvolved": "S'impliquer",
         "gallery": "Galerie",
         "resources": "Ressources",
-        "admin": "Admin"
+        "admin": "Admin",
+        "donate": "Faire un Don",
+        "donateNow": "Donner Maintenant"
     },
     "hero": {
         "title": "Nourrir l'Espoir dans les Communautés Déplacées",
@@ -68,12 +70,81 @@
         "noTeam": "Aucun membre de l'équipe à afficher pour le moment.",
         "noResources": "Aucune ressource disponible pour le moment."
     },
+    "contactPage": {
+        "title": "Contactez-nous",
+        "subtitle": "Vous avez des questions ou souhaitez en savoir plus ? Nous aimerions vous entendre.",
+        "getInTouch": "Contactez-nous",
+        "info": "Informations de Contact",
+        "address": "Adresse",
+        "phone": "Téléphone",
+        "email": "Email"
+    },
+    "contactForm": {
+        "name": "Nom",
+        "email": "Email",
+        "message": "Message",
+        "send": "Envoyer le Message",
+        "successTitle": "Message Envoyé !",
+        "successMessage": "Merci de nous avoir contactés. Nous vous répondrons bientôt.",
+        "sendAnother": "Envoyer un autre message"
+    },
+    "volunteerForm": {
+        "name": "Nom Complet",
+        "email": "Adresse Email",
+        "messageLabel": "Pourquoi voulez-vous être bénévole ?",
+        "submit": "Soumettre la Candidature",
+        "successTitle": "Merci !",
+        "successMessage": "Votre candidature a été reçue. Nous vous contacterons sous peu.",
+        "sendAnother": "Envoyer une autre candidature"
+    },
+    "testimonialForm": {
+        "name": "Votre Nom *",
+        "namePlaceholder": "Jean Dupont",
+        "role": "Rôle/Affiliation (Optionnel)",
+        "rolePlaceholder": "ex: Membre de la communauté, Bénévole",
+        "testimonial": "Votre Témoignage *",
+        "testimonialPlaceholder": "Partagez votre expérience avec NRDC...",
+        "rating": "Note",
+        "submit": "Soumettre le Témoignage",
+        "submitting": "Envoi en cours...",
+        "successTitle": "Merci !",
+        "successMessage": "Votre témoignage a été soumis et est en attente d'approbation par l'administrateur.",
+        "submitAnother": "Soumettre un Autre Témoignage",
+        "reviewNotice": "Votre témoignage sera examiné par notre équipe avant d'être publié."
+    },
     "footer": {
         "about": "À Propos de NRDC",
-        "aboutDesc": "Autonomiser les communautés déplacées grâce à la nutrition, la santé et le développement durable.",
+        "aboutDesc": "Nutrition pour les Communautés de Réfugiés et de Personnes Déplacées. Apporter espoir, santé et stabilité à ceux qui en ont besoin.",
         "quickLinks": "Liens Rapides",
-        "contact": "Contactez-nous",
+        "contact": "Contact",
+        "followUs": "Suivez-nous",
+        "aboutUs": "À Propos de Nous",
+        "ourPrograms": "Nos Programmes",
+        "newsStories": "Actualités et Histoires",
+        "contactUs": "Contactez-nous",
+        "privacyPolicy": "Politique de Confidentialité",
+        "adminLogin": "Connexion Admin",
         "rights": "Tous droits réservés."
+    },
+    "getInvolved": {
+        "title": "S'impliquer",
+        "subtitle": "Rejoignez-nous pour faire une différence. Votre temps, vos compétences et votre soutien peuvent changer des vies.",
+        "waysToSupport": "Façons de Soutenir",
+        "donateTitle": "Faire un Don",
+        "donateDesc": "Votre contribution financière soutient directement nos programmes de nutrition et de santé. Chaque geste compte.",
+        "donateLink": "Voir les Options de Don",
+        "partnerTitle": "Devenir Partenaire",
+        "partnerDesc": "Nous collaborons avec des organisations, des gouvernements et des entreprises pour amplifier notre impact.",
+        "partnerLink": "Devenir Partenaire",
+        "volunteerTitle": "Bénévolat",
+        "volunteerDesc": "Partagez vos compétences et votre temps. Nous recherchons toujours des personnes passionnées pour rejoindre notre équipe.",
+        "volunteerApp": "Candidature de Bénévole"
+    },
+    "cookieConsent": {
+        "title": "Nous utilisons des cookies",
+        "message": "Nous utilisons des cookies pour améliorer votre expérience, analyser le trafic du site et soutenir notre mission humanitaire. En cliquant sur \"Accepter\", vous acceptez notre utilisation des cookies. Lisez notre",
+        "accept": "Accepter les Cookies",
+        "decline": "Refuser"
     },
     "common": {
         "loading": "Chargement...",

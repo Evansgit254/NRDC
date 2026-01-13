@@ -2,12 +2,31 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/auth'
 
-export async function GET() {
+export async function GET(request: Request) {
+    const { searchParams } = new URL(request.url)
+    const locale = searchParams.get('locale')
+
     try {
         const tiers = await prisma.donationTier.findMany({
+            include: {
+                translations: locale ? {
+                    where: { locale }
+                } : false
+            },
             orderBy: { order: 'asc' }
         })
-        return NextResponse.json(tiers)
+
+        const translatedTiers = tiers.map(tier => {
+            if (!locale) return tier;
+            const translation = tier.translations?.[0];
+            return {
+                ...tier,
+                description: translation?.description || tier.description,
+                translations: undefined // Remove translations from response
+            }
+        })
+
+        return NextResponse.json(translatedTiers)
     } catch (error) {
         return NextResponse.json({ error: 'Error fetching donation tiers' }, { status: 500 })
     }

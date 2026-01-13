@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NRDC Platform
 
-## Getting Started
+Welcome to the **Nutrition for Refugee & Displaced Communities (NRDC)** digital platform. This project is built with Next.js 15+, TypeScript, and Prisma ORM.
 
-First, run the development server:
+## 🚀 Setup Instructions
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Clone & Install**:
+   ```bash
+   npm install
+   ```
+2. **Environment Setup**:
+   Copy `.env.example` to `.env` and fill in the required keys.
+   ```bash
+   cp .env.example .env
+   ```
+3. **Database Setup**:
+   Initialize the local SQLite database.
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
+4. **Run Development Server**:
+   ```bash
+   npm run dev
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔍 Forensic & Audit Documentation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This codebase has been specifically prepared for final review and integration optimization by the bank's digital department.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **[Forensic Audit Summary](file:///home/evans/.gemini/antigravity/brain/5a5f4403-af98-4a6b-a754-969875ac6f14/forensic_audit_summary.md)**: Highlights of recent cleanups, optimizations, and security checks.
+- **[Technical Spec Sheet](file:///home/evans/Projects/NRDC/Technical_Spec_Sheet_NRDC.pdf)**: Detailed requirements for bank transfer automation.
+- **[Integration Readiness](file:///home/evans/Projects/NRDC/Technical_Implementation_Proof_NRDC.pdf)**: Proof of current "Ready to Integrate" architecture.
 
-## Learn More
+## 🛠 Tech Stack
+- **Framework**: Next.js (App Router)
+- **Language**: TypeScript
+- **Database**: Prisma (ORM) with SQLite/PostgreSQL
+- **Styling**: Tailwind CSS
+- **Media**: Cloudinary
+- **Emails**: Resend / NodeMailer
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*For any technical queries during the audit, please refer to the documentation in the `/docs` or root directory.*

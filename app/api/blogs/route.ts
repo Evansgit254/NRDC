@@ -6,17 +6,41 @@ import { logAudit } from '@/lib/audit'
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url)
     const category = searchParams.get('category')
+    const locale = searchParams.get('locale')
 
     const session = await getSession()
     const isAdmin = session && session.role === 'ADMIN'
 
     const where = category ? { category, ...(isAdmin ? {} : { published: true }) } : (isAdmin ? {} : { published: true })
 
-    const blogs = await prisma.blogPost.findMany({
-        where,
-        orderBy: { createdAt: 'desc' },
-    })
-    return NextResponse.json(blogs)
+    try {
+        const blogs = await prisma.blogPost.findMany({
+            where,
+            include: {
+                translations: locale ? {
+                    where: { locale }
+                } : false
+            },
+            orderBy: { createdAt: 'desc' },
+        })
+
+        const translatedBlogs = blogs.map(post => {
+            if (!locale) return post;
+            const translation = post.translations?.[0];
+            return {
+                ...post,
+                title: translation?.title || post.title,
+                content: translation?.content || post.content,
+                excerpt: translation?.excerpt || post.excerpt,
+                translations: undefined // Remove translations from response
+            }
+        })
+
+        return NextResponse.json(translatedBlogs)
+    } catch (error) {
+        console.error('Error fetching blog posts:', error)
+        return NextResponse.json({ error: 'Failed to fetch blog posts' }, { status: 500 })
+    }
 }
 
 export async function POST(request: Request) {

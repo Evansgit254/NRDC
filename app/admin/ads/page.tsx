@@ -56,7 +56,7 @@ const generateAdCode = (template: string, config: any) => {
     }
 
     const content = adContent[template as keyof typeof adContent] || adContent.gradient_banner
-    const targetUrl = config.targetUrl || 'https://example.com'
+    const targetUrl = config.targetUrl || '#'
 
     // Wrap in clickable link
     return `<a href="${targetUrl}" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; height: 100%; text-decoration: none; cursor: pointer;">${content}</a>`
@@ -73,7 +73,7 @@ export default function AdsPage() {
     const [adConfig, setAdConfig] = useState({
         name: '',
         placement: 'HOME_TOP',
-        targetUrl: 'https://example.com',
+        targetUrl: '#',
         width: '728px',
         height: '90px',
         color1: '#667eea',
@@ -169,7 +169,7 @@ export default function AdsPage() {
         setAdConfig({
             name: '',
             placement: 'HOME_TOP',
-            targetUrl: 'https://example.com',
+            targetUrl: '#',
             width: '728px',
             height: '90px',
             color1: '#667eea',

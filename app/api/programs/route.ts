@@ -2,11 +2,36 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/auth'
 
-export async function GET() {
-    const programs = await prisma.program.findMany({
-        orderBy: { createdAt: 'desc' },
-    })
-    return NextResponse.json(programs)
+export async function GET(request: Request) {
+    const { searchParams } = new URL(request.url)
+    const locale = searchParams.get('locale')
+
+    try {
+        const programs = await prisma.program.findMany({
+            include: {
+                translations: locale ? {
+                    where: { locale }
+                } : false
+            },
+            orderBy: { createdAt: 'desc' },
+        })
+
+        const translatedPrograms = programs.map(program => {
+            if (!locale) return program;
+            const translation = program.translations?.[0];
+            return {
+                ...program,
+                title: translation?.title || program.title,
+                description: translation?.description || program.description,
+                translations: undefined // Remove translations from response
+            }
+        })
+
+        return NextResponse.json(translatedPrograms)
+    } catch (error) {
+        console.error('Error fetching programs:', error)
+        return NextResponse.json({ error: 'Failed to fetch programs' }, { status: 500 })
+    }
 }
 
 export async function POST(request: Request) {

@@ -8,6 +8,7 @@ import Footer from '@/components/Footer';
 import CookieConsent from '@/components/CookieConsent';
 import '../globals.css';
 import { defaultMetadata } from '@/lib/seo';
+import { ToastProvider } from '@/components/Toast';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const openSans = Open_Sans({ subsets: ['latin'], variable: '--font-open-sans' });
@@ -38,12 +39,14 @@ export default async function LocaleLayout({
         <html lang={locale} dir={direction} suppressHydrationWarning>
             <body className={`${inter.variable} ${openSans.variable} font-sans flex flex-col min-h-screen`} suppressHydrationWarning>
                 <NextIntlClientProvider messages={messages}>
-                    <Navbar />
-                    <main className="flex-grow">
-                        {children}
-                    </main>
-                    <Footer />
-                    <CookieConsent />
+                    <ToastProvider>
+                        <Navbar />
+                        <main className="flex-grow">
+                            {children}
+                        </main>
+                        <Footer />
+                        <CookieConsent />
+                    </ToastProvider>
                 </NextIntlClientProvider>
             </body>
         </html>

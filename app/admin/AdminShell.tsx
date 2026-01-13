@@ -70,6 +70,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             return
         }
 
+        setLoading(true) // Ensure we show spinner while checking auth for protected pages
+
         async function checkAuth() {
             try {
                 const res = await fetch('/api/auth/me')

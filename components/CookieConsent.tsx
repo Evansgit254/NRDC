@@ -3,8 +3,10 @@
 import { useState, useEffect } from 'react';
 import { X, Cookie } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 export default function CookieConsent() {
+    const t = useTranslations();
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
@@ -20,8 +22,6 @@ export default function CookieConsent() {
     const handleAccept = () => {
         localStorage.setItem('nrdc_cookie_consent', 'accepted');
         setIsVisible(false);
-        // Here you would initialize analytics (e.g., GA, Pixel)
-        // initializeAnalytics();
     };
 
     const handleDecline = () => {
@@ -40,12 +40,11 @@ export default function CookieConsent() {
                         <Cookie size={24} />
                     </div>
                     <div>
-                        <h3 className="text-lg font-bold text-gray-900 mb-2">We use cookies</h3>
+                        <h3 className="text-lg font-bold text-gray-900 mb-2">{t('cookieConsent.title')}</h3>
                         <p className="text-gray-600 text-sm leading-relaxed max-w-2xl">
-                            We use cookies to enhance your experience, analyze site traffic, and support our humanitarian mission.
-                            By clicking "Accept", you agree to our use of cookies. Read our{' '}
+                            {t('cookieConsent.message')}{' '}
                             <Link href="/privacy-policy" className="text-[#6E8C82] font-semibold hover:underline">
-                                Privacy Policy
+                                {t('footer.privacyPolicy')}
                             </Link>.
                         </p>
                     </div>
@@ -56,13 +55,13 @@ export default function CookieConsent() {
                         onClick={handleDecline}
                         className="px-6 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors text-center whitespace-nowrap"
                     >
-                        Decline
+                        {t('cookieConsent.decline')}
                     </button>
                     <button
                         onClick={handleAccept}
                         className="px-6 py-2.5 rounded-lg bg-[#6E8C82] text-white font-medium hover:bg-[#587068] transition-colors shadow-lg shadow-[#6E8C82]/20 text-center whitespace-nowrap"
                     >
-                        Accept Cookies
+                        {t('cookieConsent.accept')}
                     </button>
                 </div>
 

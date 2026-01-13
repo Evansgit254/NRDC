@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { Plus, Trash2, Edit, Save, X, DollarSign, BarChart, Receipt, Filter, Download } from 'lucide-react'
 import { useToast } from '@/components/Toast'
 import { useConfirm } from '@/components/ConfirmDialog'
@@ -173,7 +173,7 @@ export default function AdminDonationsPage() {
     }
 
     // Fetch donation records
-    async function fetchDonations() {
+    const fetchDonations = useCallback(async () => {
         setDonationsLoading(true)
         try {
             const params = new URLSearchParams()
@@ -194,7 +194,7 @@ export default function AdminDonationsPage() {
         } finally {
             setDonationsLoading(false)
         }
-    }
+    }, [statusFilter, methodFilter, showToast])
 
     // Update donation status
     async function updateDonationStatus(id: string, status: string) {
@@ -224,7 +224,7 @@ export default function AdminDonationsPage() {
         if (activeTab === 'history') {
             fetchDonations()
         }
-    }, [activeTab, statusFilter, methodFilter])
+    }, [activeTab, fetchDonations])
 
     // Format currency
     function formatCurrency(amount: number, currency: string) {

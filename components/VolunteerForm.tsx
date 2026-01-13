@@ -2,8 +2,10 @@
 
 import { useState } from 'react'
 import { Send, Loader2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export default function VolunteerForm() {
+    const t = useTranslations('volunteerForm')
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState(false)
 
@@ -39,13 +41,13 @@ export default function VolunteerForm() {
     if (success) {
         return (
             <div className="bg-green-50 text-green-800 p-6 rounded-xl text-center">
-                <h3 className="text-xl font-bold mb-2">Thank You!</h3>
-                <p>Your application has been received. We will be in touch shortly.</p>
+                <h3 className="text-xl font-bold mb-2">{t('successTitle')}</h3>
+                <p>{t('successMessage')}</p>
                 <button
                     onClick={() => setSuccess(false)}
                     className="mt-4 text-sm underline hover:text-green-900"
                 >
-                    Send another message
+                    {t('sendAnother')}
                 </button>
             </div>
         )
@@ -54,7 +56,7 @@ export default function VolunteerForm() {
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">{t('name')}</label>
                 <input
                     type="text"
                     name="name"
@@ -64,7 +66,7 @@ export default function VolunteerForm() {
                 />
             </div>
             <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">{t('email')}</label>
                 <input
                     type="email"
                     name="email"
@@ -74,7 +76,7 @@ export default function VolunteerForm() {
                 />
             </div>
             <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Why do you want to volunteer?</label>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">{t('messageLabel')}</label>
                 <textarea
                     name="message"
                     id="message"
@@ -89,7 +91,7 @@ export default function VolunteerForm() {
                 className="w-full bg-[#6E8C82] hover:bg-[#587068] text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
             >
                 {loading ? <Loader2 className="animate-spin" /> : <Send size={20} />}
-                Submit Application
+                {t('submit')}
             </button>
         </form>
     )

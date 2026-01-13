@@ -2,12 +2,31 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/auth'
 
-export async function GET() {
+export async function GET(request: Request) {
+    const { searchParams } = new URL(request.url)
+    const locale = searchParams.get('locale')
+
     try {
         const stats = await prisma.donationStat.findMany({
+            include: {
+                translations: locale ? {
+                    where: { locale }
+                } : false
+            },
             orderBy: { order: 'asc' }
         })
-        return NextResponse.json(stats)
+
+        const translatedStats = stats.map(stat => {
+            if (!locale) return stat;
+            const translation = stat.translations?.[0];
+            return {
+                ...stat,
+                label: translation?.label || stat.label,
+                translations: undefined
+            }
+        })
+
+        return NextResponse.json(translatedStats)
     } catch (error) {
         return NextResponse.json({ error: 'Error fetching donation stats' }, { status: 500 })
     }

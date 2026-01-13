@@ -345,7 +345,7 @@ export default function AdminProgramsPage() {
                                 })()}
                             </div>
                             <p className="text-xs text-gray-500 mt-2">
-                                Add metrics like "people_served: 5,000+" or "locations: 12"
+                                Add metrics like &quot;people_served: 5,000+&quot; or &quot;locations: 12&quot;
                             </p>
                         </div>
                         <div className="flex gap-3">

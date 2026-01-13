@@ -6,14 +6,32 @@ import { getSession } from '@/lib/auth'
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url)
     const status = searchParams.get('status')
+    const locale = searchParams.get('locale')
 
     try {
         const where = status && status !== 'ALL' ? { status } : status === 'ALL' ? {} : { status: 'APPROVED' }
         const testimonials = await prisma.testimonial.findMany({
             where,
+            include: {
+                translations: locale ? {
+                    where: { locale }
+                } : false
+            },
             orderBy: { order: 'asc' }
         })
-        return NextResponse.json(testimonials)
+
+        const translatedTestimonials = testimonials.map(testimonial => {
+            if (!locale) return testimonial;
+            const translation = testimonial.translations?.[0];
+            return {
+                ...testimonial,
+                message: translation?.message || testimonial.message,
+                role: translation?.role || testimonial.role,
+                translations: undefined // Remove translations from response
+            }
+        })
+
+        return NextResponse.json(translatedTestimonials)
     } catch (error) {
         console.error('Error fetching testimonials:', error)
         return NextResponse.json({ error: 'Failed to fetch testimonials' }, { status: 500 })
