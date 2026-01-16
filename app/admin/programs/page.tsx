@@ -110,7 +110,10 @@ export default function AdminProgramsPage() {
                     body: uploadFormData
                 })
 
-                if (!uploadRes.ok) throw new Error('Upload failed')
+                if (!uploadRes.ok) {
+                    const errorText = await uploadRes.text()
+                    throw new Error(`Upload failed: ${uploadRes.status} ${errorText}`)
+                }
                 const { url } = await uploadRes.json()
                 photoUrl = url
             }
@@ -140,10 +143,28 @@ export default function AdminProgramsPage() {
                 setShowForm(false)
                 fetchPrograms()
             } else {
-                throw new Error('Failed to save program')
+                const errorData = await res.json().catch(() => ({ error: 'Unknown server error' }))
+                throw new Error(errorData.error || `Server returned ${res.status}`)
             }
-        } catch (error) {
-            showToast('Error saving program. Please try again.', 'error')
+        } catch (error: any) {
+            console.error('Submit error:', error)
+            showToast(`Error: ${error.message}`, 'error')
+
+            // Log client-side error to server for forensic audit
+            try {
+                await fetch('/api/logs/client', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: error.message,
+                        stack: error.stack,
+                        path: window.location.pathname,
+                        details: `Submit error on ${editingId ? 'PUT' : 'POST'} programs`
+                    })
+                })
+            } catch (logError) {
+                console.error('Failed to log client error:', logError)
+            }
         } finally {
             setUploading(false)
         }
