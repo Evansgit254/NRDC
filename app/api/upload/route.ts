@@ -36,8 +36,24 @@ export async function POST(request: Request) {
         })
 
         return NextResponse.json({ url: result.secure_url })
-    } catch (error) {
+    } catch (error: any) {
         console.error('Upload error:', error)
+
+        // Log to database for forensic audit
+        try {
+            const { prisma } = require('@/lib/prisma')
+            await prisma.errorLog.create({
+                data: {
+                    message: error.message || 'Upload error',
+                    stack: error.stack,
+                    path: '/api/upload (POST)',
+                    userId: session.id
+                }
+            })
+        } catch (logError) {
+            console.error('Failed to log error to DB:', logError)
+        }
+
         return NextResponse.json({ error: 'Error uploading file' }, { status: 500 })
     }
 }
