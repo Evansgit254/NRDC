@@ -2,12 +2,27 @@ import { NextResponse } from 'next/server'
 import { getSession } from '@/lib/auth'
 import { v2 as cloudinary } from 'cloudinary'
 
-// Configure Cloudinary
-cloudinary.config({
-    cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-})
+// Initialize Cloudinary only once or reuse
+function configureCloudinary() {
+    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+    const apiKey = process.env.CLOUDINARY_API_KEY;
+    const apiSecret = process.env.CLOUDINARY_API_SECRET;
+
+    if (!cloudName || !apiKey || !apiSecret) {
+        const missing = [
+            !cloudName && 'NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME',
+            !apiKey && 'CLOUDINARY_API_KEY',
+            !apiSecret && 'CLOUDINARY_API_SECRET'
+        ].filter(Boolean);
+        throw new Error(`Cloudinary configuration missing: ${missing.join(', ')}`);
+    }
+
+    cloudinary.config({
+        cloud_name: cloudName,
+        api_key: apiKey,
+        api_secret: apiSecret,
+    });
+}
 
 export async function POST(request: Request) {
     const session = await getSession()
@@ -16,6 +31,7 @@ export async function POST(request: Request) {
     }
 
     try {
+        configureCloudinary()
         const formData = await request.formData()
         const file = formData.get('file') as File
 

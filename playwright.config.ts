@@ -38,9 +38,6 @@ export default defineConfig({
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
-        launchOptions: {
-          executablePath: '/home/evans/.cache/ms-playwright/chromium-1200/chrome-linux64/chrome',
-        },
       },
     },
 
