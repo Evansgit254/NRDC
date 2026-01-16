@@ -60,10 +60,18 @@ export default function AdminProgramsPage() {
 
     function handleEdit(program: Program) {
         const photos = JSON.parse(program.photos || '[]')
+        let parsedObjectives = ''
+        try {
+            const objectivesArr = JSON.parse(program.objectives || '[]')
+            parsedObjectives = Array.isArray(objectivesArr) ? objectivesArr.join('\n') : program.objectives
+        } catch (e) {
+            parsedObjectives = program.objectives
+        }
+
         setFormData({
             title: program.title,
             description: program.description,
-            objectives: program.objectives,
+            objectives: parsedObjectives,
             metrics: program.metrics,
             photoFile: null,
             photoUrl: photos[0] || ''

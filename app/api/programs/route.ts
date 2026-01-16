@@ -47,13 +47,14 @@ export async function POST(request: Request) {
                 title: body.title,
                 slug: body.slug,
                 description: body.description,
-                objectives: body.objectives?.split('\n').filter((o: string) => o.trim()) || [],
-                photos: body.photos?.split('\n').filter((p: string) => p.trim()) || [],
-                metrics: typeof body.metrics === 'string' ? JSON.parse(body.metrics || '{}') : body.metrics,
+                objectives: JSON.stringify(body.objectives?.split('\n').filter((o: string) => o.trim()) || []),
+                photos: JSON.stringify(body.photos?.split('\n').filter((p: string) => p.trim()) || []),
+                metrics: JSON.stringify(typeof body.metrics === 'string' ? JSON.parse(body.metrics || '{}') : body.metrics),
             },
         })
         return NextResponse.json(program)
     } catch (error) {
+        console.error('Error creating program:', error)
         return NextResponse.json({ error: 'Error creating program' }, { status: 500 })
     }
 }
@@ -85,6 +86,7 @@ export async function PUT(request: Request) {
         })
         return NextResponse.json(program)
     } catch (error) {
+        console.error('Error updating program:', error)
         return NextResponse.json({ error: 'Error updating program' }, { status: 500 })
     }
 }
