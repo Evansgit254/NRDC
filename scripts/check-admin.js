@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 async function main() {
     console.log('Checking admin user...')
 
-    const email = 'admin@nrdc.org'
+    const email = process.env.ADMIN_EMAIL || 'admin@nrdc.org'
     const user = await prisma.user.findUnique({
         where: { email }
     })

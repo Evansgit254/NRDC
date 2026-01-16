@@ -74,7 +74,7 @@ export default function ForgotPasswordPage() {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#6E8C82] focus:border-transparent outline-none transition-all"
-                                    placeholder="admin@nrdc.org"
+                                    placeholder="Enter your email"
                                 />
                             </div>
 
