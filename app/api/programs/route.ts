@@ -52,9 +52,32 @@ export async function POST(request: Request) {
                 metrics: JSON.stringify(typeof body.metrics === 'string' ? JSON.parse(body.metrics || '{}') : body.metrics),
             },
         })
+
+        // Audit Log
+        await prisma.auditLog.create({
+            data: {
+                action: 'CREATE',
+                entity: 'Program',
+                entityId: program.id,
+                userId: session.id,
+                details: `Created program: ${program.title}`
+            }
+        })
+
         return NextResponse.json(program)
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error creating program:', error)
+
+        // Log to database for forensic audit
+        await prisma.errorLog.create({
+            data: {
+                message: error.message || 'Error creating program',
+                stack: error.stack,
+                path: '/api/programs (POST)',
+                userId: session.id
+            }
+        })
+
         return NextResponse.json({ error: 'Error creating program' }, { status: 500 })
     }
 }
@@ -65,16 +88,17 @@ export async function PUT(request: Request) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
     }
 
+    let programId = ''
     try {
         const { searchParams } = new URL(request.url)
-        const id = searchParams.get('id')
-        if (!id) {
+        programId = searchParams.get('id') || ''
+        if (!programId) {
             return NextResponse.json({ error: 'ID required' }, { status: 400 })
         }
 
         const body = await request.json()
         const program = await prisma.program.update({
-            where: { id },
+            where: { id: programId },
             data: {
                 title: body.title,
                 slug: body.slug,
@@ -84,9 +108,32 @@ export async function PUT(request: Request) {
                 metrics: JSON.stringify(typeof body.metrics === 'string' ? JSON.parse(body.metrics || '{}') : body.metrics),
             },
         })
+
+        // Audit Log
+        await prisma.auditLog.create({
+            data: {
+                action: 'UPDATE',
+                entity: 'Program',
+                entityId: program.id,
+                userId: session.id,
+                details: `Updated program: ${program.title}`
+            }
+        })
+
         return NextResponse.json(program)
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error updating program:', error)
+
+        // Log to database for forensic audit
+        await prisma.errorLog.create({
+            data: {
+                message: error.message || 'Error updating program',
+                stack: error.stack,
+                path: `/api/programs (PUT) id=${programId}`,
+                userId: session.id
+            }
+        })
+
         return NextResponse.json({ error: 'Error updating program' }, { status: 500 })
     }
 }
