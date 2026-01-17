@@ -28,16 +28,24 @@
         "viewAll": "Ver Todos",
         "learnMore": "Saber Más",
         "emergencyNutrition": {
-            "title": "Nutrición de Emergencia",
-            "desc": "Asistencia alimentaria inmediata para familias en zonas de crisis."
-        },
-        "communityGardens": {
-            "title": "Huertos Comunitarios",
-            "desc": "Enseñando agricultura sostenible para garantizar la seguridad alimentaria a largo plazo."
+            "title": "Packs de Nutrición de Emergencia",
+            "desc": "Kits nutricionales densos y culturalmente apropiados para lactantes, mujeres embarazadas y ancianos."
         },
         "mobileHealth": {
-            "title": "Clínicas Móviles de Salud",
-            "desc": "Llevando atención médica esencial a comunidades desplazadas remotas."
+            "title": "Clínicas de Salud Móviles",
+            "desc": "Equipos que ofrecen detecciones, suplementos y referencias para casos de desnutrición severa."
+        },
+        "nutritionEducation": {
+            "title": "Educación Nutricional",
+            "desc": "Talleres sobre planificación de comidas con recursos limitados, apoyo a la lactancia materna e higiene."
+        },
+        "schoolFeeding": {
+            "title": "Programas de Alimentación Escolar",
+            "desc": "Comidas diarias fortalecidas para niños en asociación con escuelas/ONG."
+        },
+        "seedToolBanks": {
+            "title": "Bancos de Semillas y Herramientas",
+            "desc": "Apoyo a la agricultura urbana en campamentos con semillas resistentes a la sequía y capacitación."
         }
     },
     "testimonials": {

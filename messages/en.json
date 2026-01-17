@@ -28,16 +28,24 @@
         "viewAll": "View All",
         "learnMore": "Learn More",
         "emergencyNutrition": {
-            "title": "Emergency Nutrition",
-            "desc": "Immediate food assistance for families in crisis zones."
-        },
-        "communityGardens": {
-            "title": "Community Gardens",
-            "desc": "Teaching sustainable farming to ensure long-term food security."
+            "title": "Emergency Nutrition Packs",
+            "desc": "Culturally appropriate, nutrient-dense kits for infants, pregnant women, and the elderly."
         },
         "mobileHealth": {
             "title": "Mobile Health Clinics",
-            "desc": "Bringing essential medical care to remote displaced communities."
+            "desc": "Teams offering screenings, supplements, and referrals for severe malnutrition cases."
+        },
+        "nutritionEducation": {
+            "title": "Nutrition Education",
+            "desc": "Workshops on meal planning with limited resources, breastfeeding support, and hygiene."
+        },
+        "schoolFeeding": {
+            "title": "School Feeding Programs",
+            "desc": "Daily fortified meals for children in partnership with schools/NGOs."
+        },
+        "seedToolBanks": {
+            "title": "Seed & Tool Banks",
+            "desc": "Support urban farming in camps with drought-resistant seeds and training."
         }
     },
     "testimonials": {

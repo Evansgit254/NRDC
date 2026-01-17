@@ -134,7 +134,7 @@ export async function sendDonationReceipt(params: {
         </div>
         <div class="footer">
             <p>Nutrition Relief and Development Center (NRDC)<br>
-            Email: ${process.env.ADMIN_EMAIL || 'nrdcofficial12@gmail.com'}</p>
+            Email: ${process.env.ADMIN_EMAIL || 'nrdc@nrdc.africa'}</p>
             <p style="font-size: 12px; color: #999;">
                 This is an automated receipt. Please do not reply to this email.
             </p>

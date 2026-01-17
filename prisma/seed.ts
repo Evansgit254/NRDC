@@ -43,28 +43,44 @@ async function main() {
     // Create Programs from en.json
     const programs = [
         {
-            title: 'Emergency Nutrition',
-            slug: 'emergency-nutrition',
-            description: 'Immediate food assistance for families in crisis zones.',
-            objectives: JSON.stringify(['Reduce malnutrition', 'Provide supplements', 'Emergency relief']),
+            title: 'Emergency Nutrition Packs',
+            slug: 'emergency-nutrition-packs',
+            description: 'Culturally appropriate, nutrient-dense kits for infants, pregnant women, and the elderly.',
+            objectives: JSON.stringify(['Immediate nutrition support', 'Targeted kits', 'Vulnerable group care']),
             photos: JSON.stringify(['https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=800']),
-            metrics: JSON.stringify({ beneficiaries: 5000, meals: 15000 }),
-        },
-        {
-            title: 'Community Gardens',
-            slug: 'community-gardens',
-            description: 'Teaching sustainable farming to ensure long-term food security.',
-            objectives: JSON.stringify(['Sustainable food source', 'Skill building', 'Community resilience']),
-            photos: JSON.stringify(['https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&q=80&w=800']),
-            metrics: JSON.stringify({ gardens: 10, families: 200 }),
+            metrics: JSON.stringify({ kitsDistributed: 5000, familiesReached: 2500 }),
         },
         {
             title: 'Mobile Health Clinics',
             slug: 'mobile-health-clinics',
-            description: 'Bringing essential medical care to remote displaced communities.',
-            objectives: JSON.stringify(['Primary healthcare', 'Vaccinations', 'Maternal health']),
+            description: 'Teams offering screenings, supplements, and referrals for severe malnutrition cases.',
+            objectives: JSON.stringify(['Primary healthcare', 'Malnutrition screening', 'Remote access']),
             photos: JSON.stringify(['https://images.unsplash.com/photo-1576091160550-217359f42f8c?auto=format&fit=crop&q=80&w=800']),
-            metrics: JSON.stringify({ patients: 1200, villages: 8 }),
+            metrics: JSON.stringify({ screenings: 10000, referrals: 1500 }),
+        },
+        {
+            title: 'Nutrition Education',
+            slug: 'nutrition-education',
+            description: 'Workshops on meal planning with limited resources, breastfeeding support, and hygiene.',
+            objectives: JSON.stringify(['Community knowledge', 'Hygiene practices', 'Breastfeeding support']),
+            photos: JSON.stringify(['https://images.unsplash.com/photo-1542601906990-b4d3fb773b09?auto=format&fit=crop&q=80&w=800']),
+            metrics: JSON.stringify({ workshopsHeld: 150, participants: 3000 }),
+        },
+        {
+            title: 'School Feeding Programs',
+            slug: 'school-feeding-programs',
+            description: 'Daily fortified meals for children in partnership with schools/NGOs.',
+            objectives: JSON.stringify(['Daily nutrition', 'School retention', 'Partner collaboration']),
+            photos: JSON.stringify(['https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&q=80&w=800']),
+            metrics: JSON.stringify({ childrenFed: 12000, schoolsPartnered: 15 }),
+        },
+        {
+            title: 'Seed & Tool Banks',
+            slug: 'seed-tool-banks',
+            description: 'Support urban farming in camps with drought-resistant seeds and training.',
+            objectives: JSON.stringify(['Sustainable farming', 'Drought resilience', 'Camp food security']),
+            photos: JSON.stringify(['https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&q=80&w=800']),
+            metrics: JSON.stringify({ seedDistributed: '500kg', toolsProvided: 800 }),
         }
     ]
 
@@ -370,7 +386,7 @@ async function main() {
         },
         {
             key: 'contact_email',
-            value: 'nrdcofficial12@gmail.com',
+            value: 'nrdc@nrdc.africa',
             type: 'TEXT',
         },
         {
