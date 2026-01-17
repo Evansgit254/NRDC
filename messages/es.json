@@ -8,7 +8,9 @@
         "getInvolved": "Involúcrate",
         "gallery": "Galería",
         "resources": "Recursos",
-        "admin": "Admin"
+        "admin": "Admin",
+        "donate": "Donar",
+        "donateNow": "Donar Ahora"
     },
     "hero": {
         "title": "Sembrando Esperanza en Comunidades Desplazadas",
@@ -68,12 +70,81 @@
         "noTeam": "Aún no hay miembros del equipo para mostrar.",
         "noResources": "No hay recursos disponibles todavía."
     },
+    "contactPage": {
+        "title": "Contáctanos",
+        "subtitle": "¿Tienes preguntas o quieres saber más? Nos encantaría saber de ti.",
+        "getInTouch": "Ponte en Contacto",
+        "info": "Información de Contacto",
+        "address": "Dirección",
+        "phone": "Teléfono",
+        "email": "Correo Electrónico"
+    },
+    "contactForm": {
+        "name": "Nombre",
+        "email": "Correo Electrónico",
+        "message": "Mensaje",
+        "send": "Enviar Mensaje",
+        "successTitle": "¡Mensaje Enviado!",
+        "successMessage": "Gracias por contactarnos. Te responderemos pronto.",
+        "sendAnother": "Enviar otro mensaje"
+    },
+    "volunteerForm": {
+        "name": "Nombre Completo",
+        "email": "Correo Electrónico",
+        "messageLabel": "¿Por qué quieres ser voluntario?",
+        "submit": "Enviar Solicitud",
+        "successTitle": "¡Gracias!",
+        "successMessage": "Tu solicitud ha sido recibida. Nos pondremos en contacto pronto.",
+        "sendAnother": "Enviar otro mensaje"
+    },
+    "testimonialForm": {
+        "name": "Tu Nombre *",
+        "namePlaceholder": "Juan Pérez",
+        "role": "Rol/Afiliación (Opcional)",
+        "rolePlaceholder": "ej., Miembro de la Comunidad, Voluntario",
+        "testimonial": "Tu Testimonio *",
+        "testimonialPlaceholder": "Comparte tu experiencia con NRDC...",
+        "rating": "Calificación",
+        "submit": "Enviar Testimonio",
+        "submitting": "Enviando...",
+        "successTitle": "¡Gracias!",
+        "successMessage": "Tu testimonio ha sido enviado y está pendiente de aprobación del administrador.",
+        "submitAnother": "Enviar Otro Testimonio",
+        "reviewNotice": "Tu testimonio será revisado por nuestro equipo antes de ser publicado."
+    },
     "footer": {
         "about": "Sobre NRDC",
-        "aboutDesc": "Empoderando comunidades desplazadas a través de nutrición, salud y desarrollo sostenible.",
+        "aboutDesc": "Nutrición para Refugiados y Comunidades Desplazadas. Brindando esperanza, salud y estabilidad a quienes lo necesitan.",
         "quickLinks": "Enlaces Rápidos",
         "contact": "Contáctanos",
+        "followUs": "Síguenos",
+        "aboutUs": "Sobre Nosotros",
+        "ourPrograms": "Nuestros Programas",
+        "newsStories": "Noticias e Historias",
+        "contactUs": "Contáctanos",
+        "privacyPolicy": "Política de Privacidad",
+        "adminLogin": "Inicio de Sesión Admin",
         "rights": "Todos los derechos reservados."
+    },
+    "getInvolved": {
+        "title": "Involúcrate",
+        "subtitle": "Únete a nosotros para hacer una diferencia. Tu tiempo, habilidades y apoyo pueden cambiar vidas.",
+        "waysToSupport": "Formas de Apoyar",
+        "donateTitle": "Donar",
+        "donateDesc": "Tu contribución financiera apoya directamente nuestros programas de nutrición y salud. Cada dólar cuenta.",
+        "donateLink": "Ver Opciones de Donación",
+        "partnerTitle": "Asóciate con Nosotros",
+        "partnerDesc": "Colaboramos con organizaciones, gobiernos y empresas para amplificar nuestro impacto.",
+        "partnerLink": "Conviértete en Socio",
+        "volunteerTitle": "Voluntariado",
+        "volunteerDesc": "Comparte tus habilidades y tiempo. Siempre estamos buscando personas apasionadas para unirse a nuestro equipo.",
+        "volunteerApp": "Solicitud de Voluntariado"
+    },
+    "cookieConsent": {
+        "title": "Usamos cookies",
+        "message": "Usamos cookies para mejorar tu experiencia, analizar el tráfico del sitio y apoyar nuestra misión humanitaria. Al hacer clic en \"Aceptar\", aceptas nuestro uso de cookies. Lee nuestra",
+        "accept": "Aceptar Cookies",
+        "decline": "Rechazar"
     },
     "common": {
         "loading": "Cargando...",
