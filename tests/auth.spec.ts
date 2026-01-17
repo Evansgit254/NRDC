@@ -4,8 +4,8 @@ test.describe('Admin Authentication', () => {
     test('should allow admin to login with correct credentials', async ({ page }) => {
         await page.goto('/admin/login');
 
-        await page.fill('input[type="email"]', 'admin@nrdc.org');
-        await page.fill('input[type="password"]', 'admin123');
+        await page.fill('input[type="email"]', process.env.ADMIN_EMAIL || 'admin@nrdc.org');
+        await page.fill('input[type="password"]', process.env.ADMIN_PASSWORD || 'admin123');
         await page.click('button[type="submit"]');
 
         // Should redirect to dashboard
@@ -16,7 +16,7 @@ test.describe('Admin Authentication', () => {
     test('should show error with incorrect credentials', async ({ page }) => {
         await page.goto('/admin/login');
 
-        await page.fill('input[type="email"]', 'admin@nrdc.org');
+        await page.fill('input[type="email"]', process.env.ADMIN_EMAIL || 'admin@nrdc.org');
         await page.fill('input[type="password"]', 'wrongpassword');
         await page.click('button[type="submit"]');
 

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/auth'
+import { revalidatePath } from 'next/cache'
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url)
@@ -48,6 +49,10 @@ export async function POST(request: Request) {
                 category: body.category,
             },
         })
+
+        // Revalidate the gallery page to show new image immediately
+        revalidatePath('/[locale]/gallery')
+
         return NextResponse.json(image)
     } catch (error) {
         return NextResponse.json({ error: 'Error adding image' }, { status: 500 })
@@ -68,6 +73,10 @@ export async function DELETE(request: Request) {
         }
 
         await prisma.galleryImage.delete({ where: { id } })
+
+        // Revalidate the gallery page to remove deleted image immediately
+        revalidatePath('/[locale]/gallery')
+
         return NextResponse.json({ success: true })
     } catch (error) {
         return NextResponse.json({ error: 'Error deleting image' }, { status: 500 })
