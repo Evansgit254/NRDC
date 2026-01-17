@@ -30,11 +30,21 @@ interface SiteContent {
   mission_statement?: string
 }
 
+interface Program {
+  id: string
+  title: string
+  slug: string
+  description: string
+  photos: string // JSON string
+  translations?: any[]
+}
+
 export default function Home() {
   const t = useTranslations();
   const [statistics, setStatistics] = useState<Statistic[]>([])
   const [testimonials, setTestimonials] = useState<Testimonial[]>([])
   const [content, setContent] = useState<SiteContent>({})
+  const [programs, setPrograms] = useState<Program[]>([])
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
 
@@ -82,6 +92,17 @@ export default function Home() {
         setContent(data)
       })
       .catch(err => console.error('Error loading content:', err))
+
+    // Fetch programs
+    fetch(`/api/programs${localeQuery}`)
+      .then(res => {
+        if (!res.ok) throw new Error(`Programs API error: ${res.status}`)
+        return res.json()
+      })
+      .then(data => {
+        setPrograms(data.slice(0, 3))
+      })
+      .catch(err => console.error('Error loading programs:', err))
   }, [locale])
 
   // Auto-slide effect
@@ -258,45 +279,41 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            {
-              title: t('programs.emergencyNutrition.title'),
-              desc: t('programs.emergencyNutrition.desc'),
-              img: 'https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?q=80&w=2070&auto=format&fit=crop'
-            },
-            {
-              title: t('programs.communityGardens.title'),
-              desc: t('programs.communityGardens.desc'),
-              img: 'https://images.unsplash.com/photo-1591857177580-dc82b92811d9?q=80&w=2070&auto=format&fit=crop'
-            },
-            {
-              title: t('programs.mobileHealth.title'),
-              desc: t('programs.mobileHealth.desc'),
-              img: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2070&auto=format&fit=crop'
-            }
-          ].map((program, i) => (
-            <div
-              key={i}
-              className="bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)] overflow-hidden transition-all duration-500 border border-gray-100 group animate-fade-in-up"
-              style={{ animationDelay: `${i * 150}ms` }}
-            >
-              <div className="h-48 bg-gray-200 relative overflow-hidden">
+          {programs.length > 0 ? (
+            programs.map((program, i) => {
+              const photos = JSON.parse(program.photos || '[]')
+              const coverImage = photos[0] || 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?q=80&w=2070&auto=format&fit=crop'
+
+              return (
                 <div
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                  style={{ backgroundImage: `url("${program.img}")` }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2 text-gray-900 group-hover:text-[#6E8C82] transition-colors">{program.title}</h3>
-                <p className="text-gray-600 mb-4">{program.desc}</p>
-                <Link href="/programs" className="text-[#2E8B57] font-medium hover:text-[#267347] hover:underline transition-colors inline-flex items-center gap-1 group/link">
-                  {t('programs.learnMore')}
-                  <ArrowRight size={16} className="transition-transform group-hover/link:translate-x-1" />
-                </Link>
-              </div>
-            </div>
-          ))}
+                  key={program.id}
+                  className="bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)] overflow-hidden transition-all duration-500 border border-gray-100 group animate-fadeInUp"
+                  style={{ animationDelay: `${i * 150}ms` }}
+                >
+                  <div className="h-48 bg-gray-200 relative overflow-hidden">
+                    <div
+                      className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                      style={{ backgroundImage: `url("${coverImage}")` }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold mb-2 text-gray-900 group-hover:text-[#6E8C82] transition-colors">{program.title}</h3>
+                    <p className="text-gray-600 mb-4 line-clamp-2">{program.description}</p>
+                    <Link href={`/programs/${program.slug}`} className="text-[#2E8B57] font-medium hover:text-[#267347] hover:underline transition-colors inline-flex items-center gap-1 group/link">
+                      {t('programs.learnMore')}
+                      <ArrowRight size={16} className="transition-transform group-hover/link:translate-x-1" />
+                    </Link>
+                  </div>
+                </div>
+              )
+            })
+          ) : (
+            // Fallback to placeholders or loading state
+            [1, 2, 3].map((_, i) => (
+              <div key={i} className="bg-gray-50 rounded-xl h-80 animate-pulse border border-gray-100" />
+            ))
+          )}
         </div>
       </section>
 
