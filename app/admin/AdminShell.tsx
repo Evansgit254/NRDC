@@ -48,6 +48,7 @@ const navItems = [
     { name: 'Advertisements', href: '/admin/ads', icon: Megaphone, adminOnly: false },
     { name: 'Donations', href: '/admin/donations', icon: Heart, adminOnly: false },
     { name: 'Subscriptions', href: '/admin/subscriptions', icon: Repeat, adminOnly: false },
+    { name: 'Bank & Payment', href: '/admin/bank-settings', icon: CreditCard, adminOnly: true },
     { name: 'System Logs', href: '/admin/logs', icon: AlertTriangle, adminOnly: true },
     { name: 'Audit Logs', href: '/admin/audit', icon: Activity, adminOnly: true },
     { name: 'User Management', href: '/admin/users', icon: Users, adminOnly: true },
