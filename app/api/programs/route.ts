@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/auth'
+import { revalidatePath } from 'next/cache'
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url)
@@ -64,6 +65,8 @@ export async function POST(request: Request) {
             }
         })
 
+        revalidatePath('/[locale]/programs')
+
         return NextResponse.json(program)
     } catch (error: any) {
         console.error('Error creating program:', error)
@@ -120,6 +123,8 @@ export async function PUT(request: Request) {
             }
         })
 
+        revalidatePath('/[locale]/programs')
+
         return NextResponse.json(program)
     } catch (error: any) {
         console.error('Error updating program:', error)
@@ -152,6 +157,9 @@ export async function DELETE(request: Request) {
         }
 
         await prisma.program.delete({ where: { id } })
+
+        revalidatePath('/[locale]/programs')
+
         return NextResponse.json({ success: true })
     } catch (error) {
         return NextResponse.json({ error: 'Error deleting program' }, { status: 500 })
