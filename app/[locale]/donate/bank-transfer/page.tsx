@@ -82,7 +82,7 @@ export default function BankTransferPage() {
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="text-gray-600">Bank:</span>
-                                    <span className="font-semibold">ABC Bank</span>
+                                    <span className="font-semibold">Bank of Africa</span>
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="text-gray-600">Branch:</span>

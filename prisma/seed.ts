@@ -410,19 +410,22 @@ async function main() {
     }
 
     // Create Bank Details
-    await prisma.bankDetails.create({
-        data: {
-            accountName: 'NRDC',
-            accountNumber: '01207150002',
-            branch: 'Nairobi',
-            bankCode: '19',
-            branchCode: '000',
-            swiftCode: 'AFRIKENX',
-            phoneNumber: '972900',
-            bankName: 'ABC Bank',
-            active: true
-        }
-    })
+    const existingBank = await prisma.bankDetails.count();
+    if (existingBank === 0) {
+        await prisma.bankDetails.create({
+            data: {
+                accountName: 'NRDC',
+                accountNumber: '01207150002',
+                branch: 'Nairobi',
+                bankCode: '19',
+                branchCode: '000',
+                swiftCode: 'AFRIKENX',
+                phoneNumber: '972900',
+                bankName: 'Bank of Africa',
+                active: true
+            }
+        })
+    }
 
     // Create Donation Tiers
     const tiers = [

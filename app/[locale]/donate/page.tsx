@@ -173,7 +173,7 @@ export default function DonatePage() {
                         >
                             <CreditCard className={`mx-auto mb-3 w-10 h-10 ${paymentMethod === 'mchanga' ? 'text-[#2E8B57]' : 'text-gray-400'}`} />
                             <h4 className="font-bold text-lg mb-2">M-PESA / Mobile Money</h4>
-                            <p className="text-sm text-gray-600">Pay instantly via M-PESA, Airtel Money, or card</p>
+                            <p className="text-sm text-gray-600">Pay via M-PESA (Paybill: 972900), Airtel Money, or card</p>
                         </button>
 
                         <button
