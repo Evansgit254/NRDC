@@ -58,7 +58,7 @@ export default function ContactPage() {
                                 </div>
                                 <div className="animate-fadeInRight animation-delay-200">
                                     <h3 className="font-bold text-gray-900 mb-1">{t('email')}</h3>
-                                    <p className="text-gray-600">info@nrdc.org</p>
+                                    <p className="text-gray-600">nrdcofficial12@gmail.com</p>
                                 </div>
                             </div>
                         </div>

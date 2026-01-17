@@ -38,7 +38,7 @@ export default function Footer() {
                         <ul className="space-y-2 text-sm text-gray-400">
                             <li className="flex items-center gap-2"><MapPin size={16} /> Nairobi, Kenya</li>
                             <li className="flex items-center gap-2"><Phone size={16} /> +254 727 001 702 / +254 702 121 310</li>
-                            <li className="flex items-center gap-2"><Mail size={16} /> info@nrdc.org</li>
+                            <li className="flex items-center gap-2"><Mail size={16} /> nrdcofficial12@gmail.com</li>
                         </ul>
                     </div>
                     <div>
