@@ -154,8 +154,8 @@ export function generateArticleSchema(params: {
 export const defaultMetadata: Metadata = {
     metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
     title: {
-        default: 'NRDC - Nutrition Relief & Development Center',
-        template: '%s | NRDC',
+        default: 'NRDC.KENYA - Nutrition Relief & Displaced Communities',
+        template: '%s | NRDC.KENYA',
     },
     description: 'Supporting refugee nutrition and health programs across East Africa. Join us in making a difference.',
     keywords: ['NRDC', 'nutrition', 'relief', 'development', 'refugees', 'East Africa', 'charity', 'NGO', 'donate'],

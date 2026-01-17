@@ -47,7 +47,7 @@ async function main() {
             slug: 'emergency-nutrition',
             description: 'Immediate food assistance for families in crisis zones.',
             objectives: JSON.stringify(['Reduce malnutrition', 'Provide supplements', 'Emergency relief']),
-            photos: JSON.stringify(['https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&q=80&w=800']),
+            photos: JSON.stringify(['https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=800']),
             metrics: JSON.stringify({ beneficiaries: 5000, meals: 15000 }),
         },
         {
@@ -55,7 +55,7 @@ async function main() {
             slug: 'community-gardens',
             description: 'Teaching sustainable farming to ensure long-term food security.',
             objectives: JSON.stringify(['Sustainable food source', 'Skill building', 'Community resilience']),
-            photos: JSON.stringify(['https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=800']),
+            photos: JSON.stringify(['https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&q=80&w=800']),
             metrics: JSON.stringify({ gardens: 10, families: 200 }),
         },
         {
@@ -63,7 +63,7 @@ async function main() {
             slug: 'mobile-health-clinics',
             description: 'Bringing essential medical care to remote displaced communities.',
             objectives: JSON.stringify(['Primary healthcare', 'Vaccinations', 'Maternal health']),
-            photos: JSON.stringify(['https://images.unsplash.com/photo-1584820927498-cfe5bae427d2?auto=format&fit=crop&q=80&w=800']),
+            photos: JSON.stringify(['https://images.unsplash.com/photo-1576091160550-217359f42f8c?auto=format&fit=crop&q=80&w=800']),
             metrics: JSON.stringify({ patients: 1200, villages: 8 }),
         }
     ]
