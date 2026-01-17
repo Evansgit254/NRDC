@@ -21,6 +21,7 @@ export default function AdminSettingsPage() {
 
     async function fetchSettings() {
         try {
+            const settingsRes = await fetch('/api/settings')
             if (settingsRes.ok) {
                 const data = await settingsRes.json()
                 setSettings(prev => ({
@@ -164,6 +165,5 @@ export default function AdminSettingsPage() {
 
             </div>
         </div>
-        </div >
     )
 }

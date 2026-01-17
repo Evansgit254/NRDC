@@ -25,6 +25,7 @@ import {
     Megaphone,
     Heart,
     Repeat,
+    CreditCard,
 } from 'lucide-react'
 import clsx from 'clsx'
 import { ToastProvider } from '@/components/Toast'
