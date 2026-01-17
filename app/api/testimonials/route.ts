@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/auth'
+import { revalidatePath } from 'next/cache'
 
 // GET /api/testimonials - List testimonials
 export async function GET(request: Request) {
@@ -55,6 +56,8 @@ export async function POST(request: Request) {
                 order: 0,
             },
         })
+
+        revalidatePath('/[locale]')
 
         return NextResponse.json(testimonial, { status: 201 })
     } catch (error) {

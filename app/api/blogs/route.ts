@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/auth'
 import { logAudit } from '@/lib/audit'
+import { revalidatePath } from 'next/cache'
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url)
@@ -66,6 +67,9 @@ export async function POST(request: Request) {
 
         await logAudit('CREATE', 'BlogPost', blog.id, { userId: session.userId, details: { title: blog.title } })
 
+        revalidatePath('/[locale]/blog')
+        revalidatePath('/[locale]')
+
         return NextResponse.json(blog)
     } catch (error) {
         return NextResponse.json({ error: 'Error creating blog post' }, { status: 500 })
@@ -122,6 +126,9 @@ export async function PUT(request: Request) {
 
         await logAudit('UPDATE', 'BlogPost', blog.id, { userId: session.userId, details: { title: blog.title, changes: Object.keys(updateData) } })
 
+        revalidatePath('/[locale]/blog')
+        revalidatePath('/[locale]')
+
         return NextResponse.json(blog)
     } catch (error) {
         return NextResponse.json({ error: 'Error updating blog post' }, { status: 500 })
@@ -143,6 +150,9 @@ export async function DELETE(request: Request) {
 
         await prisma.blogPost.delete({ where: { id } })
         await logAudit('DELETE', 'BlogPost', id, { userId: session.userId })
+
+        revalidatePath('/[locale]/blog')
+        revalidatePath('/[locale]')
 
         return NextResponse.json({ success: true })
     } catch (error) {
