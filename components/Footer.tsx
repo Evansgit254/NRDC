@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from 'lucide-react'
+import { Facebook, Twitter, Instagram, Mail, Phone, MapPin, Music2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 export default function Footer() {
@@ -47,6 +47,7 @@ export default function Footer() {
                             <a href="#" className="text-gray-400 hover:text-white"><Facebook size={20} /></a>
                             <a href="#" className="text-gray-400 hover:text-white"><Twitter size={20} /></a>
                             <a href="#" className="text-gray-400 hover:text-white"><Instagram size={20} /></a>
+                            <a href="https://www.tiktok.com/@nrdc8?_r=1&_t=ZS-938cuYIVMfN" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white"><Music2 size={20} /></a>
                         </div>
                     </div>
                 </div>
