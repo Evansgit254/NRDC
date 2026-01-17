@@ -90,10 +90,29 @@ export async function POST(request: Request) {
             }
         }
 
+        // 3. Force Update Bank Details
+        const activeBank = await prisma.bankDetails.findFirst({ where: { active: true } })
+        if (activeBank) {
+            await prisma.bankDetails.update({
+                where: { id: activeBank.id },
+                data: {
+                    accountName: 'NRDC',
+                    accountNumber: '01207150002',
+                    branch: 'Nairobi',
+                    bankCode: '19',
+                    branchCode: '000',
+                    swiftCode: 'AFRIKENX',
+                    phoneNumber: '972900',
+                    bankName: 'Bank of Africa',
+                }
+            })
+            count++
+        }
+
         return NextResponse.json({
             success: true,
-            message: `Successfully seeded ${count} translations`,
-            details: 'Updated all site content and program translations'
+            message: `Successfully seeded ${count} translations and updated bank details`,
+            details: 'Updated all site content, program translations, and official bank details'
         })
     } catch (error: any) {
         console.error('Error seeding all translations:', error)
