@@ -208,7 +208,7 @@ export async function sendDonationAlertToAdmin(params: {
 </html>
     `
 
-    const adminEmail = process.env.ADMIN_EMAIL || 'admin@nrdc.org'
+    const adminEmail = process.env.ADMIN_EMAIL || 'nrdc@nrdc.africa'
 
     return sendEmail({
         to: adminEmail,
