@@ -18,7 +18,8 @@ interface SEOParams {
 export function generateMetadata(params: SEOParams): Metadata {
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
     const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'NRDC'
-    const defaultImage = `${siteUrl}/og-image.jpg`
+    // Use the dynamic route for the default image (defaulting to English)
+    const defaultImage = `${siteUrl}/en/opengraph-image`
 
     const {
         title,
@@ -91,7 +92,7 @@ export function generateOrganizationSchema() {
     return {
         '@context': 'https://schema.org',
         '@type': 'NGO',
-        name: 'Nutrition for Refugee & Displaced Communities',
+        name: 'Nutrition for Refugees and Displaced Communities',
         alternateName: 'NRDC',
         url: siteUrl,
         logo: `${siteUrl}/logo.png`,
@@ -119,7 +120,7 @@ export function generateArticleSchema(params: {
     url: string
 }) {
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-    const imageUrl = params.image || `${siteUrl}/og-image.jpg`
+    const imageUrl = params.image || `${siteUrl}/en/opengraph-image`
 
     return {
         '@context': 'https://schema. org',
@@ -154,7 +155,7 @@ export function generateArticleSchema(params: {
 export const defaultMetadata: Metadata = {
     metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
     title: {
-        default: 'NRDC.KENYA - Nutrition Relief & Displaced Communities',
+        default: 'NRDC.KENYA - Nutrition for Refugees and Displaced Communities',
         template: '%s | NRDC.KENYA',
     },
     description: 'Supporting refugee nutrition and health programs across East Africa. Join us in making a difference.',
