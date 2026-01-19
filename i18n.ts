@@ -1,11 +1,14 @@
 import { getRequestConfig } from 'next-intl/server';
 import { prisma } from '@/lib/prisma';
 
+export const locales = ['en', 'fr', 'es', 'ar', 'sw'];
+export const defaultLocale = 'en';
+
 export default getRequestConfig(async ({ requestLocale }) => {
     let locale = await requestLocale;
 
-    if (!locale || !['en', 'fr', 'es', 'ar'].includes(locale)) {
-        locale = 'en';
+    if (!locale || !locales.includes(locale)) {
+        locale = defaultLocale;
     }
 
     const fileMessages = (await import(`./messages/${locale}.json`)).default;

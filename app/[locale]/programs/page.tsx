@@ -8,7 +8,7 @@ export const dynamic = 'force-static'
 export const revalidate = 1800
 
 export function generateStaticParams() {
-    return [{ locale: 'en' }, { locale: 'fr' }];
+    return [{ locale: 'en' }, { locale: 'fr' }, { locale: 'es' }, { locale: 'ar' }, { locale: 'sw' }];
 }
 
 export default async function ProgramsPage({ params }: { params: Promise<{ locale: string }> }) {

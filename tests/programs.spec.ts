@@ -18,12 +18,12 @@ test.describe('Admin Programs Management', () => {
     });
 
     test('should allow editing a program and reflect changes', async ({ page }) => {
-        // Find Edit button for the first program - using the lucide-react Edit icon context
-        const firstProgramEditBtn = page.locator('button:has(svg.lucide-edit)').first();
+        // Find Edit button for the first program
+        const firstProgramEditBtn = page.locator('table tbody tr').first().locator('button').first();
         await firstProgramEditBtn.click();
 
         // Check if form is visible
-        await expect(page.locator('h2')).toContainText('Edit Program');
+        await expect(page.getByRole('heading', { name: 'Edit Program' })).toBeVisible();
 
         // Append a timestamp to description to ensure change
         const timestamp = Date.now().toString();
@@ -38,7 +38,7 @@ test.describe('Admin Programs Management', () => {
     });
 
     test('should handle objectives list parsing correctly', async ({ page }) => {
-        const firstProgramEditBtn = page.locator('button:has(svg.lucide-edit)').first();
+        const firstProgramEditBtn = page.locator('table tbody tr').first().locator('button').first();
         await firstProgramEditBtn.click();
 
         const objectivesField = page.locator('textarea').nth(1);

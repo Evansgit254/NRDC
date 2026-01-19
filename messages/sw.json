@@ -1,0 +1,122 @@
+{
+    "nav": {
+        "home": "Nyumbani",
+        "about": "Kuhusu Sisi",
+        "programs": "Mipango",
+        "blog": "Habari",
+        "contact": "Wasiliana nasi",
+        "getInvolved": "Jihusishe",
+        "gallery": "Picha",
+        "resources": "Rasilimali",
+        "admin": "Utawala",
+        "donate": "Changia",
+        "donateNow": "Changia Sasa"
+    },
+    "hero": {
+        "title": "Kustawisha Tumaini katika Jamii Zilizohamishwa",
+        "subtitle": "Kutoa lishe muhimu, usalama wa chakula, na msaada wa afya kwa wale wanaohitaji zaidi.",
+        "donateNow": "Changia Sasa",
+        "ourPrograms": "Mipango Yetu"
+    },
+    "mission": {
+        "title": "Ujumbe Wetu",
+        "statement": "Kutoa lishe, mipango ya usalama wa chakula, kujenga uwezo, na msaada wa afya ya jamii kwa wakimbizi na watu waliohamishwa, kuhakikisha kila mtu ana msingi wa maisha bora ya baadaye."
+    },
+    "programs": {
+        "title": "Mipango Yetu",
+        "subtitle": "Msaada kamili kwa mabadiliko endelevu.",
+        "viewAll": "Tazama Zote",
+        "learnMore": "Jifunze Zaidi",
+        "emergencyNutrition": {
+            "title": "Vifurushi vya Lishe ya Dharura",
+            "desc": "Vifurushi vyenye virutubisho vingi na vinavyoendana na utamaduni kwa watoto wachanga, wanawake wajawazito, na wazee."
+        },
+        "mobileHealth": {
+            "title": "Kliniki za Afya Zinazotembea",
+            "desc": "Timu zinazotoa uchunguzi, virutubisho, na rufaa kwa matukio makubwa ya utapiamlo."
+        },
+        "nutritionEducation": {
+            "title": "Elimu ya Lishe",
+            "desc": "Warsha kuhusu upangaji wa milo kwa rasilimali chache, usaidizi wa kunyonyesha, na usafi."
+        },
+        "schoolFeeding": {
+            "title": "Mipango ya Kulisha Mashuleni",
+            "desc": "Milo ya kila siku iliyoongezwa virutubisho kwa watoto kwa ushirikiano na shule/NGOs."
+        },
+        "seedToolBanks": {
+            "title": "Benki za Mbegu na Zana",
+            "desc": "Kusaidia kilimo cha mijini katika kambi kwa mbegu zinazostahimili ukame na mafunzo."
+        }
+    },
+    "testimonials": {
+        "title": "Maoni ya Watu",
+        "subtitle": "Sikia kutoka kwa wale ambao tumewasaidia"
+    },
+    "shareStory": {
+        "title": "Shiriki Hadithi Yako",
+        "subtitle": "Je, umeathiriwa na kazi yetu? Tungependa kusikia kutoka kwako."
+    },
+    "blogPage": {
+        "title": "Habari na Hadithi",
+        "subtitle": "Endelea kupata habari kuhusu mipango yetu ya hivi punde, hadithi za mafanikio, na athari kwa jamii.",
+        "readMore": "Soma Zaidi",
+        "noPosts": "Hakuna habari zinazopatikana kwa sasa."
+    },
+    "programsPage": {
+        "title": "Mipango Yetu",
+        "subtitle": "Hatua kamili na endelevu zilizoundwa kuwezesha na kuponya.",
+        "readMore": "Soma Zaidi"
+    },
+    "aboutPage": {
+        "title": "Kuhusu NRDC",
+        "subtitle": "Tumejitolea kurejesha adhama na afya kwa jamii zilizohamishwa kupitia lishe bora na msaada.",
+        "mission": "Ujumbe Wetu",
+        "vision": "Maono Yetu",
+        "visionStatement": "Ulimwengu ambapo jamii zilizohamishwa zina rasilimali na msaada wa kustawi kwa kujitegemea.",
+        "leadership": "Timu ya Uongozi",
+        "resources": "Rasilimali na Taarifa",
+        "noTeam": "Hakuna washiriki wa timu wa kuonyesha bado.",
+        "noResources": "Hakuna rasilimali zinazopatikana bado."
+    },
+    "contactPage": {
+        "title": "Wasiliana Nasi",
+        "subtitle": "Una maswali au unataka kujifunza zaidi? Tungependa kusikia kutoka kwako.",
+        "getInTouch": "Wasiliana Nasi",
+        "info": "Habari za Mawasiliano",
+        "address": "Anwani",
+        "phone": "Simu",
+        "email": "Barua Pepe"
+    },
+    "contactForm": {
+        "name": "Jina",
+        "email": "Barua Pepe",
+        "message": "Ujumbe",
+        "send": "Tuma Ujumbe",
+        "successTitle": "Ujumbe Umetumwa!",
+        "successMessage": "Asante kwa kuwasiliana nasi. Tutakujibu hivi karibuni.",
+        "sendAnother": "Tuma ujumbe mwingine"
+    },
+    "footer": {
+        "about": "Kuhusu NRDC",
+        "aboutDesc": "Lishe kwa Wakimbizi na Jamii Zilizohamishwa. Kutoa tumaini, afya, na utulivu kwa wale wanaohitaji.",
+        "quickLinks": "Viungo vya Haraka",
+        "contact": "Wasiliana Nasi",
+        "followUs": "Tufuate",
+        "aboutUs": "Kuhusu Sisi",
+        "ourPrograms": "Mipango Yetu",
+        "newsStories": "Habari na Hadithi",
+        "contactUs": "Wasiliana Nasi",
+        "privacyPolicy": "Sera ya Faragha",
+        "adminLogin": "Ingia Kama Admin",
+        "rights": "Haki zote zimehifadhiwa."
+    },
+    "common": {
+        "loading": "Inapakia...",
+        "error": "Hitilafu imetokea",
+        "submit": "Tuma",
+        "cancel": "Ghairi",
+        "save": "Hifadhi",
+        "delete": "Futa",
+        "edit": "Hariri"
+    }
+}

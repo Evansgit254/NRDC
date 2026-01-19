@@ -55,14 +55,6 @@ model GalleryImage {
   translations GalleryImageTranslation[]
 }
 
-model PageContent {
-  id        String   @id @default(uuid())
-  key       String   @unique
-  value     String
-  type      String   @default("text")
-  updatedAt DateTime @updatedAt
-}
-
 model ContactSubmission {
   id        String   @id @default(uuid())
   name      String

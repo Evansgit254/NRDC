@@ -100,7 +100,7 @@ export default function Home() {
         return res.json()
       })
       .then(data => {
-        setPrograms(data.slice(0, 3))
+        setPrograms(data)
       })
       .catch(err => console.error('Error loading programs:', err))
   }, [locale])

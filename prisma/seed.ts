@@ -47,7 +47,7 @@ async function main() {
             slug: 'emergency-nutrition-packs',
             description: 'Culturally appropriate, nutrient-dense kits for infants, pregnant women, and the elderly.',
             objectives: JSON.stringify(['Immediate nutrition support', 'Targeted kits', 'Vulnerable group care']),
-            photos: JSON.stringify(['https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=800']),
+            photos: JSON.stringify(['/images/emergency-packs.png']),
             metrics: JSON.stringify({ kitsDistributed: 5000, familiesReached: 2500 }),
         },
         {
@@ -55,7 +55,7 @@ async function main() {
             slug: 'mobile-health-clinics',
             description: 'Teams offering screenings, supplements, and referrals for severe malnutrition cases.',
             objectives: JSON.stringify(['Primary healthcare', 'Malnutrition screening', 'Remote access']),
-            photos: JSON.stringify(['https://images.unsplash.com/photo-1576091160550-217359f42f8c?auto=format&fit=crop&q=80&w=800']),
+            photos: JSON.stringify(['/images/mobile-clinic.png']),
             metrics: JSON.stringify({ screenings: 10000, referrals: 1500 }),
         },
         {
@@ -63,7 +63,7 @@ async function main() {
             slug: 'nutrition-education',
             description: 'Workshops on meal planning with limited resources, breastfeeding support, and hygiene.',
             objectives: JSON.stringify(['Community knowledge', 'Hygiene practices', 'Breastfeeding support']),
-            photos: JSON.stringify(['https://images.unsplash.com/photo-1542601906990-b4d3fb773b09?auto=format&fit=crop&q=80&w=800']),
+            photos: JSON.stringify(['https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=800']),
             metrics: JSON.stringify({ workshopsHeld: 150, participants: 3000 }),
         },
         {
@@ -71,7 +71,7 @@ async function main() {
             slug: 'school-feeding-programs',
             description: 'Daily fortified meals for children in partnership with schools/NGOs.',
             objectives: JSON.stringify(['Daily nutrition', 'School retention', 'Partner collaboration']),
-            photos: JSON.stringify(['https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&q=80&w=800']),
+            photos: JSON.stringify(['https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=800']),
             metrics: JSON.stringify({ childrenFed: 12000, schoolsPartnered: 15 }),
         },
         {
@@ -276,7 +276,7 @@ async function main() {
             active: true,
         },
         {
-            label: 'Community Gardens',
+            label: 'Sustainable Farming',
             value: '100+',
             icon: 'Sprout',
             order: 3,
@@ -474,47 +474,35 @@ async function main() {
     // Seed Translations for Programs
     console.log('Seeding Program translations...');
     const programTranslations = {
-        'emergency-nutrition': {
-            fr: {
-                title: 'Nutrition d\'Urgence',
-                description: 'Aide alimentaire immédiate pour les familles dans les zones de crise.'
-            },
-            es: {
-                title: 'Nutrición de Emergencia',
-                description: 'Asistencia alimentaria inmediata para familias en zonas de crisis.'
-            },
-            ar: {
-                title: 'تغذية الطوارئ',
-                description: 'مساعدة غذائية فورية للعائلات في مناطق الأزمات.'
-            }
-        },
-        'community-gardens': {
-            fr: {
-                title: 'Jardins Communautaires',
-                description: 'Enseigner l\'agriculture durable pour assurer la sécurité alimentaire à long terme.'
-            },
-            es: {
-                title: 'Huertos Comunitarios',
-                description: 'Enseñando agricultura sostenible para garantizar la seguridad alimentaria a largo plazo.'
-            },
-            ar: {
-                title: 'الحدائق المجتمعية',
-                description: 'تعليم الزراعة المستدامة لضمان الأمن الغذائي على المدى الطويل.'
-            }
+        'emergency-nutrition-packs': {
+            fr: { title: 'Packs de Nutrition d\'Urgence', description: 'Kits denses en nutriments et culturellement appropriés pour les nourrissons, les femmes enceintes et les personnes âgées.' },
+            sw: { title: 'Vifurushi vya Lishe ya Dharura', description: 'Vifurushi vyenye virutubisho vingi na vinavyoendana na utamaduni kwa watoto wachanga, wanawake wajawazito, na wazee.' },
+            es: { title: 'Packs de Nutrición de Emergencia', description: 'Kits densos en nutrientes y culturalmente apropiados para bebés, mujeres embarazadas y ancianos.' },
+            ar: { title: 'حقائب التغذية الطارئة', description: 'حقائب غنية بالعناصر الغذائية ومناسبة ثقافياً للرضع والنساء الحوامل وكبار السن.' }
         },
         'mobile-health-clinics': {
-            fr: {
-                title: 'Cliniques Mobiles',
-                description: 'Apporter des soins médicaux essentiels aux communautés déplacées isolées.'
-            },
-            es: {
-                title: 'Clínicas Móviles de Salud',
-                description: 'Llevando atención médica esencial a comunidades desplazadas remotas.'
-            },
-            ar: {
-                title: 'العيادات الصحية المتنقلة',
-                description: 'جلب الرعاية الطبية الأساسية إلى المجتمعات النازحة في المناطق النائية.'
-            }
+            fr: { title: 'Cliniques de Santé Mobiles', description: 'Équipes proposant des dépistages, des suppléments et des références pour les cas de malnutrition sévère.' },
+            sw: { title: 'Kliniki za Afya Zinazotembea', description: 'Timu zinazotoa uchunguzi, virutubisho, na rufaa kwa matukio makubwa ya utapiamlo.' },
+            es: { title: 'Clínicas de Salud Móviles', description: 'Equipos que ofrecen exámenes, suplementos y remisiones para casos de desnutrición severa.' },
+            ar: { title: 'العيادات الصحية المتنقلة', description: 'فرق تقدم الفحوصات والمكملات والإحالات لحالات سوء التغذية الحاد.' }
+        },
+        'nutrition-education': {
+            fr: { title: 'Éducation Nutritionnelle', description: 'Ateliers sur la planification des repas avec des ressources limitées, le soutien à l\'allaitement et l\'hygiène.' },
+            sw: { title: 'Elimu ya Lishe', description: 'Warsha kuhusu upangaji wa milo kwa rasilimali chache, usaidizi wa kunyonyesha, na usafi.' },
+            es: { title: 'Educación Nutricional', description: 'Talleres sobre planificación de comidas con recursos limitados, apoyo a la lactancia materna e higiene.' },
+            ar: { title: 'التثقيف التغذوي', description: 'ورش عمل حول تخطيط الوجبات بموارد محدودة، ودعم الرضاعة الطبيعية، والنظافة الصحية.' }
+        },
+        'school-feeding-programs': {
+            fr: { title: 'Programmes d\'Alimentation Scolaire', description: 'Repas quotidiens fortifiés pour les enfants en partenariat avec des écoles/ONG.' },
+            sw: { title: 'Mipango ya Kulisha Mashuleni', description: 'Milo ya kila siku iliyoongezwa virutubisho kwa watoto kwa ushirikiano na shule/NGOs.' },
+            es: { title: 'Programas de Alimentación Escolar', description: 'Comidas diarias fortificadas para niños en asociación con escuelas/ONG.' },
+            ar: { title: 'برامج التغذية المدرسية', description: 'وجبات يومية مدعمة للأطفال بالشراكة مع المدارس والمنظمات غير الحكومية.' }
+        },
+        'seed-tool-banks': {
+            fr: { title: 'Banques de Semences et d\'Outils', description: 'Soutenir l\'agriculture urbaine dans les camps avec des semences résistantes à la sécheresse et des formations.' },
+            sw: { title: 'Benki za Mbegu na Zana', description: 'Kusaidia kilimo cha mijini katika kambi kwa mbegu zinazostahimili ukame na mafunzo.' },
+            es: { title: 'Bancos de Semillas y Herramientas', description: 'Apoyar la agricultura urbana en los campamentos con semillas resistentes a la sequía y capacitación.' },
+            ar: { title: 'بنوك البذور والأدوات', description: 'دعم الزراعة الحضرية في المخيمات ببذور مقاومة للجفاف والتدريب.' }
         }
     };
 
@@ -604,7 +592,7 @@ async function main() {
     const statTranslations = {
         'lives-impacted': { label: 'Vies Impactées' },
         'meals-provided': { label: 'Repas Fournis' },
-        'community-gardens': { label: 'Jardins Communautaires' },
+        'sustainable-farming': { label: 'Agriculture Durable' },
         'partner-organizations': { label: 'Organisations Partenaires' }
     };
     for (const [id, trans] of Object.entries(statTranslations)) {

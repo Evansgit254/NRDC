@@ -1,14 +1,15 @@
 import createMiddleware from 'next-intl/middleware';
+import { locales, defaultLocale } from './i18n';
 
 export const proxy = createMiddleware({
     // A list of all locales that are supported
-    locales: ['en', 'fr', 'es', 'ar'],
+    locales,
 
     // Used when no locale matches
-    defaultLocale: 'en',
+    defaultLocale,
 
-    // Don't show the locale prefix for the default locale
-    localePrefix: 'as-needed'
+    // Explicitly disable locale prefix if preferred, but for this app we use it.
+    localePrefix: 'always'
 });
 
 export const config = {

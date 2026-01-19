@@ -43,7 +43,7 @@ export default function LanguageSwitcher() {
             const segments = pathname.split('/');
 
             // Check if the first segment is a locale
-            if (['en', 'fr', 'es', 'ar'].includes(segments[1])) {
+            if (['en', 'fr', 'es', 'ar', 'sw'].includes(segments[1])) {
                 segments[1] = nextLocale;
                 newPath = segments.join('/');
             } else {
@@ -107,6 +107,15 @@ export default function LanguageSwitcher() {
                     >
                         <span>العربية</span>
                         {locale === 'ar' && <span className="text-xs">✓</span>}
+                    </button>
+                    <button
+                        onClick={() => onSelectChange('sw')}
+                        disabled={isPending}
+                        className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors flex items-center justify-between ${locale === 'sw' ? 'text-[#6E8C82] font-bold bg-[#6E8C82]/10' : 'text-gray-700'
+                            }`}
+                    >
+                        <span>Kiswahili</span>
+                        {locale === 'sw' && <span className="text-xs">✓</span>}
                     </button>
                 </div>
             )}
