@@ -15,6 +15,10 @@ const openSans = Open_Sans({ subsets: ['latin'], variable: '--font-open-sans' })
 
 export const metadata: Metadata = defaultMetadata;
 
+import { locales } from '@/i18n';
+
+// ...
+
 export default async function LocaleLayout({
     children,
     params
@@ -25,7 +29,7 @@ export default async function LocaleLayout({
     const { locale } = await params;
 
     // Ensure that the incoming `locale` is valid
-    if (!['en', 'fr', 'es', 'ar'].includes(locale)) {
+    if (!locales.includes(locale)) {
         notFound();
     }
 
