@@ -48,7 +48,7 @@ export default function ContactPage() {
                                 </div>
                                 <div className="animate-fadeInRight animation-delay-100">
                                     <h3 className="font-bold text-gray-900 mb-1">{t('phone')}</h3>
-                                    <p className="text-gray-600">+254 727 001 702 / +254 702 121 310</p>
+                                    <p className="text-gray-600">+254 727 001 702 / +254 702 121 310 / +254 726 319978</p>
                                 </div>
                             </div>
 
