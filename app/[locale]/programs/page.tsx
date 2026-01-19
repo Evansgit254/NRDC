@@ -5,7 +5,7 @@ import { getTranslations } from 'next-intl/server'
 import AdSlot from '@/components/AdSlot'
 
 export const dynamic = 'force-static'
-export const revalidate = 1800
+export const revalidate = 60
 
 export function generateStaticParams() {
     return [{ locale: 'en' }, { locale: 'fr' }, { locale: 'es' }, { locale: 'ar' }, { locale: 'sw' }];
