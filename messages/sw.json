@@ -110,6 +110,50 @@
         "adminLogin": "Ingia Kama Admin",
         "rights": "Haki zote zimehifadhiwa."
     },
+    "volunteerForm": {
+        "name": "Jina Kamili",
+        "email": "Anwani ya Barua Pepe",
+        "messageLabel": "Kwa nini unataka kujitolea?",
+        "submit": "Tuma Maombi",
+        "successTitle": "Asante!",
+        "successMessage": "Maombi yako yamepokewa. Tutawasiliana nawe hivi karibuni.",
+        "sendAnother": "Tuma maombi mengine"
+    },
+    "testimonialForm": {
+        "name": "Jina Lako *",
+        "namePlaceholder": "John Doe",
+        "role": "Wajibu/Ushirika (Hiari)",
+        "rolePlaceholder": "mfano, Mwanajamii, Mjitolea",
+        "testimonial": "Maoni Yako *",
+        "testimonialPlaceholder": "Shiriki uzoefu wako na NRDC...",
+        "rating": "Ukadiriaji",
+        "submit": "Tuma Maoni",
+        "submitting": "Inatuma...",
+        "successTitle": "Asante!",
+        "successMessage": "Maoni yako yametumwa na yanasubiri idhini ya msimamizi.",
+        "submitAnother": "Tuma Maoni Mengine",
+        "reviewNotice": "Maoni yako yakakaguliwa na timu yetu kabla ya kuchapishwa."
+    },
+    "getInvolved": {
+        "title": "Jihusishe",
+        "subtitle": "Jiunge nasi katika kuleta mabadiliko. Muda wako, ujuzi, na msaada wako unaweza kubadilisha maisha.",
+        "waysToSupport": "Njia za Kusaidia",
+        "donateTitle": "Changia",
+        "donateDesc": "Mchango wako wa kifedha unasaidia moja kwa moja mipango yetu ya lishe na afya. Kila shilingi ni muhimu.",
+        "donateLink": "Tazama Chaguzi za Michango",
+        "partnerTitle": "Shirikiana Nasi",
+        "partnerDesc": "Tunashirikiana na mashirika, serikali, na biashara ili kuongeza athari zetu.",
+        "partnerLink": "Kuwa Mshirika",
+        "volunteerTitle": "Jitolee",
+        "volunteerDesc": "Shiriki ujuzi na muda wako. Daima tunatafuta watu wenye shauku ya kujiunga na timu yetu.",
+        "volunteerApp": "Maombi ya Kujitolea"
+    },
+    "cookieConsent": {
+        "title": "Tunatumia kuki",
+        "message": "Tunatumia kuki ili kuboresha uzoefu wako, kuchanganua trafiki ya tovuti, na kusaidia ujumbe wetu wa kibinadamu. Kwa kubofya \"Kubali\", unakubali matumizi yetu ya kuki. Soma yetu",
+        "accept": "Kubali Kuki",
+        "decline": "Kataa"
+    },
     "common": {
         "loading": "Inapakia...",
         "error": "Hitilafu imetokea",

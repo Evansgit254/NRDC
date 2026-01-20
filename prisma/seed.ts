@@ -531,41 +531,64 @@ async function main() {
 
     // Seed Translations for Blog Posts
     console.log('Seeding Blog Post translations...');
-    const blogTranslations = {
+    const blogTranslations: Record<string, Record<string, any>> = {
         'welcome-to-nrdc': {
-            title: 'Bienvenue au NRDC',
-            content: 'Nous sommes dédiés au soutien des réfugiés et des communautés déplacées grâce à nos programmes complets de nutrition et de santé.',
-            excerpt: 'Introduction à notre mission et notre vision pour l\'avenir.'
+            fr: {
+                title: 'Bienvenue au NRDC',
+                content: 'Nous sommes dédiés au soutien des réfugiés et des communautés déplacées grâce à nos programmes complets de nutrition et de santé.',
+                excerpt: 'Introduction à notre mission et notre vision pour l\'avenir.'
+            },
+            sw: {
+                title: 'Karibu NRDC',
+                content: 'Tumejitolea kusaidia wakimbizi na jamii zilizohamishwa kupitia mipango yetu kamili ya lishe na afya.',
+                excerpt: 'Utangulizi wa ujumbe na maono yetu ya baadaye.'
+            }
         },
         'success-community-garden': {
-            title: 'Histoire de Succès : Jardin Communautaire',
-            content: 'Notre récolte récente a fourni des légumes frais à plus de 200 familles dans le camp.',
-            excerpt: 'Comment l\'agriculture durable change des vies dans le camp.'
+            fr: {
+                title: 'Histoire de Succès : Jardin Communautaire',
+                content: 'Notre récolte récente a fourni des légumes frais à plus de 200 familles dans le camp.',
+                excerpt: 'Comment l\'agriculture durable change des vies dans le camp.'
+            },
+            sw: {
+                title: 'Hadithi ya Mafanikio: Bustani ya Jamii',
+                content: 'Mavuno yetu ya hivi karibuni yametoa mboga mbichi kwa zaidi ya familia 200 kambini.',
+                excerpt: 'Jinsi kilimo endelevu kinavyobadilisha maisha kambini.'
+            }
         },
         'emergency-relief-update': {
-            title: 'Mise à Jour des Secours d\'Urgence',
-            content: 'Nous avons distribué avec succès plus de 5000 repas nutritifs ce mois-ci.',
-            excerpt: 'Rapport mensuel sur nos efforts de nutrition d\'urgence.'
+            fr: {
+                title: 'Mise à Jour des Secours d\'Urgence',
+                content: 'Nous avons distribué avec succès plus de 5000 repas nutritifs ce mois-ci.',
+                excerpt: 'Rapport mensuel sur nos efforts de nutrition d\'urgence.'
+            },
+            sw: {
+                title: 'Taarifa ya Msaada wa Dharura',
+                content: 'Tumefanikiwa kutoa zaidi ya milo 5000 yenye lishe mwezi huu.',
+                excerpt: 'Ripoti ya kila mwezi kuhusu juhudi zetu za lishe ya dharura.'
+            }
         }
     };
 
-    for (const [slug, trans] of Object.entries(blogTranslations)) {
+    for (const [slug, translations] of Object.entries(blogTranslations)) {
         const post = await prisma.blogPost.findUnique({ where: { slug } });
         if (post) {
-            await prisma.blogPostTranslation.upsert({
-                where: {
-                    postId_locale: {
+            for (const [locale, trans] of Object.entries(translations)) {
+                await prisma.blogPostTranslation.upsert({
+                    where: {
+                        postId_locale: {
+                            postId: post.id,
+                            locale
+                        }
+                    },
+                    update: trans,
+                    create: {
+                        ...trans,
                         postId: post.id,
-                        locale: 'fr'
+                        locale
                     }
-                },
-                update: trans,
-                create: {
-                    ...trans,
-                    postId: post.id,
-                    locale: 'fr'
-                }
-            });
+                });
+            }
         }
     }
 
@@ -589,144 +612,226 @@ async function main() {
 
     // Seed Translations for Statistics
     console.log('Seeding Statistic translations...');
-    const statTranslations = {
-        'lives-impacted': { label: 'Vies Impactées' },
-        'meals-provided': { label: 'Repas Fournis' },
-        'sustainable-farming': { label: 'Agriculture Durable' },
-        'partner-organizations': { label: 'Organisations Partenaires' }
+    const statTranslations: Record<string, Record<string, any>> = {
+        'lives-impacted': {
+            fr: { label: 'Vies Impactées' },
+            sw: { label: 'Maisha Yaliyofikiwa' }
+        },
+        'meals-provided': {
+            fr: { label: 'Repas Fournis' },
+            sw: { label: 'Milo Iliyotolewa' }
+        },
+        'sustainable-farming': {
+            fr: { label: 'Agriculture Durable' },
+            sw: { label: 'Kilimo Endelevu' }
+        },
+        'partner-organizations': {
+            fr: { label: 'Organisations Partenaires' },
+            sw: { label: 'Mashirika Washirika' }
+        }
     };
-    for (const [id, trans] of Object.entries(statTranslations)) {
-        const stat = await prisma.statistic.findFirst({ where: { id: { contains: id } } });
+    for (const [id, translations] of Object.entries(statTranslations)) {
+        const stat = await prisma.statistic.findFirst({
+            where: {
+                label: id.replace(/-/g, ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+            }
+        });
         if (stat) {
-            await prisma.statisticTranslation.upsert({
-                where: { statisticId_locale: { statisticId: stat.id, locale: 'fr' } },
-                update: trans,
-                create: { ...trans, statisticId: stat.id, locale: 'fr' }
-            });
+            for (const [locale, trans] of Object.entries(translations)) {
+                await prisma.statisticTranslation.upsert({
+                    where: { statisticId_locale: { statisticId: stat.id, locale } },
+                    update: trans,
+                    create: { ...trans, statisticId: stat.id, locale }
+                });
+            }
         }
     }
 
     // Seed Translations for Resources
     console.log('Seeding Resource translations...');
-    const resourceTranslations = {
-        'strategic-plan-2025-2030': { title: 'Plan Stratégique 2025-2030', description: 'Notre stratégie complète pour les cinq prochaines années' },
-        'annual-report-2024': { title: 'Rapport Annuel 2024', description: 'Aperçu complet de notre impact en 2024' }
+    const resourceTranslations: Record<string, Record<string, any>> = {
+        'strategic-plan-2025-2030': {
+            fr: { title: 'Plan Stratégique 2025-2030', description: 'Notre stratégie complète pour les cinq prochaines années' },
+            sw: { title: 'Mpango Mkakati 2025-2030', description: 'Mkakati wetu kamili kwa miaka mitano ijayo' }
+        },
+        'annual-report-2024': {
+            fr: { title: 'Rapport Annuel 2024', description: 'Aperçu complet de notre impact en 2024' },
+            sw: { title: 'Ripoti ya Mwaka 2024', description: 'Muhtasari kamili wa athari zetu mnamo 2024' }
+        }
     };
-    for (const [id, trans] of Object.entries(resourceTranslations)) {
+    for (const [id, translations] of Object.entries(resourceTranslations)) {
         const resource = await prisma.resource.findFirst({ where: { id: { contains: id } } });
         if (resource) {
-            await prisma.resourceTranslation.upsert({
-                where: { resourceId_locale: { resourceId: resource.id, locale: 'fr' } },
-                update: trans,
-                create: { ...trans, resourceId: resource.id, locale: 'fr' }
-            });
+            for (const [locale, trans] of Object.entries(translations)) {
+                await prisma.resourceTranslation.upsert({
+                    where: { resourceId_locale: { resourceId: resource.id, locale } },
+                    update: trans,
+                    create: { ...trans, resourceId: resource.id, locale }
+                });
+            }
         }
     }
 
     // Seed Translations for Testimonials
     console.log('Seeding Testimonial translations...');
-    const testimonialTranslations = {
-        'amina-hassan': { message: 'Le programme de nutrition a transformé notre communauté. Mes enfants sont en meilleure santé et s\'épanouissent.', role: 'Membre de la Communauté' },
-        'john-kamau': { message: 'Travailler avec le NRDC a été incroyablement gratifiant. L\'impact que nous avons est réel et durable.', role: 'Bénévole' }
+    const testimonialTranslations: Record<string, Record<string, any>> = {
+        'amina-hassan': {
+            fr: { message: 'Le programme de nutrition a transformé notre communauté. Mes enfants sont en meilleure santé et s\'épanouissent.', role: 'Membre de la Communauté' },
+            sw: { message: 'Mpango wa lishe umebadilisha jamii yetu. Watoto wangu ni wenye afya bora na wanastawi.', role: 'Mwanajamii' }
+        },
+        'john-kamau': {
+            fr: { message: 'Travailler avec le NRDC a été incroyablement gratifiant. L\'impact que nous avons est réel et durable.', role: 'Bénévole' },
+            sw: { message: 'Kufanya kazi na NRDC kumekuwa na manufaa makubwa. Athari tunayotengeneza ni ya kweli na ya kudumu.', role: 'Mjitolea' }
+        }
     };
-    for (const [id, trans] of Object.entries(testimonialTranslations)) {
-        const testimonial = await prisma.testimonial.findFirst({ where: { id: { contains: id } } });
+    for (const [id, translations] of Object.entries(testimonialTranslations)) {
+        const testimonial = await prisma.testimonial.findFirst({
+            where: {
+                name: id.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+            }
+        });
         if (testimonial) {
-            await prisma.testimonialTranslation.upsert({
-                where: { testimonialId_locale: { testimonialId: testimonial.id, locale: 'fr' } },
-                update: trans,
-                create: { ...trans, testimonialId: testimonial.id, locale: 'fr' }
-            });
+            for (const [locale, trans] of Object.entries(translations)) {
+                await prisma.testimonialTranslation.upsert({
+                    where: { testimonialId_locale: { testimonialId: testimonial.id, locale } },
+                    update: trans,
+                    create: { ...trans, testimonialId: testimonial.id, locale }
+                });
+            }
         }
     }
 
     // Seed Translations for Donation Tiers
     console.log('Seeding Donation Tier translations...');
-    const tierTranslations = {
-        500: { description: 'Fournit des repas pour une famille pendant 3 jours' },
-        1000: { description: 'Fournit de l\'eau potable à une communauté pendant une semaine' },
-        5000: { description: 'Soutient l\'éducation d\'un enfant pour un trimestre' }
+    const tierTranslations: Record<number, Record<string, any>> = {
+        500: {
+            fr: { description: 'Fournit des repas pour une famille pendant 3 jours' },
+            sw: { description: 'Hutoa milo kwa familia kwa siku 3' }
+        },
+        1000: {
+            fr: { description: 'Fournit de l\'eau potable à une communauté pendant une semaine' },
+            sw: { description: 'Hutoa maji safi kwa jamii kwa wiki moja' }
+        },
+        5000: {
+            fr: { description: 'Soutient l\'éducation d\'un enfant pour un trimestre' },
+            sw: { description: 'Husaidia elimu ya mtoto kwa muhula mmoja' }
+        }
     };
-    for (const [amount, trans] of Object.entries(tierTranslations)) {
+    for (const [amount, translations] of Object.entries(tierTranslations)) {
         const tier = await prisma.donationTier.findFirst({ where: { amount: parseInt(amount) } });
         if (tier) {
-            await prisma.donationTierTranslation.upsert({
-                where: { donationTierId_locale: { donationTierId: tier.id, locale: 'fr' } },
-                update: trans,
-                create: { ...trans, donationTierId: tier.id, locale: 'fr' }
-            });
+            for (const [locale, trans] of Object.entries(translations)) {
+                await prisma.donationTierTranslation.upsert({
+                    where: { donationTierId_locale: { donationTierId: tier.id, locale } },
+                    update: trans,
+                    create: { ...trans, donationTierId: tier.id, locale }
+                });
+            }
         }
     }
 
     // Seed Translations for Site Content
     console.log('Seeding Site Content translations...');
-    const contentTranslations = {
-        'hero_title': { value: 'Nourrir l\'Espoir dans les Communautés Déplacées' },
-        'hero_subtitle': { value: 'Fournir une nutrition essentielle, une sécurité alimentaire et un soutien sanitaire à ceux qui en ont le plus besoin.' },
-        'mission_statement': { value: 'Fournir des programmes de nutrition, de sécurité alimentaire, de renforcement des capacités et de soutien sanitaire communautaire aux réfugiés et aux personnes déplacées.' },
-        'vision_statement': { value: 'Un monde où les communautés déplacées disposent des ressources et du soutien nécessaires pour prospérer de manière indépendante.' },
-        'core_values': { value: 'Intégrité, Compassion, Durabilité, Responsabilité, Autonomisation' }
+    const contentTranslations: Record<string, Record<string, any>> = {
+        'hero_title': {
+            fr: { value: 'Nourrir l\'Espoir dans les Communautés Déplacées' },
+            sw: { value: 'Kustawisha Tumaini katika Jamii Zilizohamishwa' }
+        },
+        'hero_subtitle': {
+            fr: { value: 'Fournir une nutrition essentielle, une sécurité alimentaire et un soutien sanitaire à ceux qui en ont le plus besoin.' },
+            sw: { value: 'Kutoa lishe muhimu, usalama wa chakula, na msaada wa afya kwa wale wanaohitaji zaidi.' }
+        },
+        'mission_statement': {
+            fr: { value: 'Fournir des programmes de nutrition, de sécurité alimentaire, de renforcement des capacités et de soutien sanitaire communautaire aux réfugiés et aux personnes déplacées.' },
+            sw: { value: 'Kutoa lishe, mipango ya usalama wa chakula, kujenga uwezo, na msaada wa afya ya jamii kwa wakimbizi na watu waliohamishwa.' }
+        },
+        'vision_statement': {
+            fr: { value: 'Un monde où les communautés déplacées disposent des ressources et du soutien nécessaires pour prospérer de manière indépendante.' },
+            sw: { value: 'Ulimwengu ambapo jamii zilizohamishwa zina rasilimali na msaada wa kustawi kwa kujitegemea.' }
+        },
+        'core_values': {
+            fr: { value: 'Intégrité, Compassion, Durabilité, Responsabilité, Autonomisation' },
+            sw: { value: 'Uadilifu, Huruma, Uendelevu, Uwajibikaji, Uwezeshaji' }
+        }
     };
-    for (const [key, trans] of Object.entries(contentTranslations)) {
+    for (const [key, translations] of Object.entries(contentTranslations)) {
         const content = await prisma.siteContent.findUnique({ where: { key } });
         if (content) {
-            await prisma.siteContentTranslation.upsert({
-                where: { siteContentId_locale: { siteContentId: content.id, locale: 'fr' } },
-                update: trans,
-                create: { ...trans, siteContentId: content.id, locale: 'fr' }
-            });
+            for (const [locale, trans] of Object.entries(translations)) {
+                await prisma.siteContentTranslation.upsert({
+                    where: { siteContentId_locale: { siteContentId: content.id, locale } },
+                    update: trans,
+                    create: { ...trans, siteContentId: content.id, locale }
+                });
+            }
         }
     }
 
     // Seed Translations for Donation Stats
     console.log('Seeding Donation Stat translations...');
-    const donationStatTranslations = {
-        'Goes directly to programs': { label: 'Va directement aux programmes' },
-        'People helped annually': { label: 'Personnes aidées annuellement' },
-        'Countries reached': { label: 'Pays atteints' },
-        'Transparency guaranteed': { label: 'Transparence garantie' }
+    const donationStatTranslations: Record<string, Record<string, any>> = {
+        'Goes directly to programs': {
+            fr: { label: 'Va directement aux programmes' },
+            sw: { label: 'Huenda moja kwa moja kwenye mipango' }
+        },
+        'People helped annually': {
+            fr: { label: 'Personnes aidées annuellement' },
+            sw: { label: 'Watu wanaosaidiwa kila mwaka' }
+        },
+        'Countries reached': {
+            fr: { label: 'Pays atteints' },
+            sw: { label: 'Nchi zilizofikiwa' }
+        },
+        'Transparency guaranteed': {
+            fr: { label: 'Transparence garantie' },
+            sw: { label: 'Uwazi umehakikishwa' }
+        }
     };
-    for (const [label, trans] of Object.entries(donationStatTranslations)) {
+    for (const [label, translations] of Object.entries(donationStatTranslations)) {
         const stat = await prisma.donationStat.findFirst({ where: { label } });
         if (stat) {
-            await prisma.donationStatTranslation.upsert({
-                where: { donationStatId_locale: { donationStatId: stat.id, locale: 'fr' } },
-                update: trans,
-                create: { ...trans, donationStatId: stat.id, locale: 'fr' }
-            });
+            for (const [locale, trans] of Object.entries(translations)) {
+                await prisma.donationStatTranslation.upsert({
+                    where: { donationStatId_locale: { donationStatId: stat.id, locale } },
+                    update: trans,
+                    create: { ...trans, donationStatId: stat.id, locale }
+                });
+            }
         }
     }
 
     // Seed Translations for Gallery Images
     console.log('Seeding Gallery Image translations...');
-    const galleryTranslations = {
-        'Community Support': 'Soutien Communautaire',
-        'Food Distribution': 'Distribution de Nourriture',
-        'Sustainable Farming': 'Agriculture Durable',
-        'Medical Checkups': 'Bilans Médicaux',
-        'Education Program': 'Programme d\'Éducation',
-        'Youth Activities': 'Activités pour la Jeunesse',
-        'Clean Water Project': 'Projet d\'Eau Potable',
-        'Women Empowerment': 'Autonomisation des Femmes',
-        'Staff Meeting': 'Réunion du Personnel',
-        'Community Elders': 'Aînés de la Communauté',
-        'Mobile Clinic Van': 'Fourgon de Clinique Mobile',
-        'Cultural Celebration': 'Célébration Culturelle',
-        'School Lunch Program': 'Programme de Déjeuner Scolaire',
-        'Tree Planting': 'Plantation d\'Arbres',
-        'Joyful Moments': 'Moments de Joie',
-        'Skills Training': 'Formation aux Compétences',
-        'Distribution Center': 'Centre de Distribution',
-        'Mother and Child': 'Mère et Enfant'
+    const galleryTranslations: Record<string, Record<string, any>> = {
+        'Community Support': { fr: 'Soutien Communautaire', sw: 'Msaada wa Jamii' },
+        'Food Distribution': { fr: 'Distribution de Nourriture', sw: 'Usambazaji wa Chakula' },
+        'Sustainable Farming': { fr: 'Agriculture Durable', sw: 'Kilimo Endelevu' },
+        'Medical Checkups': { fr: 'Bilans Médicaux', sw: 'Uchunguzi wa Matibabu' },
+        'Education Program': { fr: 'Programme d\'Éducation', sw: 'Mpango wa Elimu' },
+        'Youth Activities': { fr: 'Activités pour la Jeunesse', sw: 'Shughuli za Vijana' },
+        'Clean Water Project': { fr: 'Projet d\'Eau Potable', sw: 'Mradi wa Maji Safi' },
+        'Women Empowerment': { fr: 'Autonomisation des Femmes', sw: 'Uwezeshaji wa Wanawake' },
+        'Staff Meeting': { fr: 'Réunion du Personnel', sw: 'Mkutano wa Wafanyakazi' },
+        'Community Elders': { fr: 'Aînés de la Communauté', sw: 'Wazee wa Jamii' },
+        'Mobile Clinic Van': { fr: 'Fourgon de Clinique Mobile', sw: 'Gari la Kliniki Inayotembea' },
+        'Cultural Celebration': { fr: 'Célébration Culturelle', sw: 'Sherehe za Kitamaduni' },
+        'School Lunch Program': { fr: 'Programme de Déjeuner Scolaire', sw: 'Mpango wa Chakula cha Mchana Shuleni' },
+        'Tree Planting': { fr: 'Plantation d\'Arbres', sw: 'Upandaji Miti' },
+        'Joyful Moments': { fr: 'Moments de Joie', sw: 'Wakati wa Furaha' },
+        'Skills Training': { fr: 'Formation aux Compétences', sw: 'Mafunzo ya Ujuzi' },
+        'Distribution Center': { fr: 'Centre de Distribution', sw: 'Kituo cha Usambazaji' },
+        'Mother and Child': { fr: 'Mère et Enfant', sw: 'Mama na Mtoto' }
     };
-    for (const [caption, translatedCaption] of Object.entries(galleryTranslations)) {
+    for (const [caption, translations] of Object.entries(galleryTranslations)) {
         const image = await prisma.galleryImage.findFirst({ where: { caption } });
         if (image) {
-            await prisma.galleryImageTranslation.upsert({
-                where: { galleryImageId_locale: { galleryImageId: image.id, locale: 'fr' } },
-                update: { caption: translatedCaption },
-                create: { caption: translatedCaption, galleryImageId: image.id, locale: 'fr' }
-            });
+            for (const [locale, translatedCaption] of Object.entries(translations)) {
+                await prisma.galleryImageTranslation.upsert({
+                    where: { galleryImageId_locale: { galleryImageId: image.id, locale } },
+                    update: { caption: translatedCaption },
+                    create: { caption: translatedCaption, galleryImageId: image.id, locale }
+                });
+            }
         }
     }
 

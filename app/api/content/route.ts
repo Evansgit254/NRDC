@@ -22,9 +22,10 @@ export async function GET(request: Request) {
         // Convert array to object for easier access
         const contentMap = content.reduce((acc, item) => {
             const translation = item.translations?.[0];
-            acc[item.key] = translation?.value || item.value
+            // If locale is provided but no translation exists, return undefined to allow frontend fallback
+            acc[item.key] = translation?.value || (locale ? undefined : item.value)
             return acc
-        }, {} as Record<string, string>)
+        }, {} as Record<string, string | undefined>)
 
         return NextResponse.json(contentMap)
     } catch (error) {
