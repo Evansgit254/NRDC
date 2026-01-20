@@ -37,3 +37,15 @@ You can use the following text to manually update the team member profiles in yo
 ### Swahili
 **Title:** Msanidi Programu wa Full-Stack  
 **Bio:** Evans Mumo ni Msanidi Programu wa Full-Stack mwenye ujuzi anayehusika na msingi wa kiteknolojia na uwepo wa kidijitali wa NRDC. Akiwa na utaalamu katika teknolojia za kisasa za wavuti, anajenga na kudumisha mifumo muhimu inayoliwezesha shirika kusimamia programu, kupokea michango, na kushiriki malengo yake na ulimwengu. Evans ana shauku ya kutumia teknolojia kutatua changamoto za kibinadamu na kuhakikisha uzoefu bora kwa wadau wote.
+
+---
+
+## 4. Sylvia Isabari (Secretary)
+
+### English
+**Title:** Secretary  
+**Bio:** Sylvia Isabari is the Secretary of NRDC, playing a crucial role in the organization's administration and coordination. She manages documentation, scheduling, and communication, ensuring that all operations run smoothly. With her exceptional organizational skills and commitment to the mission, Sylvia supports the leadership team in executing programs effectively and maintaining transparent communication with stakeholders and the community.
+
+### Swahili
+**Title:** Katibu  
+**Bio:** Sylvia Isabari ni Katibu wa NRDC, akitekeleza jukumu muhimu katika usimamizi na uratibu wa shirika. Anasimmia nyaraka, ratiba, na mawasiliano, akihakikisha kuwa shughuli zote zinaendeshwa kwa ufasaha. Kwa ujuzi wake mkubwa wa upangaji na kujitolea kwake kwa malengo ya shirika, Sylvia anasaidia timu ya uongozi katika kutekeleza mipango kwa ufanisi na kudumisha mawasiliano ya wazi na wadau pamoja na jamii.
