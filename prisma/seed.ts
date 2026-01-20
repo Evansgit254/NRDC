@@ -386,7 +386,7 @@ async function main() {
         },
         {
             key: 'contact_email',
-            value: 'nrdc@nrdc.africa',
+            value: 'nrdcofficial12@gmail.com',
             type: 'TEXT',
         },
         {

@@ -18,7 +18,7 @@ export interface SendEmailOptions {
  */
 export async function sendEmail(options: SendEmailOptions) {
     try {
-        const from = options.from || process.env.EMAIL_FROM || 'noreply@nrdc.org'
+        const from = options.from || process.env.EMAIL_FROM || 'nrdcofficial12@gmail.com'
 
         const { data, error } = await resend.emails.send({
             from,
@@ -134,7 +134,7 @@ export async function sendDonationReceipt(params: {
         </div>
         <div class="footer">
             <p>Nutrition Relief and Development Center (NRDC)<br>
-            Email: ${process.env.ADMIN_EMAIL || 'nrdc@nrdc.africa'}</p>
+            Email: ${process.env.ADMIN_EMAIL || 'nrdcofficial12@gmail.com'}</p>
             <p style="font-size: 12px; color: #999;">
                 This is an automated receipt. Please do not reply to this email.
             </p>
@@ -208,7 +208,7 @@ export async function sendDonationAlertToAdmin(params: {
 </html>
     `
 
-    const adminEmail = process.env.ADMIN_EMAIL || 'nrdc@nrdc.africa'
+    const adminEmail = process.env.ADMIN_EMAIL || 'nrdcofficial12@gmail.com'
 
     return sendEmail({
         to: adminEmail,
@@ -312,7 +312,7 @@ export async function sendContactAlertToAdmin(params: {
 </html>
     `
 
-    const adminEmail = process.env.ADMIN_EMAIL || 'admin@nrdc.org'
+    const adminEmail = process.env.ADMIN_EMAIL || 'nrdcofficial12@gmail.com'
 
     return sendEmail({
         to: adminEmail,
