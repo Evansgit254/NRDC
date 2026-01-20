@@ -39,6 +39,7 @@ interface Program {
   translations?: any[]
 }
 
+// Main Landing Page Component
 export default function Home() {
   const t = useTranslations();
   const [statistics, setStatistics] = useState<Statistic[]>([])
@@ -152,6 +153,8 @@ export default function Home() {
         onMouseLeave={() => setIsPaused(false)}
         aria-label="Hero carousel"
       >
+        {/* Base layer to prevent white gap in Firefox */}
+        <div className="absolute inset-0 bg-gray-900 z-0" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#6E8C82]/70 to-[#2E8B57]/70 z-10" />
 
         {/* Sliding Background Images */}
