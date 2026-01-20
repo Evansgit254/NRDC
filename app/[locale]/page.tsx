@@ -330,25 +330,25 @@ export default function Home() {
               <p className="text-gray-600 text-center mb-12">{t('testimonials.subtitle')}</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="flex flex-wrap justify-center gap-8 md:gap-10">
               {testimonials.slice(0, 3).map((testimonial, index) => (
                 <div
                   key={index}
-                  className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 h-full"
+                  className="bg-white p-8 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-gray-100 flex flex-col w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-2rem)] max-w-[400px] transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.1)] hover:-translate-y-1"
                 >
-                  <Quote size={32} className="text-[#6E8C82] mb-4 opacity-20" />
-                  <p className="text-gray-700 mb-4 italic">&quot;{testimonial.message}&quot;</p>
-                  <div className="flex items-center justify-between mt-auto">
+                  <Quote size={40} className="text-[#6E8C82] mb-6 opacity-20" />
+                  <p className="text-gray-700 mb-6 italic leading-relaxed text-lg flex-grow">&quot;{testimonial.message}&quot;</p>
+                  <div className="flex items-center justify-between mt-auto pt-6 border-t border-gray-50">
                     <div>
-                      <p className="font-semibold text-gray-900">{testimonial.name}</p>
+                      <p className="font-bold text-gray-900">{testimonial.name}</p>
                       {testimonial.role && (
-                        <p className="text-sm text-gray-600">{testimonial.role}</p>
+                        <p className="text-sm text-[#6E8C82] font-medium">{testimonial.role}</p>
                       )}
                     </div>
                     {testimonial.rating && (
                       <div className="flex gap-1">
                         {Array.from({ length: testimonial.rating }).map((_, i) => (
-                          <Star key={i} size={14} className="fill-yellow-400 text-yellow-400" />
+                          <Star key={i} size={16} className="fill-yellow-400 text-yellow-400" />
                         ))}
                       </div>
                     )}
