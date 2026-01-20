@@ -147,7 +147,7 @@ export default function Home() {
     <div className="flex flex-col gap-16 pb-16">
       {/* Hero Section with Enhanced Carousel */}
       <section
-        className="relative min-h-[600px] flex items-center justify-center text-white overflow-hidden group"
+        className="relative h-[600px] flex items-center justify-center text-white overflow-hidden group"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
         aria-label="Hero carousel"
@@ -278,7 +278,7 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-8">
+        <div className="flex flex-wrap justify-center gap-8 md:gap-10">
           {programs.length > 0 ? (
             programs.map((program, i) => {
               const photos = JSON.parse(program.photos || '[]')
@@ -287,7 +287,7 @@ export default function Home() {
               return (
                 <div
                   key={program.id}
-                  className="bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)] overflow-hidden transition-all duration-500 border border-gray-100 group flex flex-col w-full md:w-[calc(50%-2rem)] lg:w-[calc(33.333%-2rem)] max-w-sm"
+                  className="bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] overflow-hidden transition-all duration-300 border border-gray-100 group flex flex-col w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-2rem)] max-w-[380px]"
                 >
                   <div className="h-48 bg-gray-200 relative overflow-hidden">
                     <div
@@ -298,11 +298,13 @@ export default function Home() {
                   </div>
                   <div className="p-6 flex flex-col flex-grow">
                     <h3 className="text-xl font-bold mb-2 text-gray-900 group-hover:text-[#6E8C82] transition-colors">{program.title}</h3>
-                    <p className="text-gray-600 mb-4 line-clamp-2 flex-grow">{program.description}</p>
-                    <Link href={`/programs/${program.slug}`} className="text-[#2E8B57] font-medium hover:text-[#267347] hover:underline transition-colors inline-flex items-center gap-1 group/link mt-auto">
-                      {t('programs.learnMore')}
-                      <ArrowRight size={16} className="transition-transform group-hover/link:translate-x-1" />
-                    </Link>
+                    <p className="text-gray-600 mb-4 line-clamp-3 flex-grow">{program.description}</p>
+                    <div className="mt-auto">
+                      <Link href={`/programs/${program.slug}`} className="text-[#2E8B57] font-medium hover:text-[#267347] hover:underline transition-colors inline-flex items-center gap-1 group/link">
+                        {t('programs.learnMore')}
+                        <ArrowRight size={16} className="transition-transform group-hover/link:translate-x-1" />
+                      </Link>
+                    </div>
                   </div>
                 </div>
               )
