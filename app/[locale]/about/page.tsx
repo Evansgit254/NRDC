@@ -130,17 +130,15 @@ export default function AboutPage() {
                             className="text-center group w-full sm:w-64"
                         >
                             {member.imageUrl ? (
-                                <div className="w-48 h-48 mx-auto mb-6 rounded-full p-3 relative border-4 border-white shadow-xl bg-white ring-1 ring-gray-200/50 transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2">
-                                    <div className="w-full h-full rounded-full overflow-hidden relative shadow-inner">
-                                        <Image
-                                            src={member.imageUrl}
-                                            alt={member.name}
-                                            fill
-                                            className="object-cover object-top transition-transform duration-700 group-hover:scale-110"
-                                            sizes="192px"
-                                            priority={index < 3}
-                                        />
-                                    </div>
+                                <div className="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden relative border-4 border-white shadow-xl bg-gray-50 ring-1 ring-gray-200/50 transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2">
+                                    <Image
+                                        src={member.imageUrl}
+                                        alt={member.name}
+                                        fill
+                                        className="object-cover object-top transition-transform duration-700 group-hover:scale-110"
+                                        sizes="192px"
+                                        priority={index < 3}
+                                    />
                                 </div>
                             ) : (
                                 <div className="w-48 h-48 mx-auto mb-6 rounded-full bg-gray-100 flex items-center justify-center border-4 border-white shadow-lg">
