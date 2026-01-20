@@ -24,8 +24,8 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
         <div className="pb-16">
             <section className="bg-[#6E8C82] text-white py-20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-6 animate-fadeInUp">{t('title')}</h1>
-                    <p className="text-xl max-w-3xl mx-auto text-white/80 animate-fadeInUp animation-delay-200">
+                    <h1 className="text-4xl md:text-5xl font-bold mb-6">{t('title')}</h1>
+                    <p className="text-xl max-w-3xl mx-auto text-white/80">
                         {t('subtitle')}
                     </p>
                 </div>
@@ -37,44 +37,53 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
             </div>
 
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="flex flex-wrap justify-center gap-8 md:gap-10">
                     {posts.map((post) => {
                         const translation = post.translations[0];
                         const title = translation?.title || post.title;
                         const excerpt = translation?.excerpt || post.excerpt;
 
                         return (
-                            <article key={post.id} className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 h-full flex flex-col hover-lift">
+                            <article
+                                key={post.id}
+                                className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] overflow-hidden transition-all duration-300 border border-gray-100 group flex flex-col w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-2rem)] max-w-[380px]"
+                            >
                                 {post.image && (
-                                    <div className="h-48 bg-gray-200 relative image-zoom-container">
+                                    <div className="h-48 bg-gray-200 relative overflow-hidden">
                                         <div
-                                            className="absolute inset-0 bg-cover bg-center image-zoom"
+                                            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                                             style={{ backgroundImage: `url("${post.image}")` }}
                                         />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                     </div>
                                 )}
                                 <div className="p-6 flex flex-col flex-grow">
-                                    <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
-                                        <Calendar size={16} />
-                                        {new Date(post.createdAt).toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', {
-                                            month: 'long',
-                                            day: 'numeric',
-                                            year: 'numeric'
-                                        })}
+                                    <div className="flex items-center gap-4 text-sm mb-4">
+                                        <div className="flex items-center gap-1.5 text-gray-500">
+                                            <Calendar size={14} />
+                                            {new Date(post.createdAt).toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', {
+                                                month: 'short',
+                                                day: 'numeric',
+                                                year: 'numeric'
+                                            })}
+                                        </div>
+                                        <div className="bg-[#6E8C82]/10 text-[#6E8C82] text-xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wide">
+                                            {post.category}
+                                        </div>
                                     </div>
-                                    <div className="inline-block bg-[#6E8C82]/20 text-[#6E8C82] text-xs font-semibold px-3 py-1 rounded-full mb-3 w-fit">
-                                        {post.category}
-                                    </div>
-                                    <h2 className="text-xl font-bold mb-3 text-gray-900">{title}</h2>
+                                    <h2 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-[#6E8C82] transition-colors line-clamp-2">{title}</h2>
                                     {excerpt && (
-                                        <p className="text-gray-600 mb-4 line-clamp-3 flex-grow">{excerpt}</p>
+                                        <p className="text-gray-600 mb-6 line-clamp-3 text-sm leading-relaxed">{excerpt}</p>
                                     )}
-                                    <Link
-                                        href={`/blog/${post.slug}`}
-                                        className="inline-flex items-center text-[#6E8C82] font-semibold hover:underline mt-auto"
-                                    >
-                                        {t('readMore')} <ArrowRight size={16} className="ml-1" />
-                                    </Link>
+                                    <div className="mt-auto">
+                                        <Link
+                                            href={`/blog/${post.slug}`}
+                                            className="inline-flex items-center text-[#2E8B57] font-bold hover:text-[#267347] hover:underline transition-colors group/link"
+                                        >
+                                            {t('readMore')}
+                                            <ArrowRight size={16} className="ml-1 transition-transform group-hover/link:translate-x-1" />
+                                        </Link>
+                                    </div>
                                 </div>
                             </article>
                         )

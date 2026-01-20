@@ -123,32 +123,32 @@ export default function AboutPage() {
                 <div>
                     <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">{t('leadership')}</h2>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="flex flex-wrap justify-center gap-12 md:gap-16">
                     {teamMembers.map((member, index) => (
                         <div
                             key={index}
-                            className="text-center"
+                            className="text-center group w-full sm:w-64"
                         >
                             {member.imageUrl ? (
-                                <div className="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden relative border-4 border-white shadow-xl bg-gray-50 ring-1 ring-gray-200/50">
+                                <div className="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden relative border-4 border-white shadow-xl bg-gray-50 ring-1 ring-gray-200/50 transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2">
                                     <Image
                                         src={member.imageUrl}
                                         alt={member.name}
                                         fill
-                                        className="object-cover transition-transform duration-500 hover:scale-105"
+                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
                                         sizes="192px"
                                         priority={index < 3}
                                     />
                                 </div>
                             ) : (
-                                <div className="w-48 h-48 mx-auto mb-4 rounded-full bg-gray-200 flex items-center justify-center">
-                                    <Users size={64} className="text-gray-400" />
+                                <div className="w-48 h-48 mx-auto mb-6 rounded-full bg-gray-100 flex items-center justify-center border-4 border-white shadow-lg">
+                                    <Users size={64} className="text-gray-300" />
                                 </div>
                             )}
-                            <h3 className="text-xl font-bold text-gray-900">{member.name}</h3>
-                            <p className="text-[#6E8C82] mb-2">{member.title}</p>
+                            <h3 className="text-xl font-bold text-gray-900 group-hover:text-[#6E8C82] transition-colors">{member.name}</h3>
+                            <p className="text-[#6E8C82] font-medium mb-3 uppercase text-xs tracking-widest">{member.title}</p>
                             {member.bio && (
-                                <p className="text-gray-600 text-sm max-w-xs mx-auto">{member.bio}</p>
+                                <p className="text-gray-600 text-sm leading-relaxed max-w-[240px] mx-auto">{member.bio}</p>
                             )}
                         </div>
                     ))}
@@ -164,21 +164,26 @@ export default function AboutPage() {
                     <div>
                         <h2 className="text-3xl font-bold mb-8 text-center">{t('resources')}</h2>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                    <div className="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto">
                         {resources.map((resource, index) => (
                             <div
                                 key={index}
                                 onClick={() => trackDownload(resource.id, resource.fileUrl)}
-                                className="bg-white/10 p-6 rounded-xl flex items-center justify-between transition-colors cursor-pointer"
+                                className="bg-white/10 hover:bg-white/20 p-8 rounded-2xl flex items-center justify-between transition-all duration-300 cursor-pointer border border-white/10 group w-full md:w-[calc(50%-0.75rem)]"
                             >
-                                <div>
-                                    <h3 className="font-bold text-lg">{resource.title}</h3>
-                                    <p className="text-sm opacity-80">{resource.fileType} - {resource.fileSize}</p>
+                                <div className="flex-grow mr-4">
+                                    <h3 className="font-bold text-lg mb-1 group-hover:text-white transition-colors">{resource.title}</h3>
+                                    <div className="flex items-center gap-2 text-sm text-white/70">
+                                        <span className="bg-white/10 px-2 py-0.5 rounded text-xs uppercase font-bold">{resource.fileType}</span>
+                                        <span>{resource.fileSize}</span>
+                                    </div>
                                     {resource.description && (
-                                        <p className="text-sm opacity-70 mt-1">{resource.description}</p>
+                                        <p className="text-sm text-white/60 mt-2 line-clamp-2 leading-relaxed">{resource.description}</p>
                                     )}
                                 </div>
-                                <Download size={24} />
+                                <div className="bg-white text-[#6E8C82] p-3 rounded-full transition-transform duration-300 group-hover:scale-110 shadow-lg">
+                                    <Download size={20} />
+                                </div>
                             </div>
                         ))}
                     </div>
