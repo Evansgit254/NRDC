@@ -34,12 +34,9 @@ yarn-error.log*
 .env*
 !.env.example
 
-# Bank Documentation & Folders (Keeping code tracked)
-BANK_API_INTEGRATION_REQUIREMENTS.md
-BANK_TRANSFER_SETUP_GUIDE.md
-MCHANGA_SETUP_GUIDE.md
-MARKETPLACE_BUSINESS_MODEL.md
-PRESENTATION_GUIDE.md
+# Documentation
+*.md
+!README.md
 Bank Response/
 *_Bank_Response_*.pdf
 Meeting_Prep_Brief_*.pdf
