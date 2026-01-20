@@ -22,8 +22,8 @@ export async function GET(request: Request) {
         // Convert array to object for easier access
         const contentMap = content.reduce((acc, item) => {
             const translation = item.translations?.[0];
-            // If locale is provided but no translation exists, return undefined to allow frontend fallback
-            acc[item.key] = translation?.value || (locale ? undefined : item.value)
+            // If locale is provided (and is not 'en') but no translation exists, return undefined to allow frontend fallback
+            acc[item.key] = translation?.value || (locale && locale !== 'en' ? undefined : item.value)
             return acc
         }, {} as Record<string, string | undefined>)
 

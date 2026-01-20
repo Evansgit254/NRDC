@@ -26,8 +26,8 @@ export async function GET(request: Request) {
             const translation = testimonial.translations?.[0];
             return {
                 ...testimonial,
-                message: translation?.message || (locale ? undefined : testimonial.message),
-                role: translation?.role || (locale ? undefined : testimonial.role),
+                message: translation?.message || (locale && locale !== 'en' ? undefined : testimonial.message),
+                role: translation?.role || (locale && locale !== 'en' ? undefined : testimonial.role),
                 translations: undefined // Remove translations from response
             }
         })

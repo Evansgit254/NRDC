@@ -278,7 +278,7 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="flex flex-wrap justify-center gap-8">
           {programs.length > 0 ? (
             programs.map((program, i) => {
               const photos = JSON.parse(program.photos || '[]')
@@ -287,7 +287,7 @@ export default function Home() {
               return (
                 <div
                   key={program.id}
-                  className="bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)] overflow-hidden transition-all duration-500 border border-gray-100 group animate-fadeInUp"
+                  className="bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)] overflow-hidden transition-all duration-500 border border-gray-100 group animate-fadeInUp w-full md:w-[calc(50%-2rem)] lg:w-[calc(33.333%-2rem)] max-w-sm"
                   style={{ animationDelay: `${i * 150}ms` }}
                 >
                   <div className="h-48 bg-gray-200 relative overflow-hidden">

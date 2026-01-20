@@ -22,8 +22,8 @@ export async function GET(request: Request) {
             const translation = program.translations?.[0];
             return {
                 ...program,
-                title: translation?.title || (locale ? undefined : program.title),
-                description: translation?.description || (locale ? undefined : program.description),
+                title: translation?.title || (locale && locale !== 'en' ? undefined : program.title),
+                description: translation?.description || (locale && locale !== 'en' ? undefined : program.description),
                 translations: undefined // Remove translations from response
             }
         })

@@ -26,7 +26,7 @@ export async function GET(request: Request) {
             const translation = stat.translations?.[0];
             return {
                 ...stat,
-                label: translation?.label || (locale ? undefined : stat.label),
+                label: translation?.label || (locale && locale !== 'en' ? undefined : stat.label),
                 translations: undefined // Remove translations from response
             }
         })
