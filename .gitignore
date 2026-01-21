@@ -37,6 +37,8 @@ yarn-error.log*
 # Documentation
 *.md
 !README.md
+!public/docs/*.md
+!public/docs/*.pdf
 Bank Response/
 *_Bank_Response_*.pdf
 Meeting_Prep_Brief_*.pdf

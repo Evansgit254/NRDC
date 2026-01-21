@@ -304,7 +304,7 @@ async function main() {
         {
             title: 'Strategic Plan 2025-2030',
             description: 'Our comprehensive strategy for the next five years',
-            fileUrl: '',
+            fileUrl: '/docs/strategic-plan-2025.pdf',
             fileSize: '2.4 MB',
             fileType: 'PDF',
             category: 'Strategic Plan',
@@ -313,10 +313,28 @@ async function main() {
         {
             title: 'Annual Report 2024',
             description: 'Complete overview of our impact in 2024',
-            fileUrl: '',
+            fileUrl: '/docs/annual-report-2024.pdf',
             fileSize: '3.1 MB',
             fileType: 'PDF',
             category: 'Annual Report',
+            active: true,
+        },
+        {
+            title: 'Donation Refund Policy',
+            description: 'Terms and conditions for donation refunds',
+            fileUrl: '/docs/donation-refund-policy.pdf',
+            fileSize: '0.5 MB',
+            fileType: 'PDF',
+            category: 'Policy',
+            active: true,
+        },
+        {
+            title: 'Donation Utilization Policy',
+            description: 'Policies and procedures for donation utilization',
+            fileUrl: '/docs/donation-utilization-policy.pdf',
+            fileSize: '0.6 MB',
+            fileType: 'PDF',
+            category: 'Policy',
             active: true,
         },
     ]
@@ -657,6 +675,14 @@ async function main() {
         'annual-report-2024': {
             fr: { title: 'Rapport Annuel 2024', description: 'Aperçu complet de notre impact en 2024' },
             sw: { title: 'Ripoti ya Mwaka 2024', description: 'Muhtasari kamili wa athari zetu mnamo 2024' }
+        },
+        'donation-refund-policy': {
+            fr: { title: 'Politique de Remboursement des Dons', description: 'Conditions générales pour le remboursement des dons' },
+            sw: { title: 'Sera ya Kurejesha Michango', description: 'Sheria na masharti ya kurejesha michango' }
+        },
+        'donation-utilization-policy': {
+            fr: { title: 'Politique d\'Utilisation des Dons', description: 'Politiques et procédures d\'utilisation des dons' },
+            sw: { title: 'Sera ya Matumizi ya Michango', description: 'Sera na taratibu za matumizi ya michango' }
         }
     };
     for (const [id, translations] of Object.entries(resourceTranslations)) {
