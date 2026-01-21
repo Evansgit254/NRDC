@@ -95,7 +95,7 @@ export function generateOrganizationSchema() {
         name: 'Nutrition for Refugees and Displaced Communities',
         alternateName: 'NRDC',
         url: siteUrl,
-        logo: `${siteUrl}/logo.png`,
+        logo: `${siteUrl}/images/nrdc-logo-v3.png`,
         description: 'Supporting refugee nutrition and health programs across East Africa',
         address: {
             '@type': 'PostalAddress',
@@ -139,7 +139,7 @@ export function generateArticleSchema(params: {
             name: 'NRDC',
             logo: {
                 '@type': 'ImageObject',
-                url: `${siteUrl}/logo.png`,
+                url: `${siteUrl}/images/nrdc-logo-v3.png`,
             },
         },
         mainEntityOfPage: {

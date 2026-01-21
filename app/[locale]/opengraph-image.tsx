@@ -12,7 +12,7 @@ export const contentType = 'image/png'
 
 export default async function Image() {
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-    const logoUrl = `${siteUrl}/logo-512.png`
+    const logoUrl = `${siteUrl}/images/nrdc-logo-v3.png`
 
     return new ImageResponse(
         (
