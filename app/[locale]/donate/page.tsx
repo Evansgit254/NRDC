@@ -28,7 +28,7 @@ export default function DonatePage() {
     const [processingAmount, setProcessingAmount] = useState<number | null>(null)
     const [isRecurring, setIsRecurring] = useState(false)
     const [frequency, setFrequency] = useState<'monthly' | 'yearly'>('monthly')
-    const [paymentMethod, setPaymentMethod] = useState<'mchanga' | 'bank_transfer' | 'dpo'>('mchanga')
+    const [paymentMethod, setPaymentMethod] = useState<'bank_transfer' | 'dpo'>('dpo')
     const [bankDetails, setBankDetails] = useState<any>(null)
     const [showBankDetails, setShowBankDetails] = useState(false)
     const [donorEmail, setDonorEmail] = useState('')
@@ -96,7 +96,8 @@ export default function DonatePage() {
 
                 const { reference } = await res.json()
                 window.location.href = `/donate/bank-transfer?reference=${reference}`
-            } else if (paymentMethod === 'dpo') {
+            } else {
+                // DPO payment
                 const res = await fetch('/api/donate/dpo', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -116,26 +117,6 @@ export default function DonatePage() {
 
                 const { paymentUrl } = await res.json()
                 window.location.href = paymentUrl
-            } else {
-                // M-Changa payment
-                const res = await fetch('/api/payments/mchanga/checkout', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        amount,
-                        donorEmail,
-                        donorName: donorName || null,
-                        donorPhone: donorPhone || null,
-                        tierId: tierId || null,
-                    }),
-                })
-
-                if (!res.ok) {
-                    throw new Error('Failed to create payment link')
-                }
-
-                const { link } = await res.json()
-                window.location.href = link
             }
         } catch (error) {
             console.error('Payment error:', error)
@@ -176,22 +157,7 @@ export default function DonatePage() {
                 {/* Payment Method Selector */}
                 <div className="max-w-3xl mx-auto mb-12">
                     <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">Choose Payment Method</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <button
-                            onClick={() => {
-                                setPaymentMethod('mchanga')
-                                setShowBankDetails(false)
-                            }}
-                            className={`p-6 rounded-xl border-2 transition-all ${paymentMethod === 'mchanga'
-                                ? 'border-[#2E8B57] bg-green-50'
-                                : 'border-gray-200 hover:border-gray-300'
-                                }`}
-                        >
-                            <CreditCard className={`mx-auto mb-3 w-10 h-10 ${paymentMethod === 'mchanga' ? 'text-[#2E8B57]' : 'text-gray-400'}`} />
-                            <h4 className="font-bold text-lg mb-2">M-PESA / Mobile Money</h4>
-                            <p className="text-sm text-gray-600">Pay via M-PESA, Airtel Money, or Card</p>
-                        </button>
-
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <button
                             onClick={() => {
                                 setPaymentMethod('dpo')
