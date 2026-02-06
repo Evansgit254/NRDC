@@ -28,9 +28,13 @@ export default function DonatePage() {
     const [processingAmount, setProcessingAmount] = useState<number | null>(null)
     const [isRecurring, setIsRecurring] = useState(false)
     const [frequency, setFrequency] = useState<'monthly' | 'yearly'>('monthly')
-    const [paymentMethod, setPaymentMethod] = useState<'mchanga' | 'bank_transfer'>('mchanga')
+    const [paymentMethod, setPaymentMethod] = useState<'mchanga' | 'bank_transfer' | 'dpo'>('mchanga')
     const [bankDetails, setBankDetails] = useState<any>(null)
     const [showBankDetails, setShowBankDetails] = useState(false)
+    const [donorEmail, setDonorEmail] = useState('')
+    const [donorName, setDonorName] = useState('')
+    const [donorPhone, setDonorPhone] = useState('')
+    const [formError, setFormError] = useState('')
 
     const params = useParams()
     const locale = params.locale as string
@@ -63,30 +67,26 @@ export default function DonatePage() {
     async function handleDonate(amount: number, tierId?: string) {
         if (processingAmount) return // Prevent double clicks
 
+        // Validation
+        if (!donorEmail) {
+            setFormError('Email is required to proceed')
+            // Scroll to form error if needed
+            return
+        }
+        setFormError('')
         setProcessingAmount(amount)
 
         try {
             // Check payment method
             if (paymentMethod === 'bank_transfer') {
-                // Bank transfer donation
-                const donorEmail = prompt('Please enter your email:') || ''
-                const donorName = prompt('Please enter your name (optional):') || null
-                const donorPhone = prompt('Please enter your phone number (optional):') || null
-
-                if (!donorEmail) {
-                    alert('Email is required for bank transfer donations')
-                    setProcessingAmount(null)
-                    return
-                }
-
                 const res = await fetch('/api/payments/bank-transfer', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         amount,
                         donorEmail,
-                        donorName,
-                        donorPhone
+                        donorName: donorName || null,
+                        donorPhone: donorPhone || null
                     }),
                 })
 
@@ -95,19 +95,37 @@ export default function DonatePage() {
                 }
 
                 const { reference } = await res.json()
-
-                // Redirect to bank transfer instructions page
                 window.location.href = `/donate/bank-transfer?reference=${reference}`
+            } else if (paymentMethod === 'dpo') {
+                const res = await fetch('/api/donate/dpo', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        amount,
+                        currency: 'KES',
+                        email: donorEmail,
+                        name: donorName || 'Anonymous',
+                        phone: donorPhone || null,
+                        paymentReason: `Donation of ${amount}`
+                    }),
+                })
+
+                if (!res.ok) {
+                    throw new Error('Failed to initiate DPO payment')
+                }
+
+                const { paymentUrl } = await res.json()
+                window.location.href = paymentUrl
             } else {
-                // M-Changa payment (existing logic)
+                // M-Changa payment
                 const res = await fetch('/api/payments/mchanga/checkout', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         amount,
-                        donorEmail: prompt('Please enter your email to proceed:') || '',
-                        donorName: prompt('Please enter your name (optional):') || null,
-                        donorPhone: prompt('Please enter your phone number (for payment):') || null,
+                        donorEmail,
+                        donorName: donorName || null,
+                        donorPhone: donorPhone || null,
                         tierId: tierId || null,
                     }),
                 })
@@ -117,8 +135,6 @@ export default function DonatePage() {
                 }
 
                 const { link } = await res.json()
-
-                // Redirect to M-Changa payment page
                 window.location.href = link
             }
         } catch (error) {
@@ -160,7 +176,7 @@ export default function DonatePage() {
                 {/* Payment Method Selector */}
                 <div className="max-w-3xl mx-auto mb-12">
                     <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">Choose Payment Method</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         <button
                             onClick={() => {
                                 setPaymentMethod('mchanga')
@@ -173,7 +189,22 @@ export default function DonatePage() {
                         >
                             <CreditCard className={`mx-auto mb-3 w-10 h-10 ${paymentMethod === 'mchanga' ? 'text-[#2E8B57]' : 'text-gray-400'}`} />
                             <h4 className="font-bold text-lg mb-2">M-PESA / Mobile Money</h4>
-                            <p className="text-sm text-gray-600">Pay via M-PESA (Paybill: 972900), Airtel Money, or card</p>
+                            <p className="text-sm text-gray-600">Pay via M-PESA, Airtel Money, or Card</p>
+                        </button>
+
+                        <button
+                            onClick={() => {
+                                setPaymentMethod('dpo')
+                                setShowBankDetails(false)
+                            }}
+                            className={`p-6 rounded-xl border-2 transition-all ${paymentMethod === 'dpo'
+                                ? 'border-[#2E8B57] bg-green-50'
+                                : 'border-gray-200 hover:border-gray-300'
+                                }`}
+                        >
+                            <CreditCard className={`mx-auto mb-3 w-10 h-10 ${paymentMethod === 'dpo' ? 'text-[#2E8B57]' : 'text-gray-400'}`} />
+                            <h4 className="font-bold text-lg mb-2">Card / DPO</h4>
+                            <p className="text-sm text-gray-600">Direct Pay via Global Card (Visa/Mastercard)</p>
                         </button>
 
                         <button
@@ -188,7 +219,7 @@ export default function DonatePage() {
                         >
                             <Building className={`mx-auto mb-3 w-10 h-10 ${paymentMethod === 'bank_transfer' ? 'text-[#2E8B57]' : 'text-gray-400'}`} />
                             <h4 className="font-bold text-lg mb-2">Bank Transfer</h4>
-                            <p className="text-sm text-gray-600">Direct bank deposit for larger donations</p>
+                            <p className="text-sm text-gray-600">Direct deposit for larger donations</p>
                         </button>
                     </div>
 
@@ -232,7 +263,51 @@ export default function DonatePage() {
                     )}
                 </div>
 
-                {/* Recurring Donation Toggle Removed as it was Paystack-dependent */}
+                {/* Donor Details Form */}
+                <div className="max-w-3xl mx-auto mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                    <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                        <Heart className="w-6 h-6 text-[#2E8B57]" />
+                        Donor Information
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-2">
+                            <label className="text-sm font-semibold text-gray-700">Full Name</label>
+                            <input
+                                type="text"
+                                placeholder="e.g. John Doe"
+                                value={donorName}
+                                onChange={(e) => setDonorName(e.target.value)}
+                                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#6E8C82] outline-none transition-all"
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-sm font-semibold text-gray-700">Email Address *</label>
+                            <input
+                                type="email"
+                                placeholder="john@example.com"
+                                value={donorEmail}
+                                onChange={(e) => setDonorEmail(e.target.value)}
+                                className={`w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-[#6E8C82] outline-none transition-all ${formError ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
+                            />
+                        </div>
+                        <div className="space-y-2 md:col-span-2">
+                            <label className="text-sm font-semibold text-gray-700">Phone Number (Optional)</label>
+                            <input
+                                type="tel"
+                                placeholder="+254 700 000000"
+                                value={donorPhone}
+                                onChange={(e) => setDonorPhone(e.target.value)}
+                                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#6E8C82] outline-none transition-all"
+                            />
+                        </div>
+                    </div>
+                    {formError && (
+                        <p className="mt-4 text-red-600 text-sm font-medium flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-red-600"></span>
+                            {formError}
+                        </p>
+                    )}
+                </div>
 
                 {loading ? (
                     <div className="text-center py-12">
@@ -325,7 +400,7 @@ export default function DonatePage() {
                 </div>
             </section>
 
-            {/* Payment Methods */}
+            {/* Ways to Give */}
             <section className="bg-gray-50 py-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <h2 className="text-2xl font-bold text-gray-900 text-center mb-8">Ways to Give</h2>
@@ -333,7 +408,7 @@ export default function DonatePage() {
                         <div className="bg-white p-6 rounded-xl shadow-sm text-center">
                             <CreditCard className="mx-auto mb-4 w-12 h-12 text-[#6E8C82]" />
                             <h3 className="font-bold text-lg mb-2">Credit/Debit Card</h3>
-                            <p className="text-gray-600 text-sm">Secure online payment via M-PESA and Mobile Money</p>
+                            <p className="text-gray-600 text-sm">Secure online payment via DPO</p>
                         </div>
                         <div className="bg-white p-6 rounded-xl shadow-sm text-center">
                             <Building className="mx-auto mb-4 w-12 h-12 text-[#6E8C82]" />

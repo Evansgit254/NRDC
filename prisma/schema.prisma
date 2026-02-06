@@ -415,6 +415,7 @@ model Donation {
   mpesaReceiptNo        String?
   bankTransferReference String?  // Reference number for bank transfers
   metadata              String?  // JSON for additional data
+  dpoTransToken         String?  @unique
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
   

@@ -1,0 +1,99 @@
+import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+import { verifyDpoToken } from '@/lib/dpo';
+import { redirect } from 'next/navigation';
+
+export async function GET(request: Request) {
+    const { searchParams } = new URL(request.url);
+    const transToken = searchParams.get('TransToken'); // DPO sends TransToken param
+
+    if (!transToken) {
+        return NextResponse.json({ error: 'Missing TransToken' }, { status: 400 });
+    }
+
+    try {
+        // 1. Verify Token with DPO
+        const verifyResult = await verifyDpoToken(transToken);
+
+        // Result '000' means successful payment
+        // Result '900' means transaction not paid yet
+        const isSuccess = verifyResult.Result === '000';
+
+        // 2. Update Database
+        // Find donation by token
+        const donation = await prisma.donation.findUnique({
+            where: { dpoTransToken: transToken },
+        });
+
+        if (donation) {
+            await prisma.donation.update({
+                where: { id: donation.id },
+                data: {
+                    paymentStatus: isSuccess ? 'completed' : 'failed',
+                    metadata: JSON.stringify({
+                        ...JSON.parse(donation.metadata || '{}'),
+                        dpoResult: verifyResult,
+                    }),
+                },
+            });
+        }
+
+        // 3. Redirect User
+        if (isSuccess) {
+            redirect('/donate/success?payment_method=dpo');
+        } else {
+            redirect('/donate/failed?reason=dpo_verification_failed');
+        }
+
+    } catch (error) {
+        console.error('DPO Callback Error:', error);
+        return NextResponse.json(
+            { error: 'Verification failed' },
+            { status: 500 }
+        );
+    }
+}
+
+export async function POST(request: Request) {
+    try {
+        const text = await request.text();
+        const { XMLParser } = await import('fast-xml-parser');
+        const parser = new XMLParser();
+        const result = parser.parse(text);
+
+        // DPO Webhook structure might vary, but typically contains TransToken
+        const transToken = result.API3G?.TransactionToken || result.API3G?.TransToken;
+
+        if (!transToken) {
+            return new Response('Missing Token', { status: 400 });
+        }
+
+        const verifyResult = await verifyDpoToken(transToken);
+        const isSuccess = verifyResult.Result === '000';
+
+        const donation = await prisma.donation.findUnique({
+            where: { dpoTransToken: transToken },
+        });
+
+        if (donation) {
+            await prisma.donation.update({
+                where: { id: donation.id },
+                data: {
+                    paymentStatus: isSuccess ? 'completed' : 'failed',
+                    metadata: JSON.stringify({
+                        ...JSON.parse(donation.metadata || '{}'),
+                        dpoWebhookResult: verifyResult,
+                    }),
+                },
+            });
+        }
+
+        // DPO expects an XML response to acknowledge the webhook sometimes
+        // But a simple 200 OK is often enough
+        return new Response('OK', { status: 200 });
+
+    } catch (error) {
+        console.error('DPO Webhook Error:', error);
+        return new Response('Error', { status: 500 });
+    }
+}
