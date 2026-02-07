@@ -161,6 +161,87 @@
         "cancel": "Annuler",
         "save": "Enregistrer",
         "delete": "Supprimer",
-        "edit": "Modifier"
+        "edit": "Modifier",
+        "processing": "Traitement en cours..."
+    },
+    "donate": {
+        "heroTitle": "Faites une différence aujourd'hui",
+        "heroSubtitle": "Votre don aide à fournir de la nutrition, des soins de santé et de l'espoir aux communautés de réfugiés et de déplacés à travers le monde.",
+        "title": "Choisissez Votre Impact",
+        "subtitle": "Chaque contribution, quelle que soit sa taille, fait une réelle différence dans la vie de quelqu'un.",
+        "paymentMethod": {
+            "title": "Choisissez le Mode de Paiement",
+            "dpo": {
+                "title": "Carte / DPO",
+                "desc": "Payez par carte, M-PESA, Airtel Money ou PayPal"
+            },
+            "bank": {
+                "title": "Virement Bancaire",
+                "desc": "Dépôt direct pour les dons plus importants"
+            }
+        },
+        "bankDetails": {
+            "title": "Informations sur le Compte Bancaire",
+            "accountName": "Nom du Compte",
+            "accountNumber": "Numéro de Compte",
+            "bank": "Banque",
+            "branch": "Succursale",
+            "swiftCode": "Code Swift",
+            "notice": "Après avoir fait un don par virement bancaire, vous recevrez des instructions pour envoyer une preuve de paiement par e-mail à des fins de vérification."
+        },
+        "donorInfo": {
+            "title": "Informations sur le Donateur",
+            "name": "Nom Complet",
+            "namePlaceholder": "ex: Jean Dupont",
+            "email": "Adresse Email *",
+            "phone": "Numéro de Téléphone (Optionnel)",
+            "errorEmail": "L'e-mail est requis pour continuer"
+        },
+        "tiers": {
+            "mostPopular": "Le Plus Populaire",
+            "noTiers": "Aucun niveau de don n'est disponible pour le moment.",
+            "donateButton": "Faire un don de KES {amount}"
+        },
+        "custom": {
+            "title": "Montant Personnalisé",
+            "placeholder": "Entrez le montant",
+            "button": "Donner Maintenant"
+        },
+        "waysToGive": {
+            "title": "Façons de Donner",
+            "card": {
+                "title": "Carte de Crédit/Débit",
+                "desc": "Paiement en ligne sécurisé via DPO"
+            },
+            "bank": {
+                "title": "Virement Bancaire",
+                "desc": "Virement bancaire direct pour les dons plus importants"
+            },
+            "programs": {
+                "title": "Soutenez Nos Programmes",
+                "desc": "Votre contribution finance directement nos principales initiatives"
+            }
+        },
+        "impact": {
+            "title": "Votre Don au Travail",
+            "stats": {
+                "programs": "Va directement aux programmes",
+                "people": "Personnes aidées annuellement",
+                "countries": "Pays atteints",
+                "transparency": "Transparence garantie"
+            }
+        },
+        "trust": {
+            "tax": "Déductible des Impôts",
+            "secure": "Paiement Sécurisé",
+            "nonProfit": "Organisation à But Non Lucratif Certifiée",
+            "receipt": "Reçu Instantané"
+        },
+        "otherWays": {
+            "title": "Autres Façons d'Aider",
+            "subtitle": "Vous ne pouvez pas faire de don pour le moment ? Il existe d'autres moyens significatifs de soutenir notre mission.",
+            "volunteer": "Offrez Votre Temps",
+            "partner": "Devenir Partenaire"
+        }
     }
 }

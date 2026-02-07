@@ -108,7 +108,7 @@
     "testimonialForm": {
         "name": "Tu Nombre *",
         "namePlaceholder": "Juan Pérez",
-        "role": "Rol/Afiliación (Opcional)",
+        "role": "Rol/Affiliación (Opcional)",
         "rolePlaceholder": "ej., Miembro de la Comunidad, Voluntario",
         "testimonial": "Tu Testimonio *",
         "testimonialPlaceholder": "Comparte tu experiencia con NRDC...",
@@ -161,6 +161,87 @@
         "cancel": "Cancelar",
         "save": "Guardar",
         "delete": "Eliminar",
-        "edit": "Editar"
+        "edit": "Editar",
+        "processing": "Procesando..."
+    },
+    "donate": {
+        "heroTitle": "Marque la Diferencia Hoy",
+        "heroSubtitle": "Su donación ayuda a brindar nutrición, atención médica y esperanza a las comunidades de refugiados y desplazados en todo el mundo.",
+        "title": "Elija Su Impacto",
+        "subtitle": "Cada contribución, sin importar el tamaño, marca una diferencia real en la vida de alguien.",
+        "paymentMethod": {
+            "title": "Elija el Método de Pago",
+            "dpo": {
+                "title": "Tarjeta / DPO",
+                "desc": "Pague mediante tarjeta, M-PESA, Airtel Money o PayPal"
+            },
+            "bank": {
+                "title": "Transferencia Bancaria",
+                "desc": "Depósito directo para donaciones más grandes"
+            }
+        },
+        "bankDetails": {
+            "title": "Detalles de la Cuenta Bancaria",
+            "accountName": "Nombre de la Cuenta",
+            "accountNumber": "Número de Cuenta",
+            "bank": "Banco",
+            "branch": "Sucursal",
+            "swiftCode": "Código Swift",
+            "notice": "Después de donar mediante transferencia bancaria, recibirá instrucciones para enviar el comprobante de pago por correo electrónico para su verificación."
+        },
+        "donorInfo": {
+            "title": "Información del Donante",
+            "name": "Nombre Completo",
+            "namePlaceholder": "ej., John Doe",
+            "email": "Dirección de Correo Electrónico *",
+            "phone": "Número de Teléfono (Opcional)",
+            "errorEmail": "Se requiere correo electrónico para continuar"
+        },
+        "tiers": {
+            "mostPopular": "El Más Popular",
+            "noTiers": "No hay niveles de donación disponibles en este momento.",
+            "donateButton": "Donar KES {amount}"
+        },
+        "custom": {
+            "title": "Monto Personalizado",
+            "placeholder": "Ingrese el monto",
+            "button": "Donar Ahora"
+        },
+        "waysToGive": {
+            "title": "Formas de Dar",
+            "card": {
+                "title": "Tarjeta de Crédito/Débito",
+                "desc": "Pago en línea seguro a través de DPO"
+            },
+            "bank": {
+                "title": "Transferencia Bancaria",
+                "desc": "Transferencia bancaria directa para donaciones más grandes"
+            },
+            "programs": {
+                "title": "Apoyar Nuestros Programas",
+                "desc": "Su contribución financia directamente nuestras iniciativas principales"
+            }
+        },
+        "impact": {
+            "title": "Su Donación en Acción",
+            "stats": {
+                "programs": "Va directamente a los programas",
+                "people": "Personas ayudadas anualmente",
+                "countries": "Países alcanzados",
+                "transparency": "Transparencia garantizada"
+            }
+        },
+        "trust": {
+            "tax": "Deducible de Impuestos",
+            "secure": "Pago Seguro",
+            "nonProfit": "Organización sin Fines de Lucro Certificada",
+            "receipt": "Recibo Instantáneo"
+        },
+        "otherWays": {
+            "title": "Otras Formas de Ayudar",
+            "subtitle": "¿No puede donar en este momento? Hay otras formas significativas de apoyar nuestra misión.",
+            "volunteer": "Ofrezca Su Tiempo",
+            "partner": "Conviértase en Socio"
+        }
     }
 }

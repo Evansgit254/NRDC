@@ -161,6 +161,87 @@
         "cancel": "Cancel",
         "save": "Save",
         "delete": "Delete",
-        "edit": "Edit"
+        "edit": "Edit",
+        "processing": "Processing..."
+    },
+    "donate": {
+        "heroTitle": "Make a Difference Today",
+        "heroSubtitle": "Your donation helps provide nutrition, healthcare, and hope to refugee and displaced communities around the world.",
+        "title": "Choose Your Impact",
+        "subtitle": "Every contribution, no matter the size, makes a real difference in someone's life.",
+        "paymentMethod": {
+            "title": "Choose Payment Method",
+            "dpo": {
+                "title": "Card / DPO",
+                "desc": "Pay via Card, M-PESA, Airtel Money, or PayPal"
+            },
+            "bank": {
+                "title": "Bank Transfer",
+                "desc": "Direct deposit for larger donations"
+            }
+        },
+        "bankDetails": {
+            "title": "Bank Account Details",
+            "accountName": "Account Name",
+            "accountNumber": "Account Number",
+            "bank": "Bank",
+            "branch": "Branch",
+            "swiftCode": "Swift Code",
+            "notice": "After donating through bank transfer, you'll receive instructions to email proof of payment for verification."
+        },
+        "donorInfo": {
+            "title": "Donor Information",
+            "name": "Full Name",
+            "namePlaceholder": "e.g. John Doe",
+            "email": "Email Address *",
+            "phone": "Phone Number (Optional)",
+            "errorEmail": "Email is required to proceed"
+        },
+        "tiers": {
+            "mostPopular": "Most Popular",
+            "noTiers": "No donation tiers available at the moment.",
+            "donateButton": "Donate KES {amount}"
+        },
+        "custom": {
+            "title": "Custom Amount",
+            "placeholder": "Enter amount",
+            "button": "Donate Now"
+        },
+        "waysToGive": {
+            "title": "Ways to Give",
+            "card": {
+                "title": "Credit/Debit Card",
+                "desc": "Secure online payment via DPO"
+            },
+            "bank": {
+                "title": "Bank Transfer",
+                "desc": "Direct bank transfer for larger donations"
+            },
+            "programs": {
+                "title": "Support Our Programs",
+                "desc": "Your contribution directly funds our primary initiatives"
+            }
+        },
+        "impact": {
+            "title": "Your Donation at Work",
+            "stats": {
+                "programs": "Goes directly to programs",
+                "people": "People helped annually",
+                "countries": "Countries reached",
+                "transparency": "Transparency guaranteed"
+            }
+        },
+        "trust": {
+            "tax": "Tax Deductible",
+            "secure": "Secure Payment",
+            "nonProfit": "Certified Non-Profit",
+            "receipt": "Instant Receipt"
+        },
+        "otherWays": {
+            "title": "Other Ways to Help",
+            "subtitle": "Can't donate right now? There are other meaningful ways to support our mission.",
+            "volunteer": "Volunteer Your Time",
+            "partner": "Become a Partner"
+        }
     }
 }

@@ -96,20 +96,6 @@
         "successMessage": "Asante kwa kuwasiliana nasi. Tutakujibu hivi karibuni.",
         "sendAnother": "Tuma ujumbe mwingine"
     },
-    "footer": {
-        "about": "Kuhusu NRDC",
-        "aboutDesc": "Lishe kwa Wakimbizi na Jamii Zilizohamishwa. Kutoa tumaini, afya, na utulivu kwa wale wanaohitaji.",
-        "quickLinks": "Viungo vya Haraka",
-        "contact": "Wasiliana Nasi",
-        "followUs": "Tufuate",
-        "aboutUs": "Kuhusu Sisi",
-        "ourPrograms": "Mipango Yetu",
-        "newsStories": "Habari na Hadithi",
-        "contactUs": "Wasiliana Nasi",
-        "privacyPolicy": "Sera ya Faragha",
-        "adminLogin": "Ingia Kama Admin",
-        "rights": "Haki zote zimehifadhiwa."
-    },
     "volunteerForm": {
         "name": "Jina Kamili",
         "email": "Anwani ya Barua Pepe",
@@ -117,7 +103,7 @@
         "submit": "Tuma Maombi",
         "successTitle": "Asante!",
         "successMessage": "Maombi yako yamepokewa. Tutawasiliana nawe hivi karibuni.",
-        "sendAnother": "Tuma maombi mengine"
+        "sendAnother": "Tuma maombi mwingine"
     },
     "testimonialForm": {
         "name": "Jina Lako *",
@@ -133,6 +119,20 @@
         "successMessage": "Maoni yako yametumwa na yanasubiri idhini ya msimamizi.",
         "submitAnother": "Tuma Maoni Mengine",
         "reviewNotice": "Maoni yako yakakaguliwa na timu yetu kabla ya kuchapishwa."
+    },
+    "footer": {
+        "about": "Kuhusu NRDC",
+        "aboutDesc": "Lishe kwa Wakimbizi na Jamii Zilizohamishwa. Kutoa tumaini, afya, na utulivu kwa wale wanaohitaji.",
+        "quickLinks": "Viungo vya Haraka",
+        "contact": "Wasiliana Nasi",
+        "followUs": "Tufuate",
+        "aboutUs": "Kuhusu Sisi",
+        "ourPrograms": "Mipango Yetu",
+        "newsStories": "Habari na Hadithi",
+        "contactUs": "Wasiliana Nasi",
+        "privacyPolicy": "Sera ya Faragha",
+        "adminLogin": "Ingia Kama Admin",
+        "rights": "Haki zote zimehifadhiwa."
     },
     "getInvolved": {
         "title": "Jihusishe",
@@ -161,6 +161,87 @@
         "cancel": "Ghairi",
         "save": "Hifadhi",
         "delete": "Futa",
-        "edit": "Hariri"
+        "edit": "Hariri",
+        "processing": "Inachakata..."
+    },
+    "donate": {
+        "heroTitle": "Fanya Mabadiliko Leo",
+        "heroSubtitle": "Mchango wako unasaidia kutoa lishe, huduma ya afya, na matumaini kwa wakimbizi na jamii zilizohamishwa kote ulimwenguni.",
+        "title": "Chagua Athari Yako",
+        "subtitle": "Kila mchango, hata uwe mdogo kiasi gani, unaleta mabadiliko ya kweli katika maisha ya mtu.",
+        "paymentMethod": {
+            "title": "Chagua Njia ya Malipo",
+            "dpo": {
+                "title": "Kadi / DPO",
+                "desc": "Lipa kupitia Kadi, M-PESA, Airtel Money, au PayPal"
+            },
+            "bank": {
+                "title": "Hamisho la Benki",
+                "desc": "Amana ya moja kwa moja kwa michango mikubwa"
+            }
+        },
+        "bankDetails": {
+            "title": "Maelezo ya Akaunti ya Benki",
+            "accountName": "Jina la Akaunti",
+            "accountNumber": "Nambari ya Akaunti",
+            "bank": "Benki",
+            "branch": "Tawi",
+            "swiftCode": "Kanuni ya Swift",
+            "notice": "Baada ya kuchangia kupitia hamisho la benki, utapata maelekezo ya kutuma barua pepe ya udhibitisho wa malipo kwa ajili ya uhakiki."
+        },
+        "donorInfo": {
+            "title": "Habari za Mchangiaji",
+            "name": "Jina Kamili",
+            "namePlaceholder": "mfano, John Doe",
+            "email": "Anwani ya Barua Pepe *",
+            "phone": "Nambari ya Simu (Hiari)",
+            "errorEmail": "Barua pepe inahitajika ili kuendelea"
+        },
+        "tiers": {
+            "mostPopular": "Maarufu Zaidi",
+            "noTiers": "Hakuna viwango vya michango vinavyopatikana kwa sasa.",
+            "donateButton": "Changia KES {amount}"
+        },
+        "custom": {
+            "title": "Kiasi Maalum",
+            "placeholder": "Ingiza kiasi",
+            "button": "Changia Sasa"
+        },
+        "waysToGive": {
+            "title": "Njia za Kutoa",
+            "card": {
+                "title": "Kadi ya Mkopo/Deni",
+                "desc": "Malipo salama ya mtandaoni kupitia DPO"
+            },
+            "bank": {
+                "title": "Hamisho la Benki",
+                "desc": "Hamisho la moja kwa moja la benki kwa michango mikubwa"
+            },
+            "programs": {
+                "title": "Saidia Mipango Yetu",
+                "desc": "Mchango wako unafadhili moja kwa moja mipango yetu mikuu"
+            }
+        },
+        "impact": {
+            "title": "Mchango Wako Kazini",
+            "stats": {
+                "programs": "Inaenda moja kwa moja kwenye mipango",
+                "people": "Watu wanaosaidiwa kila mwaka",
+                "countries": "Nchi zilizofikiwa",
+                "transparency": "Uwazi umehakikishwa"
+            }
+        },
+        "trust": {
+            "tax": "Inayokatwa Kodi",
+            "secure": "Malipo Salama",
+            "nonProfit": "Shirika Lisilo la Kifaida Lililoidhinishwa",
+            "receipt": "Risiti ya Papo hapo"
+        },
+        "otherWays": {
+            "title": "Njia Nyingine za Kusaidia",
+            "subtitle": "Je, huwezi kuchangia sasa? Kuna njia nyingine zenye maana za kusaidia ujumbe wetu.",
+            "volunteer": "Jitolee Muda Wako",
+            "partner": "Kuwa Mshirika"
+        }
     }
 }

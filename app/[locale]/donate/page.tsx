@@ -4,6 +4,7 @@ import { Heart, CreditCard, Building, Repeat, Gift, CheckCircle } from 'lucide-r
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 interface DonationTier {
     id: string
@@ -21,6 +22,8 @@ interface DonationStat {
 }
 
 export default function DonatePage() {
+    const t = useTranslations('donate')
+    const tc = useTranslations('common')
     const [tiers, setTiers] = useState<DonationTier[]>([])
     const [stats, setStats] = useState<DonationStat[]>([])
     const [loading, setLoading] = useState(true)
@@ -140,23 +143,23 @@ export default function DonatePage() {
             <section className="bg-gradient-to-br from-[#6E8C82] to-[#2E8B57] text-white py-20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <Heart className="mx-auto mb-6 w-16 h-16 text-white/80" />
-                    <h1 className="text-4xl md:text-5xl font-bold mb-6">Make a Difference Today</h1>
+                    <h1 className="text-4xl md:text-5xl font-bold mb-6">{t('heroTitle')}</h1>
                     <p className="text-xl max-w-3xl mx-auto text-white/90">
-                        Your donation helps provide nutrition, healthcare, and hope to refugee and displaced communities around the world.
+                        {t('heroSubtitle')}
                     </p>
                 </div>
             </section>
 
             {/* Donation Options */}
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <h2 className="text-3xl font-bold text-gray-900 text-center mb-4">Choose Your Impact</h2>
+                <h2 className="text-3xl font-bold text-gray-900 text-center mb-4">{t('title')}</h2>
                 <p className="text-gray-600 text-center mb-8 max-w-2xl mx-auto">
-                    Every contribution, no matter the size, makes a real difference in someone&apos;s life.
+                    {t('subtitle')}
                 </p>
 
                 {/* Payment Method Selector */}
                 <div className="max-w-3xl mx-auto mb-12">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">Choose Payment Method</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">{t('paymentMethod.title')}</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <button
                             onClick={() => {
@@ -169,8 +172,8 @@ export default function DonatePage() {
                                 }`}
                         >
                             <CreditCard className={`mx-auto mb-3 w-10 h-10 ${paymentMethod === 'dpo' ? 'text-[#2E8B57]' : 'text-gray-400'}`} />
-                            <h4 className="font-bold text-lg mb-2">Card / DPO</h4>
-                            <p className="text-sm text-gray-600">Pay via Card, M-PESA, Airtel Money, or PayPal</p>
+                            <h4 className="font-bold text-lg mb-2">{t('paymentMethod.dpo.title')}</h4>
+                            <p className="text-sm text-gray-600">{t('paymentMethod.dpo.desc')}</p>
                         </button>
 
                         <button
@@ -184,8 +187,8 @@ export default function DonatePage() {
                                 }`}
                         >
                             <Building className={`mx-auto mb-3 w-10 h-10 ${paymentMethod === 'bank_transfer' ? 'text-[#2E8B57]' : 'text-gray-400'}`} />
-                            <h4 className="font-bold text-lg mb-2">Bank Transfer</h4>
-                            <p className="text-sm text-gray-600">Direct deposit for larger donations</p>
+                            <h4 className="font-bold text-lg mb-2">{t('paymentMethod.bank.title')}</h4>
+                            <p className="text-sm text-gray-600">{t('paymentMethod.bank.desc')}</p>
                         </button>
                     </div>
 
@@ -194,36 +197,36 @@ export default function DonatePage() {
                         <div className="mt-6 bg-blue-50 border border-blue-200 rounded-xl p-6">
                             <h4 className="font-bold text-lg mb-4 flex items-center gap-2">
                                 <Building className="w-5 h-5 text-blue-600" />
-                                Bank Account Details
+                                {t('bankDetails.title')}
                             </h4>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                                 <div>
-                                    <p className="text-gray-600">Account Name:</p>
+                                    <p className="text-gray-600">{t('bankDetails.accountName')}</p>
                                     <p className="font-semibold">{bankDetails.accountName}</p>
                                 </div>
                                 <div>
-                                    <p className="text-gray-600">Account Number:</p>
+                                    <p className="text-gray-600">{t('bankDetails.accountNumber')}</p>
                                     <p className="font-semibold">{bankDetails.accountNumber}</p>
                                 </div>
                                 {bankDetails.bankName && (
                                     <div>
-                                        <p className="text-gray-600">Bank:</p>
+                                        <p className="text-gray-600">{t('bankDetails.bank')}</p>
                                         <p className="font-semibold">{bankDetails.bankName}</p>
                                     </div>
                                 )}
                                 <div>
-                                    <p className="text-gray-600">Branch:</p>
+                                    <p className="text-gray-600">{t('bankDetails.branch')}</p>
                                     <p className="font-semibold">{bankDetails.branch}</p>
                                 </div>
                                 {bankDetails.swiftCode && (
                                     <div>
-                                        <p className="text-gray-600">Swift Code:</p>
+                                        <p className="text-gray-600">{t('bankDetails.swiftCode')}</p>
                                         <p className="font-semibold">{bankDetails.swiftCode}</p>
                                     </div>
                                 )}
                             </div>
                             <p className="text-sm text-gray-600 mt-4">
-                                💡 After donating through bank transfer, you&apos;ll receive instructions to email proof of payment for verification.
+                                {t('bankDetails.notice')}
                             </p>
                         </div>
                     )}
@@ -233,21 +236,21 @@ export default function DonatePage() {
                 <div className="max-w-3xl mx-auto mb-12 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
                     <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
                         <Heart className="w-6 h-6 text-[#2E8B57]" />
-                        Donor Information
+                        {t('donorInfo.title')}
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label className="text-sm font-semibold text-gray-700">Full Name</label>
+                            <label className="text-sm font-semibold text-gray-700">{t('donorInfo.name')}</label>
                             <input
                                 type="text"
-                                placeholder="e.g. John Doe"
+                                placeholder={t('donorInfo.namePlaceholder')}
                                 value={donorName}
                                 onChange={(e) => setDonorName(e.target.value)}
                                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#6E8C82] outline-none transition-all"
                             />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-sm font-semibold text-gray-700">Email Address *</label>
+                            <label className="text-sm font-semibold text-gray-700">{t('donorInfo.email')}</label>
                             <input
                                 type="email"
                                 placeholder="john@example.com"
@@ -257,7 +260,7 @@ export default function DonatePage() {
                             />
                         </div>
                         <div className="space-y-2 md:col-span-2">
-                            <label className="text-sm font-semibold text-gray-700">Phone Number (Optional)</label>
+                            <label className="text-sm font-semibold text-gray-700">{t('donorInfo.phone')}</label>
                             <input
                                 type="tel"
                                 placeholder="+254 700 000000"
@@ -270,7 +273,7 @@ export default function DonatePage() {
                     {formError && (
                         <p className="mt-4 text-red-600 text-sm font-medium flex items-center gap-2">
                             <span className="w-1.5 h-1.5 rounded-full bg-red-600"></span>
-                            {formError}
+                            {formError === 'Email is required to proceed' ? t('donorInfo.errorEmail') : formError}
                         </p>
                     )}
                 </div>
@@ -289,7 +292,7 @@ export default function DonatePage() {
                             >
                                 {option.isPopular && (
                                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#2E8B57] text-white px-4 py-1 rounded-full text-sm font-semibold">
-                                        Most Popular
+                                        {t('tiers.mostPopular')}
                                     </div>
                                 )}
                                 <div className="text-center">
@@ -311,10 +314,10 @@ export default function DonatePage() {
                                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                                                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                                                 </svg>
-                                                Processing...
+                                                {tc('processing')}
                                             </span>
                                         ) : (
-                                            `Donate KES ${option.amount}`
+                                            t('tiers.donateButton', { amount: option.amount })
                                         )}
                                     </button>
                                 </div>
@@ -323,20 +326,20 @@ export default function DonatePage() {
                     </div>
                 ) : (
                     <div className="text-center py-12 text-gray-500">
-                        <p>No donation tiers available at the moment.</p>
+                        <p>{t('tiers.noTiers')}</p>
                     </div>
                 )}
 
                 {/* Custom Amount */}
                 <div className="bg-gray-50 rounded-2xl p-8 max-w-2xl mx-auto">
-                    <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">Custom Amount</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">{t('custom.title')}</h3>
                     <div className="flex gap-4">
                         <div className="flex-1">
                             <div className="relative">
                                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-xl">KES</span>
                                 <input
                                     type="number"
-                                    placeholder="Enter amount"
+                                    placeholder={t('custom.placeholder')}
                                     className="w-full pl-16 pr-4 py-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#6E8C82] outline-none text-xl"
                                     min="1"
                                     value={customAmount}
@@ -356,10 +359,10 @@ export default function DonatePage() {
                                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                                     </svg>
-                                    Processing...
+                                    {tc('processing')}
                                 </span>
                             ) : (
-                                'Donate Now'
+                                t('custom.button')
                             )}
                         </button>
                     </div>
@@ -369,22 +372,22 @@ export default function DonatePage() {
             {/* Ways to Give */}
             <section className="bg-gray-50 py-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <h2 className="text-2xl font-bold text-gray-900 text-center mb-8">Ways to Give</h2>
+                    <h2 className="text-2xl font-bold text-gray-900 text-center mb-8">{t('waysToGive.title')}</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div className="bg-white p-6 rounded-xl shadow-sm text-center">
                             <CreditCard className="mx-auto mb-4 w-12 h-12 text-[#6E8C82]" />
-                            <h3 className="font-bold text-lg mb-2">Credit/Debit Card</h3>
-                            <p className="text-gray-600 text-sm">Secure online payment via DPO</p>
+                            <h3 className="font-bold text-lg mb-2">{t('waysToGive.card.title')}</h3>
+                            <p className="text-gray-600 text-sm">{t('waysToGive.card.desc')}</p>
                         </div>
                         <div className="bg-white p-6 rounded-xl shadow-sm text-center">
                             <Building className="mx-auto mb-4 w-12 h-12 text-[#6E8C82]" />
-                            <h3 className="font-bold text-lg mb-2">Bank Transfer</h3>
-                            <p className="text-gray-600 text-sm">Direct bank transfer for larger donations</p>
+                            <h3 className="font-bold text-lg mb-2">{t('waysToGive.bank.title')}</h3>
+                            <p className="text-gray-600 text-sm">{t('waysToGive.bank.desc')}</p>
                         </div>
                         <div className="bg-white p-6 rounded-xl shadow-sm text-center">
                             <Gift className="mx-auto mb-4 w-12 h-12 text-[#6E8C82]" />
-                            <h3 className="font-bold text-lg mb-2">Support Our Programs</h3>
-                            <p className="text-gray-600 text-sm">Your contribution directly funds our primary initiatives</p>
+                            <h3 className="font-bold text-lg mb-2">{t('waysToGive.programs.title')}</h3>
+                            <p className="text-gray-600 text-sm">{t('waysToGive.programs.desc')}</p>
                         </div>
                     </div>
                 </div>
@@ -393,7 +396,7 @@ export default function DonatePage() {
             {/* Impact Stats */}
             <section className="py-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <h2 className="text-2xl font-bold text-gray-900 text-center mb-8">Your Donation at Work</h2>
+                    <h2 className="text-2xl font-bold text-gray-900 text-center mb-8">{t('impact.title')}</h2>
                     {loading ? (
                         <div className="text-center py-8">
                             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#6E8C82] mx-auto"></div>
@@ -411,19 +414,19 @@ export default function DonatePage() {
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                             <div>
                                 <div className="text-4xl font-bold text-[#2E8B57] mb-2">95%</div>
-                                <p className="text-gray-600">Goes directly to programs</p>
+                                <p className="text-gray-600">{t('impact.stats.programs')}</p>
                             </div>
                             <div>
                                 <div className="text-4xl font-bold text-[#2E8B57] mb-2">50K+</div>
-                                <p className="text-gray-600">People helped annually</p>
+                                <p className="text-gray-600">{t('impact.stats.people')}</p>
                             </div>
                             <div>
                                 <div className="text-4xl font-bold text-[#2E8B57] mb-2">12</div>
-                                <p className="text-gray-600">Countries reached</p>
+                                <p className="text-gray-600">{t('impact.stats.countries')}</p>
                             </div>
                             <div>
                                 <div className="text-4xl font-bold text-[#2E8B57] mb-2">100%</div>
-                                <p className="text-gray-600">Transparency guaranteed</p>
+                                <p className="text-gray-600">{t('impact.stats.transparency')}</p>
                             </div>
                         </div>
                     )}
@@ -436,19 +439,19 @@ export default function DonatePage() {
                     <div className="flex flex-wrap justify-center gap-8 items-center">
                         <div className="flex items-center gap-2">
                             <CheckCircle size={24} />
-                            <span>Tax Deductible</span>
+                            <span>{t('trust.tax')}</span>
                         </div>
                         <div className="flex items-center gap-2">
                             <CheckCircle size={24} />
-                            <span>Secure Payment</span>
+                            <span>{t('trust.secure')}</span>
                         </div>
                         <div className="flex items-center gap-2">
                             <CheckCircle size={24} />
-                            <span>Certified Non-Profit</span>
+                            <span>{t('trust.nonProfit')}</span>
                         </div>
                         <div className="flex items-center gap-2">
                             <CheckCircle size={24} />
-                            <span>Instant Receipt</span>
+                            <span>{t('trust.receipt')}</span>
                         </div>
                     </div>
                 </div>
@@ -458,22 +461,22 @@ export default function DonatePage() {
             <section className="py-16">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <Gift className="mx-auto mb-4 w-12 h-12 text-[#2E8B57]" />
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4">Other Ways to Help</h2>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('otherWays.title')}</h2>
                     <p className="text-gray-600 mb-8">
-                        Can&apos;t donate right now? There are other meaningful ways to support our mission.
+                        {t('otherWays.subtitle')}
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">
                         <Link
                             href="/get-involved"
                             className="bg-gray-100 hover:bg-gray-200 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-colors"
                         >
-                            Volunteer Your Time
+                            {t('otherWays.volunteer')}
                         </Link>
                         <Link
                             href="/contact"
                             className="bg-gray-100 hover:bg-gray-200 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-colors"
                         >
-                            Become a Partner
+                            {t('otherWays.partner')}
                         </Link>
                     </div>
                 </div>
