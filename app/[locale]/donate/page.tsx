@@ -170,7 +170,7 @@ export default function DonatePage() {
                         >
                             <CreditCard className={`mx-auto mb-3 w-10 h-10 ${paymentMethod === 'dpo' ? 'text-[#2E8B57]' : 'text-gray-400'}`} />
                             <h4 className="font-bold text-lg mb-2">Card / DPO</h4>
-                            <p className="text-sm text-gray-600">Direct Pay via Global Card (Visa/Mastercard)</p>
+                            <p className="text-sm text-gray-600">Pay via Card, M-PESA, Airtel Money, or PayPal</p>
                         </button>
 
                         <button
