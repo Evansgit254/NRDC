@@ -30,8 +30,13 @@ export async function createDpoToken(params: CreateTokenParams) {
                 PaymentAmount: params.amount,
                 PaymentCurrency: params.currency,
                 CompanyRef: 'NRDC_DONATION_' + Date.now(), // Generate a unique ref
-                RedirectURL: params.redirectUrl,
-                BackURL: params.backUrl,
+                // For live credentials, we MUST use production URLs to avoid CloudFront blocking localhost
+                RedirectURL: process.env.NODE_ENV === 'production'
+                    ? params.redirectUrl
+                    : 'https://www.nrdc.africa/api/webhooks/dpo/callback',
+                BackURL: process.env.NODE_ENV === 'production'
+                    ? params.backUrl
+                    : 'https://www.nrdc.africa/donate',
                 CompanyRefUnique: 0,
                 PTL: 5 // Payment Time Limit in hours
             },
@@ -47,16 +52,16 @@ export async function createDpoToken(params: CreateTokenParams) {
     });
 
     try {
-        console.log('DPO Request XML:', xmlRequest);
-
         const response = await fetch(DPO_BASE_URL, {
             method: "POST",
-            headers: { "Content-Type": "application/xml" },
+            headers: {
+                "Content-Type": "application/xml",
+                "User-Agent": "NRDC-Platform/1.0"
+            },
             body: xmlRequest
         });
 
         const textHtml = await response.text();
-        console.log('DPO Raw Response:', textHtml);
 
         const parser = new XMLParser();
         const result = parser.parse(textHtml);
@@ -100,7 +105,10 @@ export async function verifyDpoToken(transToken: string) {
     try {
         const response = await fetch(DPO_BASE_URL, {
             method: "POST",
-            headers: { "Content-Type": "application/xml" },
+            headers: {
+                "Content-Type": "application/xml",
+                "User-Agent": "NRDC-Platform/1.0"
+            },
             body: xmlRequest
         });
 

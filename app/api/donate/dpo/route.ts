@@ -51,8 +51,8 @@ export async function POST(request: Request) {
             transToken: dpoResult.transToken
         });
 
-    } catch (error) {
-        console.error('DPO Error:', error);
+    } catch (error: any) {
+        console.error('DPO Error:', error.message || error);
         return NextResponse.json(
             { error: 'Failed to initiate DPO payment' },
             { status: 500 }
