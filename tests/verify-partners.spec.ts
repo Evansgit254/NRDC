@@ -5,7 +5,7 @@ test('should display partner section', async ({ page }) => {
     await page.waitForLoadState('networkidle');
 
     // Check for section title
-    await expect(page.getByRole('heading', { name: 'Our PartnersAnd Collaborators' })).toBeVisible({ timeout: 10000 }).catch(async () => {
+    await expect(page.getByRole('heading', { name: 'Our Partners and Collaborators' })).toBeVisible({ timeout: 10000 }).catch(async () => {
         console.log('Heading not found. Constructing page dump...');
         const content = await page.content();
         console.log(content.substring(0, 2000)); // Log first 2000 chars
