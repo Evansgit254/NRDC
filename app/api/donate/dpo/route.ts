@@ -31,6 +31,7 @@ export async function POST(request: Request) {
             currency: currency || 'KES',
             paymentReason: paymentReason || `Donation ${donation.id}`,
             customerEmail: email,
+            customerPhone: phone,
             customerFirstName: name?.split(' ')[0],
             customerLastName: name?.split(' ').slice(1).join(' '),
             redirectUrl: `${baseUrl}/api/webhooks/dpo/callback`, // DPO redirects here after payment

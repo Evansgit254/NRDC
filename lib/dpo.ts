@@ -14,6 +14,7 @@ interface CreateTokenParams {
     customerFirstName?: string;
     customerLastName?: string;
     customerEmail: string;
+    customerPhone?: string;
 }
 
 export async function createDpoToken(params: CreateTokenParams) {
@@ -46,8 +47,16 @@ export async function createDpoToken(params: CreateTokenParams) {
                     ServiceDescription: params.paymentReason,
                     ServiceDate: new Date().toISOString().split('T')[0] + ' 00:00'
                 }
-            }
-            // Allocation and other fields omitted for simplicity as per standard integration
+            },
+            // Customer details - REQUIRED for compliance and transaction auditing
+            CustomerFirstName: params.customerFirstName || '',
+            CustomerLastName: params.customerLastName || '',
+            CustomerEmail: params.customerEmail || '',
+            CustomerPhone: params.customerPhone || '',
+            CustomerZip: '',
+            CustomerCity: '',
+            CustomerCountry: 'KE',
+            CustomerAddress: ''
         }
     });
 
