@@ -52,6 +52,24 @@ const generateAdCode = (template: string, config: any) => {
                     </div>
                 </div>
             </div>
+        `,
+        popup_card: `
+            <div style="width: 100%; max-width: 500px; background: white; border-radius: 20px; overflow: hidden; font-family: 'Inter', sans-serif; box-shadow: 0 20px 50px rgba(0,0,0,0.1);">
+                <div style="background: linear-gradient(135deg, ${config.color1 || '#2E8B57'} 0%, ${config.color2 || '#1a5f3a'} 100%); padding: 30px; text-align: center; position: relative;">
+                    <div style="width: 80px; height: 80px; background: white; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+                        <span style="font-size: 40px;">${config.icon || '📢'}</span>
+                    </div>
+                    <h3 style="color: white; margin: 0; font-size: 24px; font-weight: 700;">${config.title || 'Attention!'}</h3>
+                </div>
+                <div style="padding: 30px; text-align: center;">
+                    <p style="color: #4b5563; font-size: 16px; line-height: 1.6; margin-bottom: 25px;">
+                        ${config.subtitle || 'Your message goes here. Make it catchy and engaging for your visitors.'}
+                    </p>
+                    <div style="background: ${config.color1 || '#2E8B57'}; color: white; padding: 12px 30px; border-radius: 12px; font-weight: 600; display: inline-block; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                        ${config.buttonText || 'Learn More'}
+                    </div>
+                </div>
+            </div>
         `
     }
 
@@ -242,6 +260,8 @@ export default function AdsPage() {
                                         setSelectedTemplate(e.target.value)
                                         if (e.target.value === 'product_showcase') {
                                             setAdConfig({ ...adConfig, width: '300px', height: '250px' })
+                                        } else if (e.target.value === 'popup_card') {
+                                            setAdConfig({ ...adConfig, width: '100%', height: 'auto' })
                                         } else {
                                             setAdConfig({ ...adConfig, width: '728px', height: '90px' })
                                         }
@@ -250,6 +270,7 @@ export default function AdsPage() {
                                 >
                                     <option value="gradient_banner">Gradient Banner (728x90)</option>
                                     <option value="product_showcase">Product Showcase (300x250)</option>
+                                    <option value="popup_card">Popup Card (Modal)</option>
                                 </select>
                             </div>
 
@@ -266,6 +287,7 @@ export default function AdsPage() {
                                     <option value="BLOG_BOTTOM">Blog Bottom</option>
                                     <option value="PROGRAMS_TOP">Programs Top</option>
                                     <option value="PROGRAMS_BOTTOM">Programs Bottom</option>
+                                    <option value="HOME_POPUP">Home Popup (Overlay)</option>
                                 </select>
                             </div>
 

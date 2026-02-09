@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import CookieConsent from '@/components/CookieConsent';
+import AdPopup from '@/components/AdPopup';
 import '../globals.css';
 import { defaultMetadata } from '@/lib/seo';
 import { ToastProvider } from '@/components/Toast';
@@ -50,6 +51,7 @@ export default async function LocaleLayout({
                         </main>
                         <Footer />
                         <CookieConsent />
+                        <AdPopup />
                     </ToastProvider>
                 </NextIntlClientProvider>
             </body>
