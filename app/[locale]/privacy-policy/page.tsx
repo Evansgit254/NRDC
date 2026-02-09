@@ -14,7 +14,7 @@ export default function PrivacyPolicy() {
                     <section>
                         <h2 className="text-2xl font-bold text-[#6E8C82] mb-4">1. Introduction</h2>
                         <p>
-                            Welcome to the Nutrition Relief & Development Centre (NRDC). We are committed to protecting
+                            Welcome to the Nutrition for Refugee & Displaced Communities (NRDC). We are committed to protecting
                             your privacy and ensuring the security of your personal information. This Privacy Policy
                             outlines how we collect, use, and safeguard your data when you visit our website or
                             engage with our programs.
@@ -76,7 +76,7 @@ export default function PrivacyPolicy() {
                             If you have any questions about this Privacy Policy, please contact us at:
                         </p>
                         <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-100">
-                            <p className="font-semibold text-[#6E8C82]">Nutrition Relief & Development Centre</p>
+                            <p className="font-semibold text-[#6E8C82]">Nutrition for Refugee & Displaced Communities</p>
                             <p>Email: nrdcofficial12@gmail.com</p>
                             <p>Phone: +254 727 001 702 / +254 702 121 310</p>
                             <p>Address: Nairobi, Kenya</p>
