@@ -4,8 +4,9 @@ import { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { Heart, ChevronLeft, ChevronRight, ArrowRight, Users, Heart as HeartIcon, Utensils, Activity, Quote, Star, BarChart3, Smile, Award } from 'lucide-react'
-import TestimonialForm from '@/components/TestimonialForm'
+import PartnerSection from '@/components/PartnerSection'
 import AdSlot from '@/components/AdSlot'
+import TestimonialForm from '@/components/TestimonialForm'
 import { useTranslations } from 'next-intl'
 import * as Icons from 'lucide-react'
 
@@ -359,6 +360,8 @@ export default function Home() {
           </div>
         </section>
       )}
+
+      <PartnerSection />
 
       {/* Advertisement: Home Bottom */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">

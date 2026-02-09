@@ -861,6 +861,28 @@ async function main() {
         }
     }
 
+    // Seed Partners
+    console.log('Seeding Partners...');
+    await prisma.partner.deleteMany({});
+
+    const partners = [
+        { name: 'Nutrition Association Of Kenya', logo: '/images/partners/nak.png', website: null },
+        { name: 'The Nutritionist Corner', logo: '/images/partners/nutritionist-corner.png', website: null },
+        { name: 'Bank of Africa', logo: '/images/partners/boa.png', website: 'https://www.boafrica.com' },
+        { name: 'DPO Group', logo: '/images/partners/dpo.png', website: 'https://dpogroup.com' },
+        { name: 'Zoho', logo: '/images/partners/zoho.png', website: 'https://www.zoho.com' },
+        { name: 'Refugees Consortium of Kenya', logo: '/images/partners/rck.png', website: 'https://www.rckkenya.org' },
+        { name: 'Jesuit Refugee Service', logo: '/images/partners/jrs.png', website: 'https://jrs.net' },
+        { name: 'UNHCR', logo: '/images/partners/unhcr.png', website: 'https://www.unhcr.org' },
+        { name: 'I&M Bank', logo: '/images/partners/imbank.png', website: 'https://www.imbankgroup.com' },
+    ];
+
+    for (const partner of partners) {
+        await prisma.partner.create({
+            data: partner
+        });
+    }
+
     console.log('Seeding finished.')
 }
 
