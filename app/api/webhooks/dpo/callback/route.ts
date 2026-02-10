@@ -36,19 +36,24 @@ export async function GET(request: Request) {
         }, { status: 400 });
     }
 
+
     try {
         // 1. Verify Token with DPO
+        console.log('DPO Callback: Verifying token:', transToken);
         const verifyResult = await verifyDpoToken(transToken);
+        console.log('DPO Callback: Verification result:', JSON.stringify(verifyResult, null, 2));
 
         // Result '000' means successful payment
         // Result '900' means transaction not paid yet
-        const isSuccess = verifyResult.Result === '000';
+        const isSuccess = verifyResult.Result === '000' || verifyResult.Result === 0;
 
         // 2. Update Database
         // Find donation by token
         const donation = await prisma.donation.findUnique({
             where: { dpoTransToken: transToken },
         });
+
+        console.log('DPO Callback: Found donation:', donation?.id, 'Status:', isSuccess ? 'completed' : 'failed');
 
         if (donation) {
             await prisma.donation.update({
@@ -72,8 +77,13 @@ export async function GET(request: Request) {
 
     } catch (error) {
         console.error('DPO Callback Error:', error);
+        console.error('DPO Callback Error Stack:', error instanceof Error ? error.stack : 'No stack trace');
+        console.error('DPO Callback TransToken:', transToken);
         return NextResponse.json(
-            { error: 'Verification failed' },
+            {
+                error: 'Verification failed',
+                details: error instanceof Error ? error.message : 'Unknown error'
+            },
             { status: 500 }
         );
     }
