@@ -39,7 +39,15 @@ export async function createDpoToken(params: CreateTokenParams) {
                     ? params.backUrl
                     : 'https://www.nrdc.africa/donate',
                 CompanyRefUnique: 0,
-                PTL: 5 // Payment Time Limit in hours
+                PTL: 5, // Payment Time Limit in hours
+                customerFirstName: params.customerFirstName || '',
+                customerLastName: params.customerLastName || '',
+                customerEmail: params.customerEmail || '',
+                customerPhone: params.customerPhone || '',
+                customerZip: '',
+                customerCity: '',
+                customerCountry: 'KE',
+                customerAddress: ''
             },
             Services: {
                 Service: {
@@ -47,16 +55,7 @@ export async function createDpoToken(params: CreateTokenParams) {
                     ServiceDescription: params.paymentReason,
                     ServiceDate: new Date().toISOString().split('T')[0] + ' 00:00'
                 }
-            },
-            // Customer details - REQUIRED for compliance and transaction auditing
-            CustomerFirstName: params.customerFirstName || '',
-            CustomerLastName: params.customerLastName || '',
-            CustomerEmail: params.customerEmail || '',
-            CustomerPhone: params.customerPhone || '',
-            CustomerZip: '',
-            CustomerCity: '',
-            CustomerCountry: 'KE',
-            CustomerAddress: ''
+            }
         }
     });
 
