@@ -5,10 +5,35 @@ import { redirect } from 'next/navigation';
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
-    const transToken = searchParams.get('TransToken'); // DPO sends TransToken param
+    let transToken = searchParams.get('TransToken');
+    const transId = searchParams.get('TransID');
+
+    // If TransToken is missing but TransID is present, DPO might be using it as the token or reference
+    if (!transToken && transId) {
+        // Try to find the donation by reference (which stores DPO's TransRef)
+        const donationByRef = await prisma.donation.findUnique({
+            where: { reference: transId },
+        });
+
+        if (donationByRef) {
+            transToken = donationByRef.dpoTransToken;
+        } else {
+            // Fallback: Check if TransID itself is the TransToken
+            const donationByToken = await prisma.donation.findUnique({
+                where: { dpoTransToken: transId },
+            });
+            if (donationByToken) {
+                transToken = transId;
+            }
+        }
+    }
 
     if (!transToken) {
-        return NextResponse.json({ error: 'Missing TransToken' }, { status: 400 });
+        console.error('DPO Callback: Missing Transaction Token. Query Params:', Object.fromEntries(searchParams));
+        return NextResponse.json({
+            error: 'Missing TransToken',
+            receivedParams: Object.fromEntries(searchParams)
+        }, { status: 400 });
     }
 
     try {
