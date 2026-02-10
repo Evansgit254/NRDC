@@ -34,11 +34,18 @@ export async function GET() {
             prisma.contactSubmission.count({ where: { status: 'NEW' } }),
         ]);
 
-        // Get recent blog posts (for activity chart)
+        // Get blog posts from the last 7 days
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
         const recentBlogs = await prisma.blogPost.findMany({
+            where: {
+                createdAt: {
+                    gte: sevenDaysAgo
+                }
+            },
             select: { createdAt: true },
             orderBy: { createdAt: 'desc' },
-            take: 30,
         });
 
         // Group by date
@@ -48,10 +55,17 @@ export async function GET() {
             return acc;
         }, {} as Record<string, number>);
 
-        const activityData = Object.entries(blogsByDate)
-            .map(([date, count]) => ({ date, count }))
-            .reverse()
-            .slice(-7); // Last 7 days
+        // Generate all 7 days (even if no posts on some days)
+        const activityData = [];
+        for (let i = 6; i >= 0; i--) {
+            const date = new Date();
+            date.setDate(date.getDate() - i);
+            const dateStr = date.toISOString().split('T')[0];
+            activityData.push({
+                date: dateStr,
+                count: blogsByDate[dateStr] || 0
+            });
+        }
 
         // Get top categories
         const categories = await prisma.blogPost.groupBy({
