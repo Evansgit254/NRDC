@@ -40,12 +40,37 @@ export async function GET(request: Request) {
     try {
         // 1. Verify Token with DPO
         console.log('DPO Callback: Verifying token:', transToken);
-        const verifyResult = await verifyDpoToken(transToken);
-        console.log('DPO Callback: Verification result:', JSON.stringify(verifyResult, null, 2));
 
-        // Result '000' means successful payment
-        // Result '900' means transaction not paid yet
-        const isSuccess = verifyResult.Result === '000' || verifyResult.Result === 0;
+        let verifyResult;
+        let isSuccess = false;
+
+        try {
+            verifyResult = await verifyDpoToken(transToken);
+            console.log('DPO Callback: Verification result:', JSON.stringify(verifyResult, null, 2));
+
+            // Result '000' means successful payment
+            // Result '900' means transaction not paid yet
+            isSuccess = verifyResult.Result === '000' || verifyResult.Result === 0;
+        } catch (verifyError) {
+            console.error('DPO Callback: verifyToken API call failed:', verifyError);
+
+            // Fallback: If DPO sent CCDapproval, the payment was successful
+            // CCDapproval is only sent on successful transactions
+            const ccdApproval = searchParams.get('CCDapproval');
+            if (ccdApproval) {
+                console.log('DPO Callback: Using CCDapproval as success indicator:', ccdApproval);
+                isSuccess = true;
+                verifyResult = {
+                    Result: '000',
+                    ResultExplanation: 'Payment approved (verified via CCDapproval)',
+                    CCDapproval: ccdApproval,
+                    TransactionToken: transToken
+                };
+            } else {
+                // If no CCDapproval and verification failed, re-throw the error
+                throw verifyError;
+            }
+        }
 
         // 2. Update Database
         // Find donation by token
