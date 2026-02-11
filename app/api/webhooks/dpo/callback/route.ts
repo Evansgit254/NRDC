@@ -151,7 +151,14 @@ export async function GET(request: Request) {
 
         // Redirect User
         if (isSuccess) {
-            redirect('/donate/success?payment_method=dpo');
+            const successUrl = new URL('/donate/success', request.url);
+            successUrl.searchParams.set('payment_method', 'dpo');
+            if (donation) {
+                successUrl.searchParams.set('amount', donation.amount.toString());
+                successUrl.searchParams.set('currency', donation.currency);
+                successUrl.searchParams.set('txn_id', donation.dpoTransToken || transToken || '');
+            }
+            redirect(successUrl.pathname + successUrl.search);
         } else {
             redirect('/donate/failed?reason=dpo_verification_failed');
         }

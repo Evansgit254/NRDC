@@ -6,22 +6,23 @@ import Link from 'next/link'
 import { CheckCircle, Download, Share2, Heart } from 'lucide-react'
 
 export default function DonateSuccessPage() {
-    const searchParams = useSearchParams()
-    const sessionId = searchParams?.get('session_id')
-    const [loading, setLoading] = useState(true)
-    const [donation, setDonation] = useState<any>(null)
+    const amount = searchParams?.get('amount')
+    const currency = searchParams?.get('currency')
+    const txnId = searchParams?.get('txn_id') || sessionId
 
     useEffect(() => {
-        if (sessionId) {
-            // In a real implementation, you might want to fetch donation details
-            // For now, we'll just simulate it
+        if (amount && currency) {
+            setDonation({ amount: parseFloat(amount), currency, id: txnId })
+            setLoading(false)
+        } else if (sessionId) {
+            // Fallback for legacy or direct visits
             setTimeout(() => {
                 setLoading(false)
             }, 1000)
         } else {
             setLoading(false)
         }
-    }, [sessionId])
+    }, [sessionId, amount, currency, txnId])
 
     if (loading) {
         return (
@@ -54,12 +55,14 @@ export default function DonateSuccessPage() {
                     <div className="bg-gray-50 rounded-xl p-6 mb-8">
                         <div className="flex justify-between items-center mb-4">
                             <span className="text-gray-600">Donation Amount:</span>
-                            <span className="text-2xl font-bold text-[#2E8B57]">Processing...</span>
+                            <span className="text-2xl font-bold text-[#2E8B57]">
+                                {donation ? `${donation.currency} ${donation.amount.toLocaleString()}` : 'Processing...'}
+                            </span>
                         </div>
-                        {sessionId && (
+                        {txnId && (
                             <div className="flex justify-between items-center text-sm">
                                 <span className="text-gray-500">Transaction ID:</span>
-                                <span className="text-gray-700 font-mono text-xs">{sessionId.substring(0, 20)}...</span>
+                                <span className="text-gray-700 font-mono text-xs">{txnId.substring(0, 20)}...</span>
                             </div>
                         )}
                     </div>
