@@ -6,9 +6,14 @@ import Link from 'next/link'
 import { CheckCircle, Download, Share2, Heart } from 'lucide-react'
 
 export default function DonateSuccessPage() {
+    const searchParams = useSearchParams()
     const amount = searchParams?.get('amount')
     const currency = searchParams?.get('currency')
+    const sessionId = searchParams?.get('session_id')
     const txnId = searchParams?.get('txn_id') || sessionId
+
+    const [loading, setLoading] = useState(true)
+    const [donation, setDonation] = useState<any>(null)
 
     useEffect(() => {
         if (amount && currency) {
@@ -23,6 +28,25 @@ export default function DonateSuccessPage() {
             setLoading(false)
         }
     }, [sessionId, amount, currency, txnId])
+
+    const handleShare = async () => {
+        const shareData = {
+            title: 'I just donated to NRDC!',
+            text: 'I just supported NRDC in their mission to help refugees and displaced communities. Join me in making a difference!',
+            url: window.location.origin + '/donate',
+        }
+
+        try {
+            if (navigator.share) {
+                await navigator.share(shareData)
+            } else {
+                await navigator.clipboard.writeText(shareData.url)
+                alert('Donation link copied to clipboard!')
+            }
+        } catch (err) {
+            console.error('Error sharing:', err)
+        }
+    }
 
     if (loading) {
         return (
@@ -107,7 +131,10 @@ export default function DonateSuccessPage() {
                     <div className="mt-8 pt-8 border-t border-gray-200 text-center">
                         <p className="text-gray-600 mb-4">Help us reach more people</p>
                         <div className="flex justify-center gap-4">
-                            <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+                            <button
+                                onClick={handleShare}
+                                className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                            >
                                 <Share2 size={20} />
                                 Share
                             </button>
