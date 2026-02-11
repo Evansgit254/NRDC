@@ -157,6 +157,11 @@ export async function GET(request: Request) {
         }
 
     } catch (error) {
+        // Next.js redirect() throws an error, so we need to re-throw it if it's a redirect
+        if (error instanceof Error && (error.message === 'NEXT_REDIRECT' || error.message.includes('NEXT_REDIRECT'))) {
+            throw error;
+        }
+
         console.error('DPO Callback Error:', error);
         console.error('DPO Callback Error Stack:', error instanceof Error ? error.stack : 'No stack trace');
         return NextResponse.json(
