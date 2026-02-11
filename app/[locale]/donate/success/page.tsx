@@ -86,7 +86,7 @@ export default function DonateSuccessPage() {
                         {txnId && (
                             <div className="flex justify-between items-center text-sm">
                                 <span className="text-gray-500">Transaction ID:</span>
-                                <span className="text-gray-700 font-mono text-xs">{txnId.substring(0, 20)}...</span>
+                                <span className="text-gray-700 font-mono text-xs break-all">{txnId}</span>
                             </div>
                         )}
                     </div>
