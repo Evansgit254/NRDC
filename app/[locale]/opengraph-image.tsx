@@ -10,8 +10,12 @@ export const size = {
 
 export const contentType = 'image/png'
 
-export default async function Image() {
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+import { getTranslations } from 'next-intl/server'
+
+export default async function Image({ params }: { params: { locale: string } }) {
+    const { locale } = params
+    const t = await getTranslations({ locale, namespace: 'footer' })
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://nrdc.africa'
     const logoUrl = `${siteUrl}/images/nrdc-logo-v3.png`
 
     return new ImageResponse(
@@ -66,7 +70,7 @@ export default async function Image() {
                         maxWidth: '1000px',
                     }}
                 >
-                    Nutrition for Refugees and Displaced Communities
+                    {t('aboutDesc')}
                 </div>
                 <div
                     style={{

@@ -15,10 +15,9 @@ interface SEOParams {
 /**
  * Generate comprehensive meta tags for a page
  */
-export function generateMetadata(params: SEOParams): Metadata {
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-    const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'NRDC'
-    // Use the dynamic route for the default image (defaulting to English)
+export function generateMetadata(params: SEOParams & { locale?: string }): Metadata {
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://nrdc.africa'
+    const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'NRDC.KENYA'
     const defaultImage = `${siteUrl}/en/opengraph-image`
 
     const {
@@ -31,16 +30,30 @@ export function generateMetadata(params: SEOParams): Metadata {
         author,
         publishedTime,
         modifiedTime,
+        locale = 'en'
     } = params
 
-    const fullTitle = `${title} | ${siteName}`
+    const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`
     const imageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`
 
+    // Supported locales for hreflang
+    const locales = ['en', 'fr', 'es', 'ar', 'sw']
+    const languages: Record<string, string> = {}
+
+    // Generate alternate localized URLs
+    locales.forEach(l => {
+        // Handle root path vs subpaths
+        const path = url.replace(siteUrl, '').replace(/^\/[a-z]{2}(\/|$)/, '/')
+        languages[l] = `${siteUrl}/${l}${path === '/' ? '' : path}`
+    })
+
     return {
-        title: fullTitle,
+        title: {
+            absolute: fullTitle,
+        },
         description,
         keywords: keywords.join(', '),
-        authors: author ? [{ name: author }] : undefined,
+        authors: author ? [{ name: author }] : [{ name: 'NRDC' }],
         openGraph: {
             title: fullTitle,
             description,
@@ -54,7 +67,7 @@ export function generateMetadata(params: SEOParams): Metadata {
                     alt: title,
                 },
             ],
-            locale: 'en_US',
+            locale: locale === 'ar' ? 'ar_AR' : `${locale}_${locale.toUpperCase()}`,
             type,
             publishedTime,
             modifiedTime,
@@ -64,7 +77,7 @@ export function generateMetadata(params: SEOParams): Metadata {
             title: fullTitle,
             description,
             images: [imageUrl],
-            creator: '@NRDC',
+            creator: '@NRDC_KENYA',
         },
         robots: {
             index: true,
@@ -79,6 +92,7 @@ export function generateMetadata(params: SEOParams): Metadata {
         },
         alternates: {
             canonical: url,
+            languages,
         },
     }
 }
@@ -173,4 +187,20 @@ export const defaultMetadata: Metadata = {
         apple: '/apple-touch-icon.png',
     },
     manifest: '/site.webmanifest',
+}
+
+/**
+ * Generate JSON-LD structured data for breadcrumbs
+ */
+export function generateBreadcrumbSchema(items: { name: string; item: string }[]) {
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: items.map((item, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            name: item.name,
+            item: item.item,
+        })),
+    }
 }

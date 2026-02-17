@@ -3,12 +3,34 @@ import Link from 'next/link'
 import { Calendar, ArrowRight } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import AdSlot from '@/components/AdSlot'
+import { generateMetadata as generateBaseMetadata, generateBreadcrumbSchema } from '@/lib/seo';
+import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic'
 
-export default async function BlogPage({ params }: { params: Promise<{ locale: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale } = await params;
     const t = await getTranslations({ locale, namespace: 'blogPage' });
+    const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'NRDC.KENYA';
+
+    return generateBaseMetadata({
+        title: `${t('title')} | ${siteName}`,
+        description: t('subtitle'),
+        locale,
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://nrdc.africa'}/${locale}/blog`,
+    });
+}
+
+export default async function BlogPage({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
+    const tNav = await getTranslations({ locale, namespace: 'nav' });
+    const tBlog = await getTranslations({ locale, namespace: 'blogPage' });
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://nrdc.africa';
+
+    const breadcrumbSchema = generateBreadcrumbSchema([
+        { name: tNav('home'), item: `${baseUrl}/${locale}` },
+        { name: tBlog('title'), item: `${baseUrl}/${locale}/blog` },
+    ]);
 
     const posts = await prisma.blogPost.findMany({
         where: { published: true },
@@ -22,11 +44,15 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
 
     return (
         <div className="pb-16">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
             <section className="bg-[#6E8C82] text-white py-20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-6">{t('title')}</h1>
+                    <h1 className="text-4xl md:text-5xl font-bold mb-6">{tBlog('title')}</h1>
                     <p className="text-xl max-w-3xl mx-auto text-white/80">
-                        {t('subtitle')}
+                        {tBlog('subtitle')}
                     </p>
                 </div>
             </section>
@@ -80,7 +106,7 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
                                             href={`/blog/${post.slug}`}
                                             className="inline-flex items-center text-[#2E8B57] font-bold hover:text-[#267347] hover:underline transition-colors group/link"
                                         >
-                                            {t('readMore')}
+                                            {tBlog('readMore')}
                                             <ArrowRight size={16} className="ml-1 transition-transform group-hover/link:translate-x-1" />
                                         </Link>
                                     </div>
@@ -92,7 +118,7 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
 
                 {posts.length === 0 && (
                     <div className="text-center text-gray-500 py-12 animate-fadeIn">
-                        <p className="text-lg">{t('noPosts')}</p>
+                        <p className="text-lg">{tBlog('noPosts')}</p>
                     </div>
                 )}
             </section>
