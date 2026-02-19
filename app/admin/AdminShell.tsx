@@ -27,6 +27,7 @@ import {
     Repeat,
     CreditCard,
     Handshake,
+    Briefcase,
 } from 'lucide-react'
 import clsx from 'clsx'
 import { ToastProvider } from '@/components/Toast'
@@ -49,6 +50,7 @@ const navItems = [
     { name: 'Contact Messages', href: '/admin/contact', icon: Mail, adminOnly: false },
     { name: 'Translations', href: '/admin/translations', icon: Globe, adminOnly: true },
     { name: 'Advertisements', href: '/admin/ads', icon: Megaphone, adminOnly: false },
+    { name: 'Careers', href: '/admin/careers', icon: Briefcase, adminOnly: false },
     { name: 'Donations', href: '/admin/donations', icon: Heart, adminOnly: false },
     { name: 'Subscriptions', href: '/admin/subscriptions', icon: Repeat, adminOnly: false },
     { name: 'Bank & Payment', href: '/admin/bank-settings', icon: CreditCard, adminOnly: true },

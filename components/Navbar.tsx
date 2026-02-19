@@ -20,6 +20,7 @@ export default function Navbar() {
         { name: t('programs'), href: '/programs' },
         { name: t('getInvolved'), href: '/get-involved' },
         { name: t('blog'), href: '/blog' },
+        { name: t('careers'), href: '/careers' },
         { name: t('gallery'), href: '/gallery' },
         { name: t('contact'), href: '/contact' },
     ]
