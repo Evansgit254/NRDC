@@ -143,6 +143,34 @@ export default function AdminCareersPage() {
         setFn(newList)
     }
 
+    const handlePaste = (
+        e: React.ClipboardEvent,
+        list: string[],
+        idx: number,
+        setFn: (newList: string[]) => void
+    ) => {
+        const text = e.clipboardData.getData('text')
+        if (text.includes('\n')) {
+            e.preventDefault()
+            const lines = text
+                .split('\n')
+                .map(line => line.trim().replace(/^[•\-\*]\s*/, '')) // Remove bullet symbols
+                .filter(line => line.length > 0)
+
+            if (lines.length > 0) {
+                const newList = [...list]
+                // If the current field is empty, replace it. Otherwise, insert after it.
+                if (!newList[idx].trim()) {
+                    newList[idx] = lines[0]
+                    newList.splice(idx + 1, 0, ...lines.slice(1))
+                } else {
+                    newList.splice(idx + 1, 0, ...lines)
+                }
+                setFn(newList)
+            }
+        }
+    }
+
     if (loading) return <div className="p-8 text-center italic">Loading vacancies...</div>
 
     return (
@@ -260,6 +288,16 @@ export default function AdminCareersPage() {
                                                         else updateField(section.field, newList)
                                                     }
                                                     updateListItem(list, idx, e.target.value, setFn)
+                                                }}
+                                                onPaste={(e) => {
+                                                    const list = section.nested
+                                                        ? (editing as any).requirements[section.field]
+                                                        : (editing as any)[section.field]
+                                                    const setFn = (newList: string[]) => {
+                                                        if (section.nested) updateNestedField('requirements', section.field, newList)
+                                                        else updateField(section.field, newList)
+                                                    }
+                                                    handlePaste(e, list, idx, setFn)
                                                 }}
                                                 className="flex-1 px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#6E8C82] outline-none"
                                             />
