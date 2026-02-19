@@ -10,9 +10,13 @@
         "resources": "Rasilimali",
         "admin": "Utawala",
         "donate": "Changia",
-        "donateNow": "Changia Sasa"
+        "donateNow": "Changia Sasa",
+        "careers": "Kazi"
     },
-    "partners": {"title": "Washirika na Washirikiano Wetu", "subtitle": "Kufanya kazi pamoja na mashirika yanayoongoza ili kuleta athari na mabadiliko endelevu."},
+    "partners": {
+        "title": "Washirika na Washirikiano Wetu",
+        "subtitle": "Kufanya kazi pamoja na mashirika yanayoongoza ili kuleta athari na mabadiliko endelevu."
+    },
     "hero": {
         "title": "Kustawisha Tumaini katika Jamii Zilizohamishwa",
         "subtitle": "Kutoa lishe muhimu, usalama wa chakula, na msaada wa afya kwa wale wanaohitaji zaidi.",
@@ -147,7 +151,25 @@
         "partnerLink": "Kuwa Mshirika",
         "volunteerTitle": "Jitolee",
         "volunteerDesc": "Shiriki ujuzi na muda wako. Daima tunatafuta watu wenye shauku ya kujiunga na timu yetu.",
-        "volunteerApp": "Maombi ya Kujitolea"
+        "volunteerApp": "Maombi ya Kujitolea",
+        "viewCareers": "Unatafuta nafasi maalum? Tazama Nafasi zetu za Kazi.",
+        "careersLink": "Tazama Nafasi za Kazi"
+    },
+    "careers": {
+        "title": "Kazi NRDC",
+        "subtitle": "Jiunge na timu yetu ya wataalamu na wajitolea wenye shauku ya kuleta mabadiliko.",
+        "viewDetails": "Tazama Maelezo",
+        "hideDetails": "Ficha Maelezo",
+        "responsibilities": "Majukumu Muhimu",
+        "requirements": "Mahitaji",
+        "education": "Elimu",
+        "experience": "Uzoefu",
+        "skills": "Ujuzi Muhimu",
+        "professional": "Nafasi za Kitaalamu",
+        "volunteer": "Nafasi za Kujitolea",
+        "noOpenings": "Hakuna nafasi kwa sasa. Tafadhali angalia tena baadaye.",
+        "applyNow": "Omba Sasa",
+        "learnMore": "Jifunze Zaidi"
     },
     "cookieConsent": {
         "title": "Tunatumia kuki",
