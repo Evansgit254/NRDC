@@ -150,7 +150,42 @@
         "partnerLink": "Become a Partner",
         "volunteerTitle": "Volunteer",
         "volunteerDesc": "Share your skills and time. We are always looking for passionate individuals to join our team.",
-        "volunteerApp": "Volunteer Application"
+        "volunteerApp": "Volunteer Application",
+        "currentOpportunities": "Current Opportunities",
+        "noOpportunities": "No specific vacancies at the moment, but we always welcome proactive applications.",
+        "viewDetails": "View Details",
+        "hideDetails": "Hide Details",
+        "responsibilities": "Key Responsibilities",
+        "requirements": "Requirements",
+        "education": "Education",
+        "experience": "Experience",
+        "skills": "Key Skills",
+        "vacancies": {
+            "bdm": {
+                "title": "Volunteer Business Development Manager",
+                "responsibilities": [
+                    "Lead revenue streams (e.g., social enterprises, grants, partnerships)",
+                    "Analyze markets.",
+                    "Build donor/corporate ties.",
+                    "Align scaling with long-term vision; SWOT analysis; stakeholder engagement."
+                ],
+                "requirements": {
+                    "education": [
+                        "Master's degree in Business Administration, International Development, Public Health, Social Entrepreneurship, or related field.",
+                        "Certifications in Project Management, Fundraising, Resource Mobilization, or Monitoring & Evaluation"
+                    ],
+                    "experience": [
+                        "Track record securing grants (USG, EU, foundations), launching social enterprises, or diversifying income (e.g., CSR partnerships).",
+                        "3-5 years Africa/Kenya experience, especially with donors like USAID or corporate philanthropies."
+                    ]
+                },
+                "skills": [
+                    "Strategic: Business planning, market analysis, SWOT for NGO models; partnership brokering.",
+                    "Technical: Proposal writing, donor compliance, budget management; tools like Salesforce or grant platforms.",
+                    "Soft: Networking, negotiation, team leadership; excellent English communication (Swahili a plus)."
+                ]
+            }
+        }
     },
     "cookieConsent": {
         "title": "We use cookies",

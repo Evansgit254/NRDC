@@ -79,9 +79,84 @@ export default function GetInvolvedPage() {
                         </div>
                     </div>
 
-                    <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('volunteerApp')}</h2>
-                        <VolunteerForm />
+                    <div className="space-y-8">
+                        <div>
+                            <h2 className="text-3xl font-bold text-gray-900 mb-8">{t('currentOpportunities')}</h2>
+                            <div className="space-y-4">
+                                {['bdm'].map((key) => (
+                                    <div key={key} className="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm">
+                                        <div className="p-6">
+                                            <div className="flex justify-between items-start gap-4">
+                                                <h3 className="text-xl font-bold text-gray-900">{t(`vacancies.${key}.title`)}</h3>
+                                                <button
+                                                    onClick={() => {
+                                                        const el = document.getElementById(`details-${key}`);
+                                                        if (el) el.classList.toggle('hidden');
+                                                    }}
+                                                    className="text-sm font-semibold text-[#6E8C82] hover:underline whitespace-nowrap"
+                                                >
+                                                    {t('viewDetails')}
+                                                </button>
+                                            </div>
+
+                                            <div id={`details-${key}`} className="mt-6 hidden space-y-6 border-t pt-6">
+                                                <div>
+                                                    <h4 className="font-bold text-gray-900 mb-2">{t('responsibilities')}</h4>
+                                                    <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                                                        {(t.raw(`vacancies.${key}.responsibilities`) as string[]).map((item, i) => (
+                                                            <li key={i}>{item}</li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+
+                                                <div>
+                                                    <h4 className="font-bold text-gray-900 mb-2">{t('requirements')}</h4>
+                                                    <div className="space-y-4">
+                                                        <div>
+                                                            <span className="text-sm font-semibold text-gray-700 block mb-1">{t('education')}</span>
+                                                            <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                                                                {(t.raw(`vacancies.${key}.requirements.education`) as string[]).map((item, i) => (
+                                                                    <li key={i}>{item}</li>
+                                                                ))}
+                                                            </ul>
+                                                        </div>
+                                                        <div>
+                                                            <span className="text-sm font-semibold text-gray-700 block mb-1">{t('experience')}</span>
+                                                            <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                                                                {(t.raw(`vacancies.${key}.requirements.experience`) as string[]).map((item, i) => (
+                                                                    <li key={i}>{item}</li>
+                                                                ))}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <h4 className="font-bold text-gray-900 mb-2">{t('skills')}</h4>
+                                                    <ul className="list-disc pl-5 space-y-1 text-gray-600">
+                                                        {(t.raw(`vacancies.${key}.skills`) as string[]).map((item, i) => (
+                                                            <li key={i}>{item}</li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+
+                                                <button
+                                                    onClick={() => document.getElementById(`details-${key}`)?.classList.add('hidden')}
+                                                    className="text-sm font-semibold text-gray-400 hover:text-gray-600 underline"
+                                                >
+                                                    {t('hideDetails')}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+                            <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('volunteerApp')}</h2>
+                            <VolunteerForm />
+                        </div>
                     </div>
                 </div>
             </section>
