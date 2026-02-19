@@ -19,6 +19,7 @@ interface Advertisement {
 
 // Ad template generator
 const generateAdCode = (template: string, config: any) => {
+    const configWithTemplate = { ...config, template }
     const adContent = {
         gradient_banner: `
             <div style="width: 100%; max-width: ${config.width || '728px'}; height: ${config.height || '90px'}; margin: 0 auto; background: linear-gradient(135deg, ${config.color1 || '#667eea'} 0%, ${config.color2 || '#764ba2'} 100%); background-size: 200% 200%; animation: gradientShift 3s ease infinite; border-radius: 12px; position: relative; font-family: 'Inter', Arial, sans-serif; overflow: hidden; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; box-sizing: border-box; cursor: pointer; box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px) scale(1.01)';" onmouseout="this.style.transform='';">
@@ -75,10 +76,12 @@ const generateAdCode = (template: string, config: any) => {
 
     const content = adContent[template as keyof typeof adContent] || adContent.gradient_banner
     const targetUrl = config.targetUrl || '#'
+    const configTag = `<!-- ad-config:${JSON.stringify(configWithTemplate)} -->`
 
     // Wrap in clickable link
-    return `<a href="${targetUrl}" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; height: 100%; text-decoration: none; cursor: pointer;">${content}</a>`
+    return `<a href="${targetUrl}" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; height: 100%; text-decoration: none; cursor: pointer;">${content}</a>${configTag}`
 }
+
 
 export default function AdsPage() {
     const [ads, setAds] = useState<Advertisement[]>([])
@@ -168,19 +171,52 @@ export default function AdsPage() {
         setEditingAd(ad)
         setIsCreating(true)
 
-        // Extract URL from code (simple regex)
+        // Try to recover config from hidden comment
+        const configMatch = ad.code.match(/<!-- ad-config:(.*?) -->/)
+        if (configMatch) {
+            try {
+                const recoveredConfig = JSON.parse(configMatch[1])
+                setSelectedTemplate(recoveredConfig.template || 'gradient_banner')
+                setAdConfig(recoveredConfig)
+                return
+            } catch (e) {
+                console.error('Failed to parse recovered config:', e)
+            }
+        }
+
+        // Fallback for existing "Blogger Recruitment Popup" or other old ads
         const urlMatch = ad.code.match(/href="([^"]*)"/)
         const currentUrl = urlMatch ? urlMatch[1] : adConfig.targetUrl
 
-        const config = {
-            ...adConfig,
-            name: ad.name,
-            placement: ad.placement,
-            targetUrl: currentUrl,
-            // Preserve other defaults for now as they are hard to parse back
-            // Ideally we should store config separately in DB but for now this fixes the link
+        // Try to detect template and extract fields via regex fallback
+        let detectedTemplate = 'gradient_banner'
+        const extractedConfig = { ...adConfig, name: ad.name, placement: ad.placement, targetUrl: currentUrl }
+
+        if (ad.code.includes('Attention!') || ad.code.includes('Looking for Bloggers')) {
+            detectedTemplate = 'popup_card'
+
+            // Extract Title
+            const titleMatch = ad.code.match(/<h3[^>]*>(.*?)<\/h3>/)
+            if (titleMatch) extractedConfig.title = titleMatch[1]
+
+            // Extract Subtitle
+            const subtitleMatch = ad.code.match(/<p[^>]*>([\s\S]*?)<\/p>/)
+            if (subtitleMatch) extractedConfig.subtitle = subtitleMatch[1].trim()
+
+            // Extract Icon
+            const iconMatch = ad.code.match(/<span[^>]*style="[^"]*font-size:\s*40px[^"]*"[^>]*>(.*?)<\/span>/)
+            if (iconMatch) extractedConfig.icon = iconMatch[1]
+
+            // Extract Colors from gradient
+            const colorMatch = ad.code.match(/linear-gradient\(135deg, (.*?) 0%, (.*?) 100%\)/)
+            if (colorMatch) {
+                extractedConfig.color1 = colorMatch[1]
+                extractedConfig.color2 = colorMatch[2]
+            }
         }
-        setAdConfig(config)
+
+        setSelectedTemplate(detectedTemplate)
+        setAdConfig(extractedConfig)
     }
 
     function resetConfig() {
