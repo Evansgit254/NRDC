@@ -118,6 +118,7 @@ export async function PUT(request: Request) {
         if (body.category !== undefined) updateData.category = body.category
         if (body.tags !== undefined) updateData.tags = body.tags
         if (body.published !== undefined) updateData.published = body.published
+        if (body.image !== undefined) updateData.image = body.image
 
         const blog = await prisma.blogPost.update({
             where: { id },

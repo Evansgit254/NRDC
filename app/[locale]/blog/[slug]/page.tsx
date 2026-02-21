@@ -66,9 +66,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
             <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="prose max-w-none mb-12">
-                    <div className="text-lg text-gray-700 leading-relaxed whitespace-pre-wrap">
-                        {content}
-                    </div>
+                    <div
+                        className="text-lg text-gray-700 leading-relaxed"
+                        dangerouslySetInnerHTML={{ __html: content }}
+                    />
                 </div>
 
                 {tags.length > 0 && (
