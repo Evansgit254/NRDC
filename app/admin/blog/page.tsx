@@ -30,6 +30,17 @@ export default function AdminBlogPage() {
     const [editingId, setEditingId] = useState<string | null>(null)
     const [imagePreview, setImagePreview] = useState<string | null>(null)
     const [searchTerm, setSearchTerm] = useState('')
+    const [translations, setTranslations] = useState<Record<string, { title: string, excerpt: string, content: string }>>({})
+    const [selectedLocale, setSelectedLocale] = useState('en')
+    const [loadingTranslations, setLoadingTranslations] = useState(false)
+
+    const locales = [
+        { code: 'en', label: 'English' },
+        { code: 'sw', label: 'Swahili' },
+        { code: 'fr', label: 'French' },
+        { code: 'es', label: 'Spanish' },
+        { code: 'ar', label: 'Arabic' }
+    ]
 
     const filteredPosts = posts.filter(post =>
         post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -61,6 +72,8 @@ export default function AdminBlogPage() {
         setFormData({ title: '', content: '', excerpt: '', category: '', tags: '', published: false, imageFile: null, imageUrl: '' })
         setImagePreview(null)
         setEditingId(null)
+        setSelectedLocale('en')
+        setTranslations({})
         setShowForm(true)
     }
 
@@ -77,7 +90,29 @@ export default function AdminBlogPage() {
         })
         setImagePreview(post.image || null)
         setEditingId(post.id)
+        setSelectedLocale('en')
+        setTranslations({})
         setShowForm(true)
+        fetchTranslations(post.id)
+    }
+
+    async function fetchTranslations(postId: string) {
+        setLoadingTranslations(true)
+        try {
+            const res = await fetch(`/api/blogs/${postId}/translations`)
+            if (res.ok) {
+                const data = await res.json()
+                const transMap: Record<string, { title: string, excerpt: string, content: string }> = {}
+                data.forEach((t: any) => {
+                    transMap[t.locale] = { title: t.title, excerpt: t.excerpt || '', content: t.content }
+                })
+                setTranslations(transMap)
+            }
+        } catch (error) {
+            console.error('Error fetching translations', error)
+        } finally {
+            setLoadingTranslations(false)
+        }
     }
 
     function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -97,6 +132,20 @@ export default function AdminBlogPage() {
         setUploading(true)
 
         try {
+            if (selectedLocale !== 'en' && editingId) {
+                // Save Translation
+                const payload = translations[selectedLocale] || { title: '', excerpt: '', content: '' }
+                const res = await fetch(`/api/blogs/${editingId}/translations`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ locale: selectedLocale, ...payload })
+                })
+                if (!res.ok) throw new Error('Failed to save translation')
+                showToast(`Translation for ${selectedLocale} saved!`, 'success')
+                setUploading(false)
+                return
+            }
+
             let imageUrl = formData.imageUrl
 
             // Upload new image if selected
@@ -182,6 +231,24 @@ export default function AdminBlogPage() {
         }
     }
 
+    const currentTitle = selectedLocale === 'en' ? formData.title : (translations[selectedLocale]?.title || '')
+    const currentExcerpt = selectedLocale === 'en' ? formData.excerpt : (translations[selectedLocale]?.excerpt || '')
+    const currentContent = selectedLocale === 'en' ? formData.content : (translations[selectedLocale]?.content || '')
+
+    function updateField(field: 'title' | 'excerpt' | 'content', value: string) {
+        if (selectedLocale === 'en') {
+            setFormData({ ...formData, [field]: value })
+        } else {
+            setTranslations({
+                ...translations,
+                [selectedLocale]: {
+                    ...(translations[selectedLocale] || { title: '', excerpt: '', content: '' }),
+                    [field]: value
+                }
+            })
+        }
+    }
+
     if (loading) {
         return <div className="text-center py-12">Loading...</div>
     }
@@ -220,6 +287,32 @@ export default function AdminBlogPage() {
                             <X size={24} />
                         </button>
                     </div>
+
+                    {editingId && (
+                        <div className="flex flex-wrap gap-2 mb-6 border-b border-gray-200 pb-4">
+                            {locales.map(loc => (
+                                <button
+                                    key={loc.code}
+                                    type="button"
+                                    onClick={() => setSelectedLocale(loc.code)}
+                                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${selectedLocale === loc.code
+                                        ? 'bg-[#6E8C82] text-white'
+                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                        }`}
+                                >
+                                    {loc.label}
+                                </button>
+                            ))}
+                            {loadingTranslations && <span className="text-sm text-gray-500 self-center ml-2">Loading...</span>}
+                        </div>
+                    )}
+
+                    {!editingId && selectedLocale !== 'en' && (
+                        <div className="mb-4 text-sm text-yellow-600 bg-yellow-50 p-3 rounded-lg">
+                            Please save the post in English first before adding translations.
+                        </div>
+                    )}
+
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
@@ -227,91 +320,102 @@ export default function AdminBlogPage() {
                                 type="text"
                                 required
                                 className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#6E8C82] outline-none"
-                                value={formData.title}
-                                onChange={e => setFormData({ ...formData, title: e.target.value })}
+                                value={currentTitle}
+                                onChange={e => updateField('title', e.target.value)}
                             />
                         </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Featured Image</label>
-                            <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-[#6E8C82] transition-colors">
-                                {imagePreview ? (
-                                    <div className="space-y-3">
-                                        <img src={imagePreview} alt="Preview" className="max-h-48 mx-auto rounded-lg" />
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                setImagePreview(null)
-                                                setFormData({ ...formData, imageFile: null, imageUrl: '' })
-                                            }}
-                                            className="text-red-600 hover:text-red-800 text-sm"
-                                        >
-                                            Remove Image
-                                        </button>
-                                    </div>
-                                ) : (
-                                    <div>
-                                        <ImageIcon size={36} className="mx-auto text-gray-400 mb-2" />
-                                        <label className="cursor-pointer">
-                                            <span className="text-[#6E8C82] hover:underline font-medium">Click to upload image</span>
-                                            <input
-                                                type="file"
-                                                accept="image/*"
-                                                className="hidden"
-                                                onChange={handleFileChange}
-                                            />
-                                        </label>
-                                        <p className="text-xs text-gray-500 mt-1">PNG, JPG up to 10MB</p>
-                                    </div>
-                                )}
+
+                        {selectedLocale === 'en' && (
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Featured Image</label>
+                                <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-[#6E8C82] transition-colors">
+                                    {imagePreview ? (
+                                        <div className="space-y-3">
+                                            <img src={imagePreview} alt="Preview" className="max-h-48 mx-auto rounded-lg" />
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setImagePreview(null)
+                                                    setFormData({ ...formData, imageFile: null, imageUrl: '' })
+                                                }}
+                                                className="text-red-600 hover:text-red-800 text-sm"
+                                            >
+                                                Remove Image
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <ImageIcon size={36} className="mx-auto text-gray-400 mb-2" />
+                                            <label className="cursor-pointer">
+                                                <span className="text-[#6E8C82] hover:underline font-medium">Click to upload image</span>
+                                                <input
+                                                    type="file"
+                                                    accept="image/*"
+                                                    className="hidden"
+                                                    onChange={handleFileChange}
+                                                />
+                                            </label>
+                                            <p className="text-xs text-gray-500 mt-1">PNG, JPG up to 10MB</p>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                            <input
-                                type="text"
-                                required
-                                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#6E8C82] outline-none"
-                                placeholder="News, Stories, Updates"
-                                value={formData.category}
-                                onChange={e => setFormData({ ...formData, category: e.target.value })}
-                            />
-                        </div>
+                        )}
+
+                        {selectedLocale === 'en' && (
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                                <input
+                                    type="text"
+                                    required
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#6E8C82] outline-none"
+                                    placeholder="News, Stories, Updates"
+                                    value={formData.category}
+                                    onChange={e => setFormData({ ...formData, category: e.target.value })}
+                                />
+                            </div>
+                        )}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Excerpt (Summary)</label>
                             <textarea
                                 rows={2}
                                 className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#6E8C82] outline-none"
-                                value={formData.excerpt}
-                                onChange={e => setFormData({ ...formData, excerpt: e.target.value })}
+                                value={currentExcerpt}
+                                onChange={e => updateField('excerpt', e.target.value)}
                             />
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Content</label>
                             <Editor
-                                value={formData.content}
-                                onChange={(content) => setFormData({ ...formData, content })}
+                                value={currentContent}
+                                onChange={(content) => updateField('content', content)}
                             />
                         </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Tags (comma-separated)</label>
-                            <input
-                                type="text"
-                                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#6E8C82] outline-none"
-                                placeholder="nutrition, health, community"
-                                value={formData.tags}
-                                onChange={e => setFormData({ ...formData, tags: e.target.value })}
-                            />
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <input
-                                type="checkbox"
-                                id="published"
-                                className="w-4 h-4 text-[#6E8C82] rounded focus:ring-[#6E8C82]"
-                                checked={formData.published}
-                                onChange={e => setFormData({ ...formData, published: e.target.checked })}
-                            />
-                            <label htmlFor="published" className="text-sm font-medium text-gray-700">Publish immediately</label>
-                        </div>
+
+                        {selectedLocale === 'en' && (
+                            <>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Tags (comma-separated)</label>
+                                    <input
+                                        type="text"
+                                        className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#6E8C82] outline-none"
+                                        placeholder="nutrition, health, community"
+                                        value={formData.tags}
+                                        onChange={e => setFormData({ ...formData, tags: e.target.value })}
+                                    />
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <input
+                                        type="checkbox"
+                                        id="published"
+                                        className="w-4 h-4 text-[#6E8C82] rounded focus:ring-[#6E8C82]"
+                                        checked={formData.published}
+                                        onChange={e => setFormData({ ...formData, published: e.target.checked })}
+                                    />
+                                    <label htmlFor="published" className="text-sm font-medium text-gray-700">Publish immediately</label>
+                                </div>
+                            </>
+                        )}
                         <div className="flex gap-3">
                             <button
                                 type="submit"
@@ -321,10 +425,10 @@ export default function AdminBlogPage() {
                                 {uploading ? (
                                     <>
                                         <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
-                                        Uploading...
+                                        Saving...
                                     </>
                                 ) : (
-                                    <>{editingId ? 'Update' : 'Create'} Post</>
+                                    <>{selectedLocale === 'en' ? (editingId ? 'Update' : 'Create') + ' Post' : 'Save Translation'}</>
                                 )}
                             </button>
                             <button type="button" onClick={() => setShowForm(false)} className="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition-colors">
