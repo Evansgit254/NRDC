@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/auth'
 import { logAudit } from '@/lib/audit'
 import { revalidatePath } from 'next/cache'
+import { autoTranslatePost } from '@/lib/translate'
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url)
@@ -67,6 +68,29 @@ export async function POST(request: Request) {
 
         await logAudit('CREATE', 'BlogPost', blog.id, { userId: session.userId, details: { title: blog.title } })
 
+        // Auto-translate in the background
+        autoTranslatePost({
+            title: blog.title,
+            excerpt: blog.excerpt || '',
+            content: blog.content
+        }).then(async (translations) => {
+            for (const [locale, data] of Object.entries(translations)) {
+                await prisma.blogPostTranslation.upsert({
+                    where: {
+                        postId_locale: { postId: blog.id, locale }
+                    },
+                    update: data,
+                    create: {
+                        postId: blog.id,
+                        locale,
+                        title: data.title,
+                        excerpt: data.excerpt,
+                        content: data.content
+                    }
+                })
+            }
+        }).catch(err => console.error('Auto-translation failed after post creation:', err))
+
         revalidatePath('/[locale]/blog')
         revalidatePath('/[locale]')
 
@@ -126,6 +150,31 @@ export async function PUT(request: Request) {
         })
 
         await logAudit('UPDATE', 'BlogPost', blog.id, { userId: session.userId, details: { title: blog.title, changes: Object.keys(updateData) } })
+
+        // Only auto-translate if core content fields were updated
+        if (body.title !== undefined || body.content !== undefined || body.excerpt !== undefined) {
+            autoTranslatePost({
+                title: blog.title,
+                excerpt: blog.excerpt || '',
+                content: blog.content
+            }).then(async (translations) => {
+                for (const [locale, data] of Object.entries(translations)) {
+                    await prisma.blogPostTranslation.upsert({
+                        where: {
+                            postId_locale: { postId: blog.id, locale }
+                        },
+                        update: data,
+                        create: {
+                            postId: blog.id,
+                            locale,
+                            title: data.title,
+                            excerpt: data.excerpt,
+                            content: data.content
+                        }
+                    })
+                }
+            }).catch(err => console.error('Auto-translation failed after post update:', err))
+        }
 
         revalidatePath('/[locale]/blog')
         revalidatePath('/[locale]')
