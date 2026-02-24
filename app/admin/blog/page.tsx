@@ -33,6 +33,7 @@ export default function AdminBlogPage() {
     const [translations, setTranslations] = useState<Record<string, { title: string, excerpt: string, content: string }>>({})
     const [selectedLocale, setSelectedLocale] = useState('en')
     const [loadingTranslations, setLoadingTranslations] = useState(false)
+    const [translateAllLoading, setTranslateAllLoading] = useState(false)
 
     const locales = [
         { code: 'en', label: 'English' },
@@ -219,6 +220,29 @@ export default function AdminBlogPage() {
         }
     }
 
+    async function handleTranslateAll() {
+        const confirmed = await confirm(
+            'This will auto-translate ALL existing blog posts into Swahili, French, Arabic and Spanish. This may take a while. Continue?',
+            'Translate All Posts'
+        )
+        if (!confirmed) return
+
+        setTranslateAllLoading(true)
+        try {
+            const res = await fetch('/api/admin/translate-blogs', { method: 'POST' })
+            const data = await res.json()
+            if (res.ok) {
+                showToast(data.message, 'success')
+            } else {
+                showToast(data.error || 'Translation failed', 'error')
+            }
+        } catch {
+            showToast('Failed to translate posts. Please try again.', 'error')
+        } finally {
+            setTranslateAllLoading(false)
+        }
+    }
+
     async function togglePublish(id: string, published: boolean) {
         const res = await fetch(`/api/blogs?id=${id}`, {
             method: 'PUT',
@@ -268,6 +292,20 @@ export default function AdminBlogPage() {
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
+                    <button
+                        onClick={handleTranslateAll}
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors whitespace-nowrap disabled:opacity-50"
+                        disabled={translateAllLoading}
+                    >
+                        {translateAllLoading ? (
+                            <>
+                                <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                                Translating...
+                            </>
+                        ) : (
+                            '🌐 Translate All'
+                        )}
+                    </button>
                     <button
                         onClick={handleAdd}
                         className="bg-[#6E8C82] hover:bg-[#587068] text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors whitespace-nowrap"
