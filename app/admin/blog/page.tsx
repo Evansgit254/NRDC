@@ -223,7 +223,9 @@ export default function AdminBlogPage() {
     async function handleTranslateAll() {
         const confirmed = await confirm(
             'This will auto-translate ALL existing blog posts into Swahili, French, Arabic and Spanish. This may take a while. Continue?',
-            'Translate All Posts'
+            'Translate All Posts',
+            'Translate',
+            'primary'
         )
         if (!confirmed) return
 

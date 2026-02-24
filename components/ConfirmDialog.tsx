@@ -4,7 +4,7 @@ import { createContext, useContext, useState, ReactNode } from 'react'
 import { X, AlertTriangle } from 'lucide-react'
 
 interface ConfirmDialogContextType {
-    confirm: (message: string, title?: string) => Promise<boolean>
+    confirm: (message: string, title?: string, confirmLabel?: string, variant?: 'danger' | 'primary') => Promise<boolean>
 }
 
 const ConfirmDialogContext = createContext<ConfirmDialogContextType | undefined>(undefined)
@@ -13,11 +13,15 @@ export function ConfirmDialogProvider({ children }: { children: ReactNode }) {
     const [isOpen, setIsOpen] = useState(false)
     const [title, setTitle] = useState('Confirm Action')
     const [message, setMessage] = useState('')
+    const [confirmLabel, setConfirmLabel] = useState('Delete')
+    const [variant, setVariant] = useState<'danger' | 'primary'>('danger')
     const [resolvePromise, setResolvePromise] = useState<((value: boolean) => void) | null>(null)
 
-    const confirm = (msg: string, titleText: string = 'Confirm Action'): Promise<boolean> => {
+    const confirm = (msg: string, titleText: string = 'Confirm Action', label: string = 'Delete', v: 'danger' | 'primary' = 'danger'): Promise<boolean> => {
         setMessage(msg)
         setTitle(titleText)
+        setConfirmLabel(label)
+        setVariant(v)
         setIsOpen(true)
 
         return new Promise((resolve) => {
@@ -74,9 +78,12 @@ export function ConfirmDialogProvider({ children }: { children: ReactNode }) {
                             </button>
                             <button
                                 onClick={handleConfirm}
-                                className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium"
+                                className={`flex-1 px-4 py-2 text-white rounded-lg transition-colors font-medium ${variant === 'danger'
+                                        ? 'bg-red-600 hover:bg-red-700'
+                                        : 'bg-blue-600 hover:bg-blue-700'
+                                    }`}
                             >
-                                Delete
+                                {confirmLabel}
                             </button>
                         </div>
                     </div>
