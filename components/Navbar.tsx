@@ -8,6 +8,7 @@ import clsx from 'clsx'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import LanguageSwitcher from './LanguageSwitcher'
+import GoogleTranslate from './GoogleTranslate'
 
 export default function Navbar() {
     const t = useTranslations('nav')
@@ -67,6 +68,7 @@ export default function Navbar() {
                             )
                         })}
 
+                        <GoogleTranslate />
                         <LanguageSwitcher />
 
                         <Link
@@ -80,6 +82,7 @@ export default function Navbar() {
 
                     {/* Mobile menu button */}
                     <div className="flex items-center gap-4 md:hidden">
+                        <GoogleTranslate />
                         <LanguageSwitcher />
                         <button
                             onClick={() => setIsOpen(!isOpen)}
